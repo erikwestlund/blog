@@ -1,0 +1,17 @@
+@tailwind preflight;
+@tailwind components;
+
+@import 'colors';
+@import 'forms';
+@import 'alerts';
+
+a {
+  color: $blue-darker;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@tailwind utilities;

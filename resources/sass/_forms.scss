@@ -1,0 +1,11 @@
+.form-control {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight;
+}
+
+.danger {
+  @apply border border-red;
+}
+
+.btn {
+  @apply bg-blue-dark text-white font-bold py-2 px-4 rounded;
+}
