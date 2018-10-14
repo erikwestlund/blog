@@ -1,6 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from blog import app
 from blog.forms import LoginForm
+from blog.models import User, Post
 
 posts = [
     {
@@ -29,15 +30,6 @@ def about():
     return render_template('about.html', title='About')
 
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
-    return render_template('register.html', title='Register', form=form)
-
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -48,6 +40,7 @@ def login():
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
 
 @app.route('/version-<version>/<path:static_file>')
 def versioned_static(version, static_file):

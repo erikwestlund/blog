@@ -1,2 +1,3 @@
 .idea*
 *__pycache__*
+app/blog/site.db
