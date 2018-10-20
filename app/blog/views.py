@@ -1,6 +1,5 @@
 from flask import render_template, url_for, flash, redirect
 from blog import app
-from blog.controllers.login_controller import login as login_controller
 
 posts = [
     {
@@ -22,11 +21,6 @@ posts = [
 @app.route("/home")
 def home():
     return render_template('home.html', posts=posts)
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    return login_controller();
 
 @app.route("/about")
 def about():
