@@ -19,7 +19,7 @@ posts = [
 
 @app.route('/')
 @app.route('/home')
-def index():
+def home():
     return render_template('home.html', posts=posts)
 
 

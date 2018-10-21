@@ -1,3 +1,6 @@
 {
-    "/app/blog/static/app.css": "/app/blog/static/app.css"
+    "/app/app/static/vendor.js": "/app/app/static/vendor.js",
+    "/app/app/static/app.js": "/app/app/static/app.js",
+    "/app/app/static/app.css": "/app/app/static/app.css",
+    "/app/app/static/manifest.js": "/app/app/static/manifest.js"
 }

@@ -10,50 +10,58 @@
     <link rel="stylesheet" type="text/css" href="{{ "static/app.css"|versioned }}">
 
     {% if title %}
-    <title>{{ title }} | Erik Westlund</title>
+        <title>{{ title }} | Erik Westlund</title>
     {% else %}
-    <title>Erik Westlund</title>
+        <title>Erik Westlund</title>
     {% endif %}
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body>
-<header>
-    <nav class="flex items-center justify-between flex-wrap bg-blue-dark p-6">
-        <div class="flex items-center flex-no-shrink text-white mr-6">
-            <span class="font-semibold text-xl tracking-tight">Erik Westlund</span>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div class="text-sm lg:flex-grow">
-                <a href="/about" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
-                    About
-                </a>
-                <a href="/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white">
-                    Contact
-                </a>
+<div id="app">
+    <header>
+        <nav class="flex items-center justify-between flex-wrap bg-blue-dark p-6">
+            <div class="flex items-center flex-no-shrink text-white mr-6">
+                <span class="font-semibold text-xl tracking-tight">Erik Westlund</span>
             </div>
-        </div>
-    </nav>
-</header>
-<main role="main" class="container mx-auto px-4 py-12">
-    <div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert-{{ category }} mb-4" role="alert">
-            <div class="flex">
-                <div>
-                    {{ message }}
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+                <div class="text-sm lg:flex-grow">
+                    <a href="/about" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white mr-4">
+                        About
+                    </a>
+                    <a href="/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-white">
+                        Contact
+                    </a>
                 </div>
             </div>
+        </nav>
+    </header>
+    <main role="main" class="container mx-auto px-4 py-12">
+        <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert-{{ category }} mb-4" role="alert">
+                            <div class="flex">
+                                <div>
+                                    {{ message }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
         </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </div>
-</main>
+    </main>
+</div>
 
 
 <!-- JavaScript -->
+<script src="{{ "static/manifest.js"|versioned }}"></script>
+<script src="{{ "static/vendor.js"|versioned }}"></script>
+<script src="{{ "static/app.js"|versioned }}"></script>
 
 </body>
 </html>
