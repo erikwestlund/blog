@@ -1,7 +1,13 @@
 from flask import Blueprint, render_template, url_for, flash, redirect
-from blog.users.forms import LoginForm
+from app.users.forms.login import LoginForm
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
+
+
+@users_blueprint.route('/register', methods=['GET', 'POST'])
+def register():
+    return render_template('users/register.html', title='Register')
+
 
 @users_blueprint.route("/login", methods=['GET', 'POST'])
 def login():

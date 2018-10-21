@@ -1,5 +1,5 @@
-from flask import render_template, url_for, flash, redirect
-from blog import app
+from flask import render_template, url_for, redirect
+from app import app
 
 posts = [
     {
@@ -17,14 +17,10 @@ posts = [
 ]
 
 
-@app.route("/")
-@app.route("/home")
-def home():
+@app.route('/')
+@app.route('/home')
+def index():
     return render_template('home.html', posts=posts)
-
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
 
 
 @app.route('/version-<version>/<path:static_file>')
