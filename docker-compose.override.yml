@@ -1,5 +1,17 @@
-version: '3'
+version: '3.0'
 services:
+  postgres:
+    restart: always
+    image: postgres:10
+    env_file: app/app/.env
+    environment:
+    - POSTGRES_USER=root
+    - POSTGRES_PASSWORD=secret
+    - POSTGRES_DB=blog
+    volumes:
+    - postgresdata:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
   web:
     volumes:
       - ./app:/app

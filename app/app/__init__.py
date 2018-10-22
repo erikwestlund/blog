@@ -2,9 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flaskext.versioned import Versioned
 from flask_wtf.csrf import CSRFProtect
 from app.config import Config
+from flaskext.versioned import Versioned
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -21,6 +21,7 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+    versioned = Versioned(app)
 
     from app.main.views import main_blueprint
     from app.users.views import users_blueprint

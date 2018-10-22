@@ -1,1 +1,967 @@
-webpackJsonp([1],{12:function(e,r,t){t(13),e.exports=t(40)},13:function(e,r,t){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var o=t(36),s=t.n(o);t(14),window.Vue=t(11);new Vue({el:"#app",components:{"register-user":s.a}})},14:function(e,r,t){window._=t(3),window.axios=t(4);var o=document.head.querySelector('meta[name="csrf-token"]');o?window.axios.defaults.headers.common["X-CSRF-TOKEN"]=o.content:console.error("CSRF token not found.")},36:function(e,r,t){var o=t(37)(t(38),t(39),!1,null,null,null);e.exports=o.exports},37:function(e,r){e.exports=function(e,r,t,o,s,n){var a,i=e=e||{},l=typeof e.default;"object"!==l&&"function"!==l||(a=e,i=e.default);var u,c="function"==typeof i?i.options:i;if(r&&(c.render=r.render,c.staticRenderFns=r.staticRenderFns,c._compiled=!0),t&&(c.functional=!0),s&&(c._scopeId=s),n?(u=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),o&&o.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(n)},c._ssrRegister=u):o&&(u=o),u){var d=c.functional,f=d?c.render:c.beforeCreate;d?(c._injectStyles=u,c.render=function(e,r){return u.call(r),f(e,r)}):c.beforeCreate=f?[].concat(f,u):[u]}return{esModule:a,exports:i,options:c}}},38:function(e,r,t){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var o=function(){function e(e,r){for(var t=0;t<r.length;t++){var o=r[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(r,t,o){return t&&e(r.prototype,t),o&&e(r,o),r}}();var s=function(){function e(){!function(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}(this,e),this.errors={}}return o(e,[{key:"has",value:function(e){return this.errors.hasOwnProperty(e)}},{key:"any",value:function(){return Object.keys(this.errors).length>0}},{key:"count",value:function(){return Object.keys(this.errors).length}},{key:"get",value:function(e){if(this.errors[e])return this.errors[e][0]}},{key:"record",value:function(e){this.errors=e}},{key:"clear",value:function(e){e?delete this.errors[e]:this.errors={}}}]),e}(),n=function(){function e(e,r){for(var t=0;t<r.length;t++){var o=r[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(r,t,o){return t&&e(r.prototype,t),o&&e(r,o),r}}();var a=function(){function e(r){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];for(var o in function(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}(this,e),this.originalData=_.cloneDeep(r),r)this[o]=r[o];this.formType=t?"update":"create",this.errors=new s}return n(e,[{key:"data",value:function(){var e={};for(var r in this.originalData)e[r]=this[r];return e}},{key:"reset",value:function(){arguments.length>0&&void 0!==arguments[0]&&arguments[0];if("create"==this.formType)for(var e in this.originalData)this[e]=this.originalData[e];this.errors.clear()}},{key:"post",value:function(e){return this.submit("post",e)}},{key:"put",value:function(e){return this.submit("put",e)}},{key:"patch",value:function(e){return this.submit("patch",e)}},{key:"delete",value:function(e){return this.submit("delete",e)}},{key:"submit",value:function(e,r){var t=this;return new Promise(function(o,s){axios[e](r,t.data()).then(function(e){t.onSuccess(e.data),o(e.data)}).catch(function(e){t.onFail(e.response.data),s(e.response)})})}},{key:"onSuccess",value:function(e){this.reset()}},{key:"onFail",value:function(e){e.hasOwnProperty("errors")&&this.errors.record(e.errors)}}]),e}();r.default={mounted:function(){console.log("Component mounted.")},data:function(){return{form:new a({username:"",first_name:"",last_name:"",email:"",password:"",password_confirm:""})}},methods:{onSubmit:function(){this.form.post("/register").then(function(e){console.log(e)}).catch(function(e){console.log(e)})}}}},39:function(e,r){e.exports={render:function(){var e=this,r=e.$createElement,t=e._self._c||r;return t("div",{staticClass:"flex mt-8"},[t("form",{staticClass:"w-full max-w-md",attrs:{method:"POST",action:"/register"},on:{submit:function(r){return r.preventDefault(),e.onSubmit(r)},keydown:function(r){e.form.errors.clear(r.target.name)}}},[t("div",{staticClass:"flex flex-wrap -mx-3 mb-6"},[t("div",{staticClass:"w-full px-3"},[t("label",{staticClass:"block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",class:{"text-red":e.form.errors.has("username")},attrs:{for:"grid-username"}},[e._v("\n                    Username\n                ")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.username,expression:"form.username"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",class:{"border border-red":e.form.errors.has("username")},attrs:{id:"grid-username",type:"password",placeholder:"Username"},domProps:{value:e.form.username},on:{input:function(r){r.target.composing||e.$set(e.form,"username",r.target.value)}}}),e._v(" "),e.form.errors.has("username")?t("p",{staticClass:"text-red text-xs italic",domProps:{textContent:e._s(e.form.errors.get("username"))}}):e._e()])]),e._v(" "),t("div",{staticClass:"flex flex-wrap -mx-3 mb-6"},[t("div",{staticClass:"w-full md:w-1/2 px-3 mb-6 md:mb-0"},[t("label",{staticClass:"block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",attrs:{for:"grid-first-name"}},[e._v("\n                    First Name\n                ")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.first_name,expression:"form.first_name"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",attrs:{id:"grid-first-name",type:"text",placeholder:"Jane"},domProps:{value:e.form.first_name},on:{input:function(r){r.target.composing||e.$set(e.form,"first_name",r.target.value)}}})]),e._v(" "),t("div",{staticClass:"w-full md:w-1/2 px-3"},[t("label",{staticClass:"block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",attrs:{for:"grid-last-name"}},[e._v("\n                    Last Name\n                ")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.last_name,expression:"form.last_name"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey",attrs:{id:"grid-last-name",type:"text",placeholder:"Doe"},domProps:{value:e.form.last_name},on:{input:function(r){r.target.composing||e.$set(e.form,"last_name",r.target.value)}}})])]),e._v(" "),t("div",{staticClass:"flex flex-wrap -mx-3 mb-6"},[t("div",{staticClass:"w-full px-3"},[t("label",{staticClass:"block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",class:{"text-red":e.form.errors.has("email")},attrs:{for:"grid-email"}},[e._v("\n                    Email\n                ")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.email,expression:"form.email"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",class:{"border border-red":e.form.errors.has("email")},attrs:{id:"grid-email",placeholder:"name@domain.com"},domProps:{value:e.form.email},on:{input:function(r){r.target.composing||e.$set(e.form,"email",r.target.value)}}}),e._v(" "),e.form.errors.has("email")?t("p",{staticClass:"text-red text-xs italic",domProps:{textContent:e._s(e.form.errors.get("email"))}}):e._e()])]),e._v(" "),t("div",{staticClass:"flex flex-wrap -mx-3 mb-6"},[t("div",{staticClass:"w-full px-3"},[t("label",{staticClass:"block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",class:{"text-red":e.form.errors.has("password")||e.form.errors.has("password_confirm")},attrs:{for:"grid-password"}},[e._v("\n                    Password\n                ")]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.password,expression:"form.password"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",class:{"border border-red":e.form.errors.has("password")},attrs:{id:"grid-password",type:"password",placeholder:"Password"},domProps:{value:e.form.password},on:{input:function(r){r.target.composing||e.$set(e.form,"password",r.target.value)}}}),e._v(" "),e.form.errors.has("password")?t("p",{staticClass:"text-red text-xs italic mb-4",domProps:{textContent:e._s(e.form.errors.get("password"))}}):e._e(),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.form.password_confirm,expression:"form.password_confirm"}],staticClass:"appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",class:{"border border-red":e.form.errors.has("password_confirm")},attrs:{id:"grid-password-confirm",type:"password",placeholder:"Confirm password"},domProps:{value:e.form.password_confirm},on:{input:function(r){r.target.composing||e.$set(e.form,"password_confirm",r.target.value)}}}),e._v(" "),e.form.errors.has("password_confirm")?t("p",{staticClass:"text-red text-xs italic",domProps:{textContent:e._s(e.form.errors.get("password_confirm"))}}):e._e()])]),e._v(" "),e._m(0)])])},staticRenderFns:[function(){var e=this.$createElement,r=this._self._c||e;return r("div",{staticClass:"flex flex-wrap mb-6"},[r("button",{staticClass:"flex-no-shrink bg-blue-darker hover:bg-blue-darkest border-blue-darker hover:border-blue-darkest text-sm border-4 text-white py-1 px-2 rounded"},[this._v("\n                Sign Up\n            ")])])}]}},40:function(e,r){}},[12]);
+webpackJsonp([1],{
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(13);
+module.exports = __webpack_require__(42);
+
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_users_RegisterUser__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_users_RegisterUser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_users_RegisterUser__);
+__webpack_require__(14);
+
+window.Vue = __webpack_require__(11);
+
+
+
+var app = new Vue({
+    el: '#app',
+    components: {
+        'register-user': __WEBPACK_IMPORTED_MODULE_0__components_users_RegisterUser___default.a
+    }
+});
+
+/***/ }),
+
+/***/ 14:
+/***/ (function(module, exports, __webpack_require__) {
+
+window._ = __webpack_require__(3);
+window.axios = __webpack_require__(4);
+
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found.');
+}
+
+/***/ }),
+
+/***/ 36:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(37)
+/* script */
+var __vue_script__ = __webpack_require__(38)
+/* template */
+var __vue_template__ = __webpack_require__(41)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/users/RegisterUser.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4936d4e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-4936d4e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 38:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_Form_js__ = __webpack_require__(39);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+    data: function data() {
+        return {
+            form: new __WEBPACK_IMPORTED_MODULE_0__modules_Form_js__["a" /* default */]({
+                username: '',
+                first_name: '',
+                last_name: '',
+                email: '',
+                password: '',
+                password_confirm: ''
+            })
+        };
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.post('/register').then(function (response) {
+                console.log(response);
+            }).catch(function (errors) {
+                console.log(errors);
+            });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Errors_js__ = __webpack_require__(40);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var Form = function () {
+    /**
+     * Create a new Form instance.
+     *
+     * @param {object} data
+     */
+    function Form(data) {
+        var isUpdateForm = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+        _classCallCheck(this, Form);
+
+        this.originalData = _.cloneDeep(data);
+
+        for (var field in data) {
+            this[field] = data[field];
+        }
+
+        this.formType = isUpdateForm ? 'update' : 'create';
+        this.errors = new __WEBPACK_IMPORTED_MODULE_0__Errors_js__["a" /* default */]();
+    }
+
+    /**
+     * Fetch all relevant data for the form.
+     */
+
+
+    _createClass(Form, [{
+        key: 'data',
+        value: function data() {
+            var data = {};
+
+            for (var property in this.originalData) {
+                data[property] = this[property];
+            }
+
+            return data;
+        }
+
+        /**
+         * Reset the form fields.
+         */
+
+    }, {
+        key: 'reset',
+        value: function reset() {
+            var force_reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+            if (this.formType == 'create') {
+                for (var field in this.originalData) {
+                    this[field] = this.originalData[field];
+                }
+            }
+
+            this.errors.clear();
+        }
+
+        /**
+         * Send a POST request to the given URL.
+         * .
+         * @param {string} url
+         */
+
+    }, {
+        key: 'post',
+        value: function post(url) {
+            return this.submit('post', url);
+        }
+
+        /**
+         * Send a PUT request to the given URL.
+         * .
+         * @param {string} url
+         */
+
+    }, {
+        key: 'put',
+        value: function put(url) {
+            return this.submit('put', url);
+        }
+
+        /**
+         * Send a PATCH request to the given URL.
+         * .
+         * @param {string} url
+         */
+
+    }, {
+        key: 'patch',
+        value: function patch(url) {
+            return this.submit('patch', url);
+        }
+
+        /**
+         * Send a DELETE request to the given URL.
+         * .
+         * @param {string} url
+         */
+
+    }, {
+        key: 'delete',
+        value: function _delete(url) {
+            return this.submit('delete', url);
+        }
+
+        /**
+         * Submit the form.
+         *
+         * @param {string} requestType
+         * @param {string} url
+         */
+
+    }, {
+        key: 'submit',
+        value: function submit(requestType, url) {
+            var _this = this;
+
+            return new Promise(function (resolve, reject) {
+                axios[requestType](url, _this.data()).then(function (response) {
+                    _this.onSuccess(response.data);
+
+                    resolve(response.data);
+                }).catch(function (error) {
+                    _this.onFail(error.response.data);
+                    reject(error.response);
+                });
+            });
+        }
+
+        /**
+         * Handle a successful form submission.
+         *
+         * @param {object} data
+         */
+
+    }, {
+        key: 'onSuccess',
+        value: function onSuccess(data) {
+            this.reset();
+        }
+
+        /**
+         * Handle a failed form submission.
+         *
+         * Only record if an error bag is returned. This allows us to defer
+         * to the caller to handle things like authorization errors.
+         *
+         * @param {object} errors
+         */
+
+    }, {
+        key: 'onFail',
+        value: function onFail(errors) {
+            if (errors.hasOwnProperty('errors')) {
+                this.errors.record(errors.errors);
+            }
+        }
+    }]);
+
+    return Form;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Form);
+
+/***/ }),
+
+/***/ 40:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Errors = function () {
+    /**
+     * Create a new Errors instance.
+     */
+    function Errors() {
+        _classCallCheck(this, Errors);
+
+        this.errors = {};
+    }
+
+    /**
+     * Determine if an errors exists for the given field.
+     *
+     * @param {string} field
+     */
+
+
+    _createClass(Errors, [{
+        key: "has",
+        value: function has(field) {
+            return this.errors.hasOwnProperty(field);
+        }
+
+        /**
+         * Determine if we have any errors.
+         */
+
+    }, {
+        key: "any",
+        value: function any() {
+            return Object.keys(this.errors).length > 0;
+        }
+
+        /**
+         * The number of errors.
+         *
+         * @returns {Number}
+         */
+
+    }, {
+        key: "count",
+        value: function count() {
+            return Object.keys(this.errors).length;
+        }
+
+        /**
+         * Retrieve the error message for a field.
+         *
+         * @param {string} field
+         */
+
+    }, {
+        key: "get",
+        value: function get(field) {
+            if (this.errors[field]) {
+                return this.errors[field][0];
+            }
+        }
+
+        /**
+         * Record the new errors.
+         *
+         * @param {object} errors
+         */
+
+    }, {
+        key: "record",
+        value: function record(errors) {
+            this.errors = errors;
+        }
+
+        /**
+         * Clear one or all error fields.
+         *
+         * @param {string|null} field
+         */
+
+    }, {
+        key: "clear",
+        value: function clear(field) {
+            if (field) {
+                delete this.errors[field];
+
+                return;
+            }
+
+            this.errors = {};
+        }
+    }]);
+
+    return Errors;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Errors);
+
+/***/ }),
+
+/***/ 41:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flex mt-8" }, [
+    _c(
+      "form",
+      {
+        staticClass: "w-full max-w-md",
+        attrs: { method: "POST", action: "/register" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          },
+          keydown: function($event) {
+            _vm.form.errors.clear($event.target.name)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+          _c("div", { staticClass: "w-full px-3" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+                class: { "text-red": _vm.form.errors.has("username") },
+                attrs: { for: "grid-username" }
+              },
+              [_vm._v("\n                    Username\n                ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.username,
+                  expression: "form.username"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+              class: { "border border-red": _vm.form.errors.has("username") },
+              attrs: {
+                id: "grid-username",
+                type: "password",
+                placeholder: "Username"
+              },
+              domProps: { value: _vm.form.username },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "username", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("username")
+              ? _c("p", {
+                  staticClass: "text-red text-xs italic",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("username"))
+                  }
+                })
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+          _c("div", { staticClass: "w-full md:w-1/2 px-3 mb-6 md:mb-0" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+                attrs: { for: "grid-first-name" }
+              },
+              [_vm._v("\n                    First Name\n                ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.first_name,
+                  expression: "form.first_name"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white",
+              attrs: {
+                id: "grid-first-name",
+                type: "text",
+                placeholder: "Jane"
+              },
+              domProps: { value: _vm.form.first_name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "first_name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-full md:w-1/2 px-3" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+                attrs: { for: "grid-last-name" }
+              },
+              [_vm._v("\n                    Last Name\n                ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.last_name,
+                  expression: "form.last_name"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+              attrs: { id: "grid-last-name", type: "text", placeholder: "Doe" },
+              domProps: { value: _vm.form.last_name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "last_name", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+          _c("div", { staticClass: "w-full px-3" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+                class: { "text-red": _vm.form.errors.has("email") },
+                attrs: { for: "grid-email" }
+              },
+              [_vm._v("\n                    Email\n                ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.email,
+                  expression: "form.email"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+              class: { "border border-red": _vm.form.errors.has("email") },
+              attrs: { id: "grid-email", placeholder: "name@domain.com" },
+              domProps: { value: _vm.form.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "email", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("email")
+              ? _c("p", {
+                  staticClass: "text-red text-xs italic",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("email"))
+                  }
+                })
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+          _c("div", { staticClass: "w-full px-3" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+                class: {
+                  "text-red":
+                    _vm.form.errors.has("password") ||
+                    _vm.form.errors.has("password_confirm")
+                },
+                attrs: { for: "grid-password" }
+              },
+              [_vm._v("\n                    Password\n                ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.password,
+                  expression: "form.password"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+              class: { "border border-red": _vm.form.errors.has("password") },
+              attrs: {
+                id: "grid-password",
+                type: "password",
+                placeholder: "Password"
+              },
+              domProps: { value: _vm.form.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "password", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("password")
+              ? _c("p", {
+                  staticClass: "text-red text-xs italic mb-4",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("password"))
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.password_confirm,
+                  expression: "form.password_confirm"
+                }
+              ],
+              staticClass:
+                "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey",
+              class: {
+                "border border-red": _vm.form.errors.has("password_confirm")
+              },
+              attrs: {
+                id: "grid-password-confirm",
+                type: "password",
+                placeholder: "Confirm password"
+              },
+              domProps: { value: _vm.form.password_confirm },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "password_confirm", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.form.errors.has("password_confirm")
+              ? _c("p", {
+                  staticClass: "text-red text-xs italic",
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("password_confirm"))
+                  }
+                })
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex flex-wrap mb-6" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "flex-no-shrink bg-blue-darker hover:bg-blue-darkest border-blue-darker hover:border-blue-darkest text-sm border-4 text-white py-1 px-2 rounded"
+        },
+        [_vm._v("\n                Sign Up\n            ")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4936d4e0", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 42:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ })
+
+},[12]);
