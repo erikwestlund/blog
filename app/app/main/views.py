@@ -1,5 +1,6 @@
-from flask import render_template, url_for, redirect
-from flask import current_app
+from flask import Blueprint, render_template, redirect
+
+main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
 posts = [
     {
@@ -16,12 +17,14 @@ posts = [
     }
 ]
 
-@current_app.route('/')
-@current_app.route('/home')
+
+@main_blueprint.route('/')
+@main_blueprint.route('/home')
 def home():
     return render_template('home.html', posts=posts)
 
 
-@current_app.route('/version-<version>/<path:static_file>')
+@main_blueprint.route('/version-<version>/<path:static_file>')
 def versioned_static(version, static_file):
     return redirect(static_file)
+
