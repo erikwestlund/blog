@@ -1,7 +1,9 @@
 @tailwind preflight;
 @tailwind components;
 
+@import 'headings';
 @import 'colors';
+@import 'nav';
 @import 'forms';
 @import 'alerts';
 
@@ -10,8 +12,5 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
 
 @tailwind utilities;
