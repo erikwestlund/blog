@@ -1,6 +1,8 @@
 .env
+.docker_env
 node_modules/*
 .idea*
 *__pycache__*
-app/blog/site.db
+app/app/site.db
 .DS_store
+.DS_Store
