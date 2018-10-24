@@ -5,7 +5,8 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from app.config import Config
 from flaskext.versioned import Versioned
-from flask_migrate import Migrate
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -15,10 +16,15 @@ login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-def create_app(config_class=Config):
-    app = Flask(__name__)
-    app.config.from_object(Config)
 
+def load_models():
+    from app.users.models.user import User
+
+
+load_models()
+
+
+def init_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
@@ -26,6 +32,7 @@ def create_app(config_class=Config):
     csrf.init_app(app)
     versioned = Versioned(app)
 
+def init_blueprints(app):
     from app.main.views import main_blueprint
     from app.users.views import users_blueprint
     from app.posts.views import posts_blueprint
@@ -34,4 +41,15 @@ def create_app(config_class=Config):
     app.register_blueprint(users_blueprint)
     app.register_blueprint(posts_blueprint)
 
+
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    init_extensions(app)
+    init_blueprints(app)
+
     return app
+
+manager = Manager(create_app)
+manager.add_command('db', MigrateCommand)
