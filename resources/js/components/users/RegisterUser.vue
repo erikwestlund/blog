@@ -121,7 +121,11 @@
             onSubmit() {
                 this.form.post('/register')
                     .then((response) => {
-                        flash('User registration successful!')
+                        setTimeout(() => {
+                            flash('User registration successful!')
+                        }, 2000);
+
+                        window.location.replace('/');
                     })
                     .catch((errors) => {
                         flash('User registration failed.', 'danger')

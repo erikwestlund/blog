@@ -7,7 +7,8 @@
 
     <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" type="text/css" href="{{ "static/app.css"|versioned }}">
+    <link rel="stylesheet" type="text/css" href="{{ "static/app.css" }}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Roboto Mono" rel="stylesheet" type="text/css">
 
     {% if title %}
         <title>{{ title }} | Erik Westlund</title>
@@ -22,7 +23,7 @@
 <div id="app" class="lg:px-24 p-6">
     <header class="container mx-auto">
         <div class="flex text-black mt-12">
-            <span class="font-light text-5xl tracking-tight">Erik Westlund</span>
+            <span class="text-5xl ">Erik Westlund</span>
         </div>
         <nav class="flex items-center justify-between flex-wrap mt-8 mb-8 border-t border-b border-grey-light">
             <div class="w-full block flex-grow md:flex lg:flex md:items-center lg:items-center lg:w-auto pt-3 pb-3 pl-1  pr-1 ">
@@ -64,9 +65,9 @@
 
 
 <!-- JavaScript -->
-<script src="{{ "static/manifest.js"|versioned }}"></script>
-<script src="{{ "static/vendor.js"|versioned }}"></script>
-<script src="{{ "static/app.js"|versioned }}"></script>
+<script src="{{ "static/manifest.js" }}"></script>
+<script src="{{ "static/vendor.js" }}"></script>
+<script src="{{ "static/app.js" }}"></script>
 
 </body>
 </html>

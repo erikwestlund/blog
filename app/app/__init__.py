@@ -4,11 +4,10 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from app.config import Config
-from flaskext.versioned import Versioned
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
-
+import json
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -32,7 +31,6 @@ def init_extensions(app):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
-    versioned = Versioned(app)
 
 def init_blueprints(app):
     from app.main.views import main_blueprint
@@ -54,6 +52,12 @@ def create_app(config_class=Config):
     init_blueprints(app)
 
     return app
+
+def get_asset_version(file):
+    with open('mix-manifest.json') as f:
+        data = json.load(f)
+
+    return data['/' + file]
 
 manager = Manager(create_app)
 

@@ -3,14 +3,18 @@ from app.users.forms.login import LoginForm
 from app.users.forms.register import RegisterForm
 from app import bcrypt, db
 from app.users.models.user import User
+from flask_login import login_user, current_user
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
 
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
     form = RegisterForm()
-    if (request.method=='POST'):
+    if request.method == 'POST':
         if form.validate_on_submit():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             user = User(username=form.username.data,
@@ -18,8 +22,13 @@ def register():
                         password=hashed_password,
                         firstname=form.first_name.data,
                         lastname=form.last_name.data)
+
             db.session.add(user)
             db.session.commit()
+
+            login_user(user)
+
+            flash('You have been logged in.')
             return jsonify({'success': True})
         else:
             return jsonify(errors=form.errors), 422

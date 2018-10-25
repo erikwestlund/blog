@@ -7,6 +7,10 @@
 @import 'forms';
 @import 'alerts';
 
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
 a {
   color: $blue-darker;
   text-decoration: none;

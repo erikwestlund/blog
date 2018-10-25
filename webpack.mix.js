@@ -13,17 +13,20 @@ class TailwindExtractor {
     }
 }
 
-mix.sass('resources/sass/app.scss', 'app/app/static')
+mix.setPublicPath('./app')
+    .sass('resources/sass/app.scss', 'app/static')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.js')],
     })
-    .js('resources/js/app.js', 'app/app/static')
+    .js('resources/js/app.js', 'app/static')
     .extract([
         'vue',
         'axios',
         'lodash'
     ])
+    .sourceMaps()
+    .version();
 
 if (mix.inProduction()) {
   mix.webpackConfig({
