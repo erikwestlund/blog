@@ -6,6 +6,7 @@ RUN pip install --upgrade pip
 
 RUN pip install python-dotenv \
                 psycopg2-binary \
+                flask-debugtoolbar \
                 Flask-Versioned \
                 flask_wtf \
                 flask_sqlalchemy \

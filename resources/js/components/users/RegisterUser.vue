@@ -17,7 +17,6 @@
                            :class="{'border border-red' : form.errors.has('username')}"
                            v-model="form.username"
                            id="grid-username"
-                           type="password"
                            placeholder="Username">
                     <p class="text-red text-xs italic"
                        v-if="form.errors.has('username')"
@@ -106,9 +105,6 @@
     import Form from '../../modules/Form.js'
 
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        },
         data() {
             return {
                 form: new Form({
@@ -125,10 +121,10 @@
             onSubmit() {
                 this.form.post('/register')
                     .then((response) => {
-                        console.log(response)
+                        flash('User registration successful!')
                     })
                     .catch((errors) => {
-                        console.log(errors)
+                        flash('User registration failed.', 'danger')
                     });
             },
         }

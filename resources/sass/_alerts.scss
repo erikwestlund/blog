@@ -1,7 +1,7 @@
 .alert-success {
-  @apply bg-teal-lightest border-t-4 border-teal rounded-b text-teal-darkest px-4 py-3 shadow-md;
+  @apply bg-green-lightest border border-green-lighter rounded text-green-darkest px-4 py-4 text-sm;
 }
 
 .alert-danger {
-  @apply bg-red-lightest border-t-4 border-red rounded-b text-red-darkest px-4 py-3 shadow-md;
+  @apply bg-red-lightest border border-red-lighter rounded text-red-darkest px-4 py-4 text-sm;
 }
