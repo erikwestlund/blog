@@ -9,9 +9,11 @@ RUN pip install python-dotenv \
                 flask-debugtoolbar \
                 flask_wtf \
                 flask_sqlalchemy \
+                flask-redis \
                 flask_script \
                 Flask-Migrate \
                 flask_bcrypt \
-                flask_login
+                flask_login \
+                redis
 
 COPY ./app /app

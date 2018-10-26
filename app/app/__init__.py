@@ -1,15 +1,18 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
-from flask_wtf.csrf import CSRFProtect
 from app.config import Config
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+from app.utils.session import RedisSessionInterface
+from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_login import LoginManager
 from flask_login import current_user
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
+from flask_redis import FlaskRedis
 
 db = SQLAlchemy()
+redis = FlaskRedis()
 migrate = Migrate()
 bcrypt = Bcrypt()
 csrf = CSRFProtect()
@@ -19,7 +22,7 @@ login_manager.login_message_category = 'info'
 
 
 def load_models():
-    from app.users.models.user import User
+    pass
 
 
 load_models()
@@ -27,10 +30,16 @@ load_models()
 
 def init_extensions(app):
     db.init_app(app)
+    redis.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+
+
+def init_session(app):
+    prefix = app.config['REDIS_SESSION_PREFIX']
+    app.session_interface = RedisSessionInterface(redis=redis, prefix=prefix)
 
 
 def init_blueprints(app):
@@ -64,6 +73,7 @@ def create_app(config_class=Config):
     toolbar = DebugToolbarExtension(app)
 
     init_extensions(app)
+    init_session(app)
     init_blueprints(app)
 
     init_state(app)
