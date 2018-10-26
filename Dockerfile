@@ -13,7 +13,8 @@ RUN pip install python-dotenv \
                 flask_script \
                 Flask-Migrate \
                 flask_bcrypt \
-                flask_login \
+                flask-login \
+                Flask-Mail \
                 redis
 
 COPY ./app /app

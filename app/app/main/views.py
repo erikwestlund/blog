@@ -1,5 +1,4 @@
-from flask import Blueprint, render_template, redirect, jsonify
-from flask_wtf import csrf
+from flask import Blueprint, render_template, redirect
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 

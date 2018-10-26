@@ -27,15 +27,15 @@ def register():
             user = User(username=form.username.data,
                         email=form.email.data,
                         password=hashed_password,
-                        firstname=form.first_name.data,
-                        lastname=form.last_name.data)
+                        first_name=form.first_name.data,
+                        last_name=form.last_name.data)
 
             db.session.add(user)
             db.session.commit()
 
-            login_user(user)
+            token = user.generate_confirmation_token()
 
-            flash('You have been logged in.')
+            flash('A confirmation email has been sent.' + token)
             return jsonify({'success': True})
         else:
             return jsonify(errors=form.errors), 422

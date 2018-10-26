@@ -29,25 +29,28 @@ mix.setPublicPath('./app')
     .version();
 
 if (mix.inProduction()) {
-  mix.webpackConfig({
-    plugins: [
-      new PurgecssPlugin({
+    const whitelistPatterns = [/^alert/];
 
-        // Specify the locations of any files you want to scan for class names.
-        paths: glob.sync([
-          path.join(__dirname, "app/app/**/*.html"),
-          path.join(__dirname, "resources/js/**/*.vue")
-        ]),
-        extractors: [
-          {
-            extractor: TailwindExtractor,
+    mix.webpackConfig({
+        plugins: [
+            new PurgecssPlugin({
 
-            // Specify the file extensions to include when scanning for
-            // class names.
-            extensions: ["html", "js", "py", "vue"]
-          }
+                // Specify the locations of any files you want to scan for class names.
+                paths: glob.sync([
+                    path.join(__dirname, "app/app/**/*.html"),
+                    path.join(__dirname, "resources/js/**/*.vue")
+                ]),
+                whitelistPatterns: whitelistPatterns,
+                extractors: [
+                    {
+                        extractor: TailwindExtractor,
+
+                        // Specify the file extensions to include when scanning for
+                        // class names.
+                        extensions: ["html", "js", "py", "vue"]
+                    }
+                ]
+            })
         ]
-      })
-    ]
-  });
+    });
 }
