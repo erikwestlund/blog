@@ -25,7 +25,7 @@ mix.setPublicPath('./app')
         'axios',
         'lodash'
     ])
-    .sourceMaps()
+    .sourceMaps(false)
     .version();
 
 if (mix.inProduction()) {

@@ -3,7 +3,6 @@
 
 @import 'headings';
 @import 'colors';
-@import 'nav';
 @import 'forms';
 @import 'alerts';
 
@@ -12,7 +11,7 @@ body {
 }
 
 a {
-  color: $blue-darker;
+  color: $blue-darkest;
   text-decoration: none;
 }
 
