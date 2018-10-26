@@ -6,3 +6,4 @@ node_modules/*
 app/app/site.db
 .DS_store
 .DS_Store
+.docker_env
