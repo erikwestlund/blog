@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" type="text/css" href="{{ "static/app.css" }}">
+    <link rel="stylesheet" type="text/css" href="{{ "static/app.css" | versioned_asset }}">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Roboto Mono" rel="stylesheet" type="text/css">
 
     {% if title %}
@@ -65,9 +65,9 @@
 
 
 <!-- JavaScript -->
-<script src="{{ "static/manifest.js" }}"></script>
-<script src="{{ "static/vendor.js" }}"></script>
-<script src="{{ "static/app.js" }}"></script>
+<script src="{{ "static/manifest.js" | versioned_asset }}"></script>
+<script src="{{ "static/vendor.js" | versioned_asset }}"></script>
+<script src="{{ "static/app.js" | versioned_asset }}"></script>
 
 </body>
 </html>

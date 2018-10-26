@@ -7,7 +7,7 @@ from app.config import Config
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
-import json
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -32,14 +32,17 @@ def init_extensions(app):
     login_manager.init_app(app)
     csrf.init_app(app)
 
+
 def init_blueprints(app):
     from app.main.views import main_blueprint
     from app.users.views import users_blueprint
     from app.posts.views import posts_blueprint
+    from app.utils.filters import utils_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(users_blueprint)
     app.register_blueprint(posts_blueprint)
+    app.register_blueprint(utils_blueprint)
 
 
 def create_app(config_class=Config):
@@ -53,11 +56,6 @@ def create_app(config_class=Config):
 
     return app
 
-def get_asset_version(file):
-    with open('mix-manifest.json') as f:
-        data = json.load(f)
-
-    return data['/' + file]
 
 manager = Manager(create_app)
 
