@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, jsonify
+from flask_wtf import csrf
 
-main_blueprint = Blueprint('main', __name__, template_folder='templates', static_folder='static')
+main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 
 posts = [
     {
@@ -18,13 +19,13 @@ posts = [
 ]
 
 
-@main_blueprint.route('/')
-@main_blueprint.route('/home')
+@main.route('/')
+@main.route('/home')
 def home():
     return render_template('main/home.html', posts=posts)
 
 
-@main_blueprint.route('/version-<version>/<path:static_file>')
+@main.route('/version-<version>/<path:static_file>')
 def versioned_static(version, static_file):
     return redirect(static_file)
 

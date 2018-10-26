@@ -14,12 +14,12 @@ class TailwindExtractor {
 }
 
 mix.setPublicPath('./app')
-    .sass('resources/sass/app.scss', 'app/static')
+    .sass('resources/sass/app.scss', 'app/app/static')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.js')],
     })
-    .js('resources/js/app.js', 'app/static')
+    .js('resources/js/app.js', 'app/app/static')
     .extract([
         'vue',
         'axios',
@@ -35,8 +35,7 @@ if (mix.inProduction()) {
 
         // Specify the locations of any files you want to scan for class names.
         paths: glob.sync([
-          path.join(__dirname, "app/app/templates/**/*.html"),
-          path.join(__dirname, "app/app/users/templates/users/**/*.html"),
+          path.join(__dirname, "app/app/**/*.html"),
           path.join(__dirname, "resources/js/**/*.vue")
         ]),
         extractors: [

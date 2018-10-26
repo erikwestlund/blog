@@ -2,12 +2,13 @@ import json
 
 from flask import Blueprint
 
-utils_blueprint = Blueprint('utils', __name__)
+utils = Blueprint('utils', __name__)
 
 
-@utils_blueprint.app_template_filter()
+@utils.app_template_filter()
 def versioned_asset(filename):
+    filename = '/app/' + filename
     with open('mix-manifest.json') as file:
         data = json.load(file)
 
-    return data['/' + filename]
+    return data[filename].lstrip('/app')

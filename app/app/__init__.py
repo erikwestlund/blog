@@ -7,7 +7,7 @@ from app.config import Config
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_debugtoolbar import DebugToolbarExtension
-
+from flask_login import current_user
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -34,15 +34,27 @@ def init_extensions(app):
 
 
 def init_blueprints(app):
-    from app.main.views import main_blueprint
-    from app.users.views import users_blueprint
-    from app.posts.views import posts_blueprint
-    from app.utils.filters import utils_blueprint
+    from app.main.views import main
+    from app.users.views import users
+    from app.posts.views import posts
+    from app.utils.filters import utils
 
-    app.register_blueprint(main_blueprint)
-    app.register_blueprint(users_blueprint)
-    app.register_blueprint(posts_blueprint)
-    app.register_blueprint(utils_blueprint)
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
+    app.register_blueprint(utils)
+
+
+def init_state(app):
+    @app.context_processor
+    def inject_state():
+        return dict(
+            state={
+                'user': {
+                    'logged_in': current_user.is_authenticated
+                }
+            }
+        )
 
 
 def create_app(config_class=Config):
@@ -54,9 +66,12 @@ def create_app(config_class=Config):
     init_extensions(app)
     init_blueprints(app)
 
+    init_state(app)
+
     return app
 
 
 manager = Manager(create_app)
 
 manager.add_command('db', MigrateCommand)
+
