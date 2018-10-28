@@ -7,9 +7,9 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    ADMIN_USERNAME = os.getenv('ADMIN_USERNAME')
-    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
-    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+    ADMIN_INIT_USERNAME = os.getenv('ADMIN_INIT_USERNAME')
+    ADMIN_INIT_PASSWORD = os.getenv('ADMIN_INIT_PASSWORD')
+    ADMIN_INIT_EMAIL = os.getenv('ADMIN_INIT_EMAIL')
 
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
 
