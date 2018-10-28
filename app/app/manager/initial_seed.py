@@ -1,16 +1,35 @@
 from flask_script import Command
 import flask
-
+from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 class InitialSeed(Command):
 
-    admin_username = flask.current_app.config['ADMIN_INIT_USERNAME']
-    admin_password = flask.current_app.config['ADMIN_INIT_PASSWORD']
-    admin_email = flask.current_app.config['ADMIN_INIT_EMAIL']
-
     def run(self):
-        print(self.admin_username)
-    # admin_user = User(username=admin_username, password=admin_password,
-        #              email=admin_email)
-        # db.session.add(admin_user)
-        # db.session.commit()
+        bcrypt = Bcrypt(flask.current_app)
+        db = SQLAlchemy(flask.current_app)
+
+        # seed roles
+        from app.users.models.user import Role
+
+        admin_role = Role(name="administrator",
+                          description="Can administrate site")
+        db.session.add(admin_role)
+
+        #seed user
+        admin_username = flask.current_app.config['ADMIN_INIT_USERNAME']
+        admin_password = flask.current_app.config['ADMIN_INIT_PASSWORD']
+        admin_password_hashed = bcrypt.generate_password_hash(admin_password).decode('utf-8')
+        admin_email = flask.current_app.config['ADMIN_INIT_EMAIL']
+
+        from app.users.models.user import User
+        admin_user = User(username=admin_username,
+                          password=admin_password_hashed,
+                          email=admin_email,
+                          confirmed_at=datetime.datetime.now())
+
+        admin_user.roles.append(admin_role)
+
+        db.session.add(admin_user)
+        db.session.commit()
