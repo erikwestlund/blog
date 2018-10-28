@@ -1,7 +1,7 @@
 from app import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
 roles_users = db.Table('roles_users',
@@ -39,10 +39,18 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 
-    # Confirmation token generator
-    def generate_confirmation_token(self):
-        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
-        return serializer.dumps(self.email, salt=current_app.config['SECURITY_PASSWORD_SALT'])
+    # Token generator
+    def generate_token(self, expires_sec=86400):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    # Generate a confirmation token
+    def generate_confirmation_token(self, expires_sec=86400):
+        return self.generate_token(expires_sec=expires_sec)
+
+    # Generate a password reset token
+    def generate_confirmation_token(self, expires_sec=1800):
+        return self.generate_token(expires_sec=expires_sec)
 
     # Representation
     def __repr__(self):

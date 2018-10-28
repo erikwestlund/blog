@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+COMPOSE=docker-compose
+APP_CONTAINER=web
+
+if [ $# -gt 0 ];then
+    if [ "$1" == "manage" ]; then
+        shift 1
+		$COMPOSE exec \
+			$APP_CONTAINER \
+			python manage.py "$@"
+    else
+        $COMPOSE "$@"
+    fi
+else
+    $COMPOSE ps
+fi

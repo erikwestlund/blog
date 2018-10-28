@@ -10,6 +10,7 @@ from flask_redis import FlaskRedis
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from app.manager.initial_seed import InitialSeed
 
 db = SQLAlchemy()
 redis = FlaskRedis()
@@ -79,4 +80,5 @@ def create_app(config_class=Config):
 manager = Manager(create_app)
 
 manager.add_command('db', MigrateCommand)
+manager.add_command('init_seed', InitialSeed)
 
