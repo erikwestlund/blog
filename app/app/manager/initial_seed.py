@@ -1,12 +1,7 @@
-# from app import db
 from flask_script import Command
-# from flask import Flask, current_app
-# from app.users.models.user import User
-# from flask import current_app
+import flask
 
 
-
-@with_appcontext
 class InitialSeed(Command):
 
     admin_username = flask.current_app.config['ADMIN_INIT_USERNAME']
