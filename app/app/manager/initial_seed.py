@@ -1,4 +1,4 @@
-from app import db
+# from app import db
 from flask_script import Command
 # from app.users.models.user import User
 # from flask import current_app
