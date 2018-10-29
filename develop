@@ -2,6 +2,8 @@
 
 COMPOSE=docker-compose
 APP_CONTAINER=web
+CELERY_CONTAINER=celery
+CELERY_BEAT_CONTAINER=celery-beat
 
 if [ $# -gt 0 ];then
     if [ "$1" == "manage" ]; then
@@ -9,6 +11,11 @@ if [ $# -gt 0 ];then
 		$COMPOSE exec \
 			$APP_CONTAINER \
 			python manage.py "$@"
+    elif [ "$1" == "celery" ]; then
+        shift 1
+		$COMPOSE exec \
+			$APP_CONTAINER \
+			celery "$@"
     else
         $COMPOSE "$@"
     fi

@@ -17,6 +17,10 @@ class InitialSeed(Command):
                           description="Can administrate site")
         db.session.add(admin_role)
 
+        user_role = Role(name="user",
+                          description="Basic user")
+        db.session.add(user_role)
+
         #seed user
         admin_username = flask.current_app.config['ADMIN_INIT_USERNAME']
         admin_password = flask.current_app.config['ADMIN_INIT_PASSWORD']
@@ -27,7 +31,7 @@ class InitialSeed(Command):
         admin_user = User(username=admin_username,
                           password=admin_password_hashed,
                           email=admin_email,
-                          confirmed_at=datetime.datetime.now())
+                          email_confirmed_at=datetime.datetime.now())
 
         admin_user.roles.append(admin_role)
 

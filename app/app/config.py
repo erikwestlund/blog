@@ -17,6 +17,9 @@ class Config:
 
     REDIS_SESSION_PREFIX = os.getenv('REDIS_SESSION_PREFIX')
 
+    CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = os.getenv('MAIL_PORT')
     MAIL_USE_SSL = os.getenv('MAIL_USE_SSL')

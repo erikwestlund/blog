@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 264546c5e4de
+Revision ID: 3a71f5e89d95
 Revises: 
-Create Date: 2018-10-28 21:33:11.598313
+Create Date: 2018-10-29 19:59:17.850820
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '264546c5e4de'
+revision = '3a71f5e89d95'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,12 +29,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=50), server_default='', nullable=False),
     sa.Column('email', sa.Unicode(length=255), server_default='', nullable=False),
-    sa.Column('confirmed_at', sa.DateTime(), nullable=True),
     sa.Column('password', sa.String(length=255), server_default='', nullable=False),
-    sa.Column('reset_password_token', sa.String(length=100), server_default='', nullable=False),
     sa.Column('active', sa.Boolean(), server_default='0', nullable=False),
     sa.Column('first_name', sa.Unicode(length=50), server_default='', nullable=False),
     sa.Column('last_name', sa.Unicode(length=50), server_default='', nullable=False),
+    sa.Column('email_confirmed_at', sa.DateTime(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),

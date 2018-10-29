@@ -15,6 +15,7 @@ RUN pip install python-dotenv \
                 flask_bcrypt \
                 flask-login \
                 Flask-Mail \
-                redis
+                redis \
+                celery[redis]
 
 COPY ./app /app
