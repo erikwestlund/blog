@@ -8,7 +8,7 @@ services:
     env_file: .docker_env
     environment:
     - POSTGRES_USER=root
-    - POSTGRES_PASSWORD=secretk
+    - POSTGRES_PASSWORD=secret
     - POSTGRES_DB=blog
     ports:
     - "5432:5432"
@@ -22,6 +22,17 @@ services:
      - blognet
     ports:
      - "6379:6379"
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+    - RABBITMQ_DEFAULT_USER=queue
+    - RABBITMQ_DEFAULT_PASS=secret
+    - RABBITMQ_DEFAULT_VHOST=queue
+    networks:
+      - blognet
+    ports:
+      - "5672:5672"
+      - "15672:15672"
   web:
     volumes:
       - ./app:/app

@@ -1,4 +1,4 @@
-from app import bcrypt, db
+from app import bcrypt, db, celery
 from app.tasks import make_celery
 from app.users.forms.login import LoginForm
 from app.users.forms.register import RegisterForm
@@ -35,13 +35,11 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-            celery = make_celery(current_app)
-
             @celery.task()
             def email_registration_confirmation(user):
-                return None
+                return print(user.username)
 
-            email_registration_confirmation.delay(user)
+            email_registration_confirmation.delay(user.as_dict())
 
 
 

@@ -11,6 +11,7 @@ from flask_redis import FlaskRedis
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from celery import Celery
 
 db = SQLAlchemy()
 redis = FlaskRedis()
@@ -22,6 +23,10 @@ csrf = CSRFProtect()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
+
+celery = Celery(__name__,
+                broker=Config.CELERY_BROKER_URL,
+                backend=Config.CELERY_RESULT_BACKEND)
 
 
 def init_extensions(app):
@@ -62,6 +67,9 @@ def init_state(app):
             }
         )
 
+def init_celery(app):
+    celery.conf.update(app.config)
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -73,13 +81,12 @@ def create_app(config_class=Config):
     init_session(app)
     init_blueprints(app)
     init_state(app)
+    init_celery(app)
 
     return app
 
 
 manager = Manager(create_app)
 
-
 manager.add_command('db', MigrateCommand)
 manager.add_command('init_seed', InitialSeed)
-

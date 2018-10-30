@@ -52,6 +52,9 @@ class User(db.Model, UserMixin):
     def generate_confirmation_token(self, expires_sec=1800):
         return self.generate_token(expires_sec=expires_sec)
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
     # Representation
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.first_name}', '{self.last_name}')"
