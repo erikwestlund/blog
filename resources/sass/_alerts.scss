@@ -2,6 +2,10 @@
   @apply bg-blue-lightest border border-blue-lighter rounded text-blue-darkest px-4 py-4 text-sm;
 }
 
+.alert-warning {
+  @apply bg-orange-lightest border border-orange-lighter rounded text-orange-darkest px-4 py-4 text-sm;
+}
+
 .alert-success {
   @apply bg-green-lightest border border-green-lighter rounded text-green-darkest px-4 py-4 text-sm;
 }

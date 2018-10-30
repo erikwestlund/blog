@@ -25,9 +25,9 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     environment:
-    - RABBITMQ_DEFAULT_USER=queue
+    - RABBITMQ_DEFAULT_USER=tasks
     - RABBITMQ_DEFAULT_PASS=secret
-    - RABBITMQ_DEFAULT_VHOST=queue
+    - RABBITMQ_DEFAULT_VHOST=tasks
     networks:
       - blognet
     ports:

@@ -11,9 +11,10 @@ from flask_redis import FlaskRedis
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from celery import Celery
+from app.tasks import FlaskCelery
 
 db = SQLAlchemy()
+celery = FlaskCelery()
 redis = FlaskRedis()
 mail = Mail()
 migrate = Migrate()
@@ -24,13 +25,10 @@ login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-celery = Celery(__name__,
-                broker=Config.CELERY_BROKER_URL,
-                backend=Config.CELERY_RESULT_BACKEND)
-
 
 def init_extensions(app):
     db.init_app(app)
+    celery.init_app(app)
     redis.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
@@ -59,16 +57,18 @@ def init_blueprints(app):
 def init_state(app):
     @app.context_processor
     def context_processor():
+        if current_user:
+            logged_in = current_user.is_authenticated
+        else:
+            logged_in = 0
+
         return dict(
             state={
                 'user': {
-                    'logged_in': current_user.is_authenticated
+                    'logged_in': logged_in
                 }
             }
         )
-
-def init_celery(app):
-    celery.conf.update(app.config)
 
 
 def create_app(config_class=Config):
@@ -81,7 +81,6 @@ def create_app(config_class=Config):
     init_session(app)
     init_blueprints(app)
     init_state(app)
-    init_celery(app)
 
     return app
 
