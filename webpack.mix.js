@@ -29,7 +29,10 @@ mix.setPublicPath('./app')
     .version();
 
 if (mix.inProduction()) {
-    const whitelistPatterns = [/^alert/];
+    const whitelistPatterns = [
+        /^alert/,
+        /^trx-/,
+    ];
 
     mix.webpackConfig({
         plugins: [

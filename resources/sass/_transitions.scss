@@ -1,0 +1,6 @@
+.trx-fade-leave-active {
+  transition: all .4s ease;
+}
+.trx-fade-enter, .trx-fade-leave-to {
+  opacity: 0;
+}

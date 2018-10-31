@@ -13,3 +13,19 @@
 .alert-danger {
   @apply bg-red-lightest border border-red-lighter rounded text-red-darkest px-4 py-4 text-sm;
 }
+
+.alert-x-message {
+  @apply text-blue-dark;
+}
+
+.alert-x-warning {
+  @apply text-orange-dark;
+}
+
+.alert-x-success {
+  @apply text-green-dark;
+}
+
+.alert-x-danger {
+  @apply text-red-dark;
+}

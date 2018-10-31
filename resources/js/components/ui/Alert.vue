@@ -1,19 +1,16 @@
 <template>
     <div>
-        <transition name="fade">
+        <transition name="trx-fade">
             <div role="alert"
                  class="alert mb-4"
                  :class="'alert-' + category"
                  v-show="show"
-                 :show.sync="visible"
             >
-                <div class="flex">
-                    <!--<button type="button" class="close float-right" v-if="!important" @click="hide()">-->
-                        <!--<fa-icon :class="'alert-' + category" :icon="['far', 'times']"/>-->
-                    <!--</button>-->
+                <button type="button" class="float-right" v-if="!important" @click="hide()">
+                    <fa-icon :class="'alert-x-' + category" :icon="['far', 'times']"/>
+                </button>
 
-                    <slot></slot>
-                </div>
+                <slot></slot>
             </div>
         </transition>
     </div>
@@ -21,20 +18,23 @@
 
 <script>
     export default {
+        created() {
+            Event.listen('hideAlert', () => this.hide())
+        },
         props: {
             category: {
                 type: String,
-                default: 'info'
+                default: 'message'
             },
             duration: {
                 type: Number,
-                default: 5000
+                default: 3000,
             },
             important: {
                 type: Boolean,
                 default: false
             },
-            show: {
+            initShow: {
                 type: Boolean,
                 default: false
             },
@@ -45,22 +45,22 @@
         },
         data() {
             return {
-                visible: false,
+                show: this.initShow,
             }
         },
         methods: {
             hide() {
-                this.$emit('update:show', false);
+                this.show = false;
             }
         },
         mounted() {
             this.$nextTick(() => {
 
                 if (this.temporary) {
-                    setTimeout(
-                        () => hide(),
-                        this.duration
-                    )
+                    setTimeout(() => {
+                            Event.fire('hideAlert')
+                        },
+                        this.duration);
                 }
             })
         }
