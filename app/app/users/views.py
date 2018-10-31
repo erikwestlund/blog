@@ -6,7 +6,7 @@ from app.users.forms.register import RegisterForm
 from app.users.models.user import User
 from app.users.tasks import email_registration_confirmation
 from flask import Blueprint, render_template, url_for, flash, redirect, request, jsonify
-from flask_login import logout_user, current_user
+from flask_login import logout_user, current_user, login_user
 
 users = Blueprint('users', __name__, template_folder='templates')
 
@@ -52,14 +52,26 @@ def save_new_user(form):
 
 @users.route("/login", methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+    if request.method == 'POST':
+        form = LoginForm()
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user, remember=form.remember.data)
+                return jsonify({
+                    'success': True,
+                })
+            else:
+                return jsonify(errors={
+                    'password': ['Incorrect email and password.']
+                }), 422
         else:
-            flash('Login Unsuccessful. Please check username and password', 'danger')
-    return render_template('users/login.html', title='Login', form=form)
+            return jsonify(errors=form.errors), 422
+    else:
+        if current_user.is_authenticated:
+            return redirect(url_for('main.home'))
+        else:
+            return render_template('users/login.html', title='Log In')
 
 
 @users.route("/users/confirm-email/<token>")

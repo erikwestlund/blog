@@ -1,0 +1,11 @@
+.btn {
+  @apply py-1 px-2 rounded  text-sm border-4;
+}
+
+.btn-blue {
+  @apply flex-no-shrink bg-blue-darker border-blue-darker  text-white;
+}
+
+.btn-grey {
+  @apply flex-no-shrink bg-grey-darker border-grey-darker text-white;
+}

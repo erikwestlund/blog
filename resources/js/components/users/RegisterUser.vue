@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap mb-6">
-                <button class="flex-no-shrink bg-blue-darker hover:bg-blue-darkest border-blue-darker hover:border-blue-darkest text-sm border-4 text-white py-1 px-2 rounded">
+                <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest">
                     Sign Up
                 </button>
             </div>
@@ -121,11 +121,11 @@
             onSubmit() {
                 this.form.post('/register')
                     .then((response) => {
-                        setTimeout(() => {
-                            flash('User registration successful!')
-                        }, 2000);
+                        flash('Signing you up...')
 
-                        window.location.replace('/');
+                        setTimeout(() => {
+                            window.location.replace('/');
+                        }, 500);
                     })
                     .catch((errors) => {
                         flash('User registration failed.', 'danger')

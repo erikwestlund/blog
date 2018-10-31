@@ -14,6 +14,7 @@ window.flash = function (message, level = 'success', timeout = 3) {
 import Alert from './components/ui/Alert'
 import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
+import LoginUser from './components/users/LoginUser'
 import RegisterUser from './components/users/RegisterUser'
 
 const app = new Vue({
@@ -24,6 +25,7 @@ const app = new Vue({
         'flash': Flash,
         'navigation-bar': NavigationBar,
         // users
+        'login-user': LoginUser,
         'register-user': RegisterUser,
     }
 });
