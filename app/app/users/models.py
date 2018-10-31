@@ -6,14 +6,15 @@ from flask import current_app
 from app import login_manager
 from celery import Celery
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 
 class Role(db.Model):
@@ -73,5 +74,3 @@ class User(db.Model, UserMixin):
     # Representation
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.first_name}', '{self.last_name}')"
-
-

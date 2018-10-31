@@ -3,7 +3,7 @@ import datetime
 from app import bcrypt, db
 from app.users.forms.login import LoginForm
 from app.users.forms.register import RegisterForm
-from app.users.models.user import User
+from app.users.models import User
 from app.users.tasks import email_registration_confirmation
 from flask import Blueprint, render_template, url_for, flash, redirect, request, jsonify
 from flask_login import logout_user, current_user, login_user
