@@ -68,7 +68,7 @@
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-3">
                     <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                           :class="{'text-red' : form.errors.has('password') ||  form.errors.has('retype_password')}"
+                           :class="{'text-red' : form.errors.has('password') ||  form.errors.has('password_confirm')}"
                            for="grid-password">
                         Password
                     </label>
@@ -82,14 +82,14 @@
                        v-if="form.errors.has('password')"
                        v-text="form.errors.get('password')"></p>
                     <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                           :class="{'border border-red' : form.errors.has('retype_password')}"
-                           v-model="form.retype_password"
+                           :class="{'border border-red' : form.errors.has('password_confirm')}"
+                           v-model="form.password_confirm"
                            id="grid-password-confirm"
                            type="password"
                            placeholder="Confirm password">
                     <p class="text-red text-xs italic"
-                       v-if="form.errors.has('retype_password')"
-                       v-text="form.errors.get('retype_password')"></p>
+                       v-if="form.errors.has('password_confirm')"
+                       v-text="form.errors.get('password_confirm')"></p>
                 </div>
             </div>
             <div class="flex flex-wrap mb-6">
@@ -113,7 +113,7 @@
                     last_name: '',
                     email: '',
                     password: '',
-                    retype_password: '',
+                    password_confirm: '',
                 })
             }
         },

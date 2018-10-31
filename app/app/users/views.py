@@ -26,15 +26,7 @@ def register():
     form = RegisterForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            user = User(username=form.username.data,
-                        email=form.email.data,
-                        password=hashed_password,
-                        first_name=form.first_name.data,
-                        last_name=form.last_name.data)
-
-            db.session.add(user)
-            db.session.commit()
+            user = save_new_user(form)
 
             email_registration_confirmation.delay(user.id)
 
@@ -44,6 +36,18 @@ def register():
             return jsonify(errors=form.errors), 422
     else:
         return render_template('users/register.html', title='Register', form=form)
+
+
+def save_new_user(form):
+    hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+    user = User(username=form.username.data,
+                email=form.email.data,
+                password=hashed_password,
+                first_name=form.first_name.data,
+                last_name=form.last_name.data)
+    db.session.add(user)
+    db.session.commit()
+    return user
 
 
 @users.route("/login", methods=['GET', 'POST'])

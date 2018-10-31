@@ -6,7 +6,7 @@ load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
-
+    BLOG_TITLE = os.getenv('BLOG_TITLE')
     SERVER_NAME = os.getenv('SERVER_NAME')
 
     ADMIN_INIT_USERNAME = os.getenv('ADMIN_INIT_USERNAME')

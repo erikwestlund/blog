@@ -11,6 +11,12 @@
   "author": "Erik Westlund",
   "license": "MIT",
   "devDependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/fontawesome-free-brands": "^5.0.9",
+    "@fortawesome/fontawesome-pro-light": "^5.0.9",
+    "@fortawesome/fontawesome-pro-regular": "^5.0.9",
+    "@fortawesome/fontawesome-pro-solid": "^5.0.9",
+    "@fortawesome/vue-fontawesome": "0.0.21",
     "axios": "^0.18.0",
     "glob-all": "^3.1.0",
     "laravel-mix": "^2.1.14",
