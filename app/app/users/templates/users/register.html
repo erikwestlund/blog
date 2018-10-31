@@ -1,7 +1,13 @@
 {% extends "main/layout.html" %}
 {% block content %}
-<h1>Register</h1>
 
-    <register-user></register-user>
+    <h1>
+        <fa-icon class="mr-2" :icon="['far', 'user-plus']"></fa-icon>
+        Register
+    </h1>
+
+    <div class="mt-6">
+        <register-user></register-user>
+    </div>
 
 {% endblock content %}
