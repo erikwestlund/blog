@@ -11,7 +11,7 @@ class InitialSeed(Command):
         db = SQLAlchemy(flask.current_app)
 
         # seed roles
-        from app.users.models import Role
+        from app.users.models.user import Role
 
         admin_role = Role(name="administrator",
                           description="Can administrate site")
@@ -27,7 +27,7 @@ class InitialSeed(Command):
         admin_password_hashed = bcrypt.generate_password_hash(admin_password).decode('utf-8')
         admin_email = flask.current_app.config['ADMIN_INIT_EMAIL']
 
-        from app.users.models import User
+        from app.users.models.user import User
         admin_user = User(username=admin_username,
                           password=admin_password_hashed,
                           email=admin_email,

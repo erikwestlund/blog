@@ -1,26 +1,15 @@
 from app import db
-from flask_login import UserMixin
-from sqlalchemy.sql import func
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import current_app
 from app import login_manager
-from celery import Celery
+from app.users.models.role import roles_users
+from flask import current_app
+from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy.sql import func
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-roles_users = db.Table('roles_users',
-                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
-
-class Role(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
 
 
 class User(db.Model, UserMixin):
