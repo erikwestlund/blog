@@ -43,9 +43,10 @@ def init_session(app):
 
 
 def init_blueprints(app):
-    from app.main.views import main
+    from app.main.routes import main
     from app.users.routes import users
     from app.posts.routes import posts
+
     from app.utils.filters import utils
 
     app.register_blueprint(main)
