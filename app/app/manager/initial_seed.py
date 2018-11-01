@@ -11,7 +11,7 @@ class InitialSeed(Command):
         db = SQLAlchemy(flask.current_app)
 
         # seed roles
-        from app.users.models.user import Role
+        from app.users.models.role import Role
 
         admin_role = Role(name="administrator",
                           description="Can administrate site")
@@ -31,6 +31,7 @@ class InitialSeed(Command):
         admin_user = User(username=admin_username,
                           password=admin_password_hashed,
                           email=admin_email,
+                          active=True,
                           email_confirmed_at=datetime.datetime.now())
 
         admin_user.roles.append(admin_role)
