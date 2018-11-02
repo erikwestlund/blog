@@ -1,6 +1,6 @@
-from app.config import Config
-from app.manager.initial_seed import InitialSeed
-from app.utils.session import RedisSessionInterface
+from config import Config
+from manager.initial_seed import InitialSeed
+from utils.session import RedisSessionInterface
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
@@ -11,7 +11,7 @@ from flask_redis import FlaskRedis
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from app.tasks import FlaskCelery
+from celery_init import FlaskCelery
 
 db = SQLAlchemy()
 celery = FlaskCelery()
@@ -43,13 +43,13 @@ def init_session(app):
 
 
 def init_blueprints(app):
-    from app.main.routes import main
-    from app.users.routes import users
-    from app.posts.routes import posts
+    from blog.routes import blog
+    from users.routes import users
+    from posts.routes import posts
 
-    from app.utils.filters import utils
+    from utils.filters import utils
 
-    app.register_blueprint(main)
+    app.register_blueprint(blog)
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(utils)

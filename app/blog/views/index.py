@@ -19,4 +19,4 @@ posts = [
 class Index(MethodView):
 
     def get(self):
-        return render_template('main/home.html', posts=posts)
+        return render_template('blog/home.html', posts=posts)

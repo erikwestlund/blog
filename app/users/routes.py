@@ -1,8 +1,8 @@
-from app.users.views.confirm_email import ConfirmEmail
-from app.users.views.login import Login
-from app.users.views.logout import Logout
-from app.users.views.reset_password import ResetPassword
-from app.users.views.register import Register
+from users.views.confirm_email import ConfirmEmail
+from users.views.login import Login
+from users.views.logout import Logout
+from users.views.reset_password import ResetPassword
+from users.views.register import Register
 from flask import Blueprint
 
 users = Blueprint('users', __name__, template_folder='templates')

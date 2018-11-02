@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from app.config import Config
+from config import Config
 from app import celery, create_app
 
 app = create_app(Config)

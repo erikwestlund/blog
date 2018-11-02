@@ -1,6 +1,6 @@
 from app import bcrypt
-from app.users.forms.login import LoginForm
-from app.users.models.user import User
+from users.forms.login import LoginForm
+from users.models.user import User
 from flask import render_template, url_for, redirect, jsonify
 from flask.views import MethodView
 from flask_login import current_user, login_user
@@ -10,7 +10,7 @@ class Login(MethodView):
 
     def get(self):
         if current_user.is_authenticated:
-            return redirect(url_for('main.index'))
+            return redirect(url_for('blog.index'))
         else:
             return render_template('users/login.html', title='Log In')
 

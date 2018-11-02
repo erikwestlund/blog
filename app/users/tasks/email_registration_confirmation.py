@@ -1,6 +1,6 @@
 from app import celery
 from app import mail
-from app.users.models.user import User
+from users.models.user import User
 from flask import current_app
 from flask import render_template, url_for
 from flask_mail import Message

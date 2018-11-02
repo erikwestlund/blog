@@ -1,6 +1,6 @@
 from app import db
 from app import login_manager
-from app.users.models.role import roles_users
+from users.models.role import roles_users
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer

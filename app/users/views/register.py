@@ -1,7 +1,7 @@
 from app import bcrypt, db
-from app.users.forms.register import RegisterForm
-from app.users.models.user import User
-from app.users.tasks.email_registration_confirmation import email_registration_confirmation
+from users.forms.register import RegisterForm
+from users.models.user import User
+from users.tasks.email_registration_confirmation import email_registration_confirmation
 from flask import render_template, flash, jsonify
 from flask.views import MethodView
 
