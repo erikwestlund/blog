@@ -9,13 +9,14 @@
 
             <div class="flex flex-wrap -mx-3 mb-3">
                 <div class="w-full px-3">
-                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                    <label class="text-input-label"
                            :class="{'text-red' : form.errors.has('email')}"
                            for="grid-email">
                         Email Address
                     </label>
-                    <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                    <input class="text-input focus:outline-none focus:border-grey"
                            :class="{'border border-red' : form.errors.has('email')}"
+                           name="email"
                            v-model="form.email"
                            id="grid-email"
                            placeholder="Email Address">
@@ -28,14 +29,15 @@
 
             <div class="flex flex-wrap -mx-3 mb-3">
                 <div class="w-full px-3">
-                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                    <label class="text-input-label"
                            :class="{'text-red' : form.errors.has('password')}"
                            for="grid-password">
                         Password
                     </label>
                     <input type="password"
-                           class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                           class="text-input focus:outline-none focus:border-grey"
                            :class="{'border border-red' : form.errors.has('password')}"
+                           name="password"
                            v-model="form.password"
                            id="grid-password"
                            placeholder="Password">
@@ -54,7 +56,9 @@
                 </label>
             </div>
             <div class="flex flex-wrap mb-3">
-                <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest">
+                <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
+                        :disabled="form.errors.any() || submitting"
+                >
                     <fa-icon class="mr-2" :icon="['far', 'sign-in']"/>
                     Log In
                 </button>
@@ -68,11 +72,12 @@
     import Form from '../../modules/Form.js'
 
     export default {
-        name: 'LoginUser',
         data() {
             return {
+                submitting: false,
                 showLoginModal: false,
                 form: new Form({
+                    next: this.next,
                     email: '',
                     password: '',
                 })
@@ -80,6 +85,7 @@
         },
         methods: {
             onSubmit() {
+                this.submitting = true;
                 this.form.post('/login')
                     .then((response) => {
                         Event.fire('closeLoginModal')
@@ -87,10 +93,21 @@
                         flash('Logging you in...')
 
                         setTimeout(() => {
-                            location.reload();
+                            window.location.replace(response.next);
                         }, 500);
+
+                        this.submitting = false;
+                    })
+                    .catch(errors => {
+                        this.submitting = false;
                     })
             },
+        },
+        props: {
+            next: {
+                type: String,
+                default: null,
+            }
         }
     }
 </script>

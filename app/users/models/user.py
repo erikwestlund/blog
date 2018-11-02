@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
                             backref=db.backref('users', lazy='dynamic'))
 
     # Token generator
-    def generate_token(self, expires_sec=86400):
+    def generate_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
@@ -45,11 +45,11 @@ class User(db.Model, UserMixin):
         return self.generate_token(expires_sec=expires_sec)
 
     # Generate a password reset token
-    def generate_confirmation_token(self, expires_sec=1800):
+    def generate_password_reset_token(self, expires_sec=1800):
         return self.generate_token(expires_sec=expires_sec)
 
     @staticmethod
-    def verify_reset_token(token):
+    def verify_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']

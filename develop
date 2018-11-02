@@ -6,7 +6,7 @@ CELERY_CONTAINER=celery
 CELERY_BEAT_CONTAINER=celery-beat
 
 if [ $# -gt 0 ];then
-    if [ "$1" == "manage" ]; then
+    if [ "$1" == "cmd" ]; then
         shift 1
 		$COMPOSE exec \
 			$APP_CONTAINER \
@@ -16,6 +16,9 @@ if [ $# -gt 0 ];then
 		$COMPOSE exec \
 			$APP_CONTAINER \
 			celery "$@"
+    elif [ "$1" == "terminal" ]; then
+        shift 1
+        $COMPOSE exec web /bin/sh
     else
         $COMPOSE "$@"
     fi

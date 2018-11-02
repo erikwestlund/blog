@@ -1,8 +1,8 @@
 <template>
     <div class="flex mt-8">
         <form class="w-full max-w-md"
-              method="POST"
-              action="/register"
+              method="PATCH"
+              action="/account"
               @submit.prevent="onSubmit"
               @keydown="form.errors.clear($event.target.name)"
         >
@@ -102,7 +102,7 @@
                 <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
                         :disabled="form.errors.any() || submitting"
                 >
-                    Sign Up
+                    Update My Account
                 </button>
             </div>
         </form>
@@ -117,10 +117,10 @@
             return {
                 submitting: false,
                 form: new Form({
-                    username: '',
-                    first_name: '',
-                    last_name: '',
-                    email: '',
+                    username: this.initUser.username,
+                    first_name: this.initUser.first_name,
+                    last_name: this.initUser.last_name,
+                    email: this.initUser.email,
                     password: '',
                     password_confirm: '',
                 })
@@ -144,6 +144,12 @@
                         this.submitting = false;
                     });
             },
+        },
+        props: {
+            initUser: {
+                type: Object,
+                required: true,
+            }
         }
     }
 </script>

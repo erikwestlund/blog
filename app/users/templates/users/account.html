@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+{% block content %}
+
+    <h1>
+        <fa-icon class="mr-2" :icon="['far', 'user']"></fa-icon>
+        {{ user.username }}'s Account
+    </h1>
+
+    <div class="mt-6">
+        <update-user :init-user="{{ state['user']['account']|safe }}"></update-user>
+    </div>
+
+{% endblock content %}

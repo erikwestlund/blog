@@ -13,3 +13,11 @@
 .form-h-label {
   @apply font-light text-grey-dark pt-2;
 }
+
+.text-input-label {
+  @apply block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2;
+}
+
+.text-input {
+  @apply appearance-none block w-full text-grey-darker border border-grey-light rounded py-3 px-4 mb-3 leading-tight;
+}

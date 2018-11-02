@@ -41,11 +41,14 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            {% block content %}{% endblock %}
+
+            <div class="mt-8">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </main>
 
-    <flash initial-message="{{ '' }}"
+    <flash initial-message=""
            initial-level="{{ 'success' }}"
            :initial-duration="3"
     ></flash>

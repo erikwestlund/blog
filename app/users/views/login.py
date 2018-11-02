@@ -1,7 +1,7 @@
 from app import bcrypt
 from users.forms.login import LoginForm
 from users.models.user import User
-from flask import render_template, url_for, redirect, jsonify
+from flask import render_template, url_for, redirect, jsonify, request
 from flask.views import MethodView
 from flask_login import current_user, login_user
 
@@ -12,7 +12,8 @@ class Login(MethodView):
         if current_user.is_authenticated:
             return redirect(url_for('main.index'))
         else:
-            return render_template('users/login.html', title='Log In')
+            next = request.args.get('next') or None
+            return render_template('users/login.html', title='Log In', next=next)
 
     def post(self):
         form = LoginForm()
@@ -22,6 +23,7 @@ class Login(MethodView):
                 login_user(user, remember=form.remember.data)
                 return jsonify({
                     'success': True,
+                    'next': form.next.data or url_for('main.index')
                 })
             else:
                 return jsonify(errors={

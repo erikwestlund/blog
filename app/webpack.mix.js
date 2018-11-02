@@ -40,7 +40,7 @@ if (mix.inProduction()) {
 
                 // Specify the locations of any files you want to scan for class names.
                 paths: glob.sync([
-                    path.join(__dirname, "app/app/**/*.html"),
+                    path.join(__dirname, "**/*.html"),
                     path.join(__dirname, "resources/js/**/*.vue")
                 ]),
                 whitelistPatterns: whitelistPatterns,

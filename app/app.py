@@ -3,15 +3,13 @@ from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from flask_redis import FlaskRedis
-from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
 from app_state import app_state
-from celery_init import FlaskCelery
-from commands.initial_seed import InitialSeed
+from celery_context import FlaskCelery
 from config import Config
 from utils.session import RedisSessionInterface
 
@@ -25,7 +23,9 @@ csrf = CSRFProtect()
 
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
-login_manager.login_message_category = 'info'
+login_manager.login_message_category = 'warning'
+login_manager.refresh_view = 'users.login'
+login_manager.needs_refresh_message_category = 'warning'
 
 
 def init_extensions(app):
@@ -68,7 +68,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    toolbar = DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     init_extensions(app)
     init_session(app)
@@ -76,9 +76,3 @@ def create_app(config_class=Config):
     init_state(app)
 
     return app
-
-
-manager = Manager(create_app)
-
-manager.add_command('db', MigrateCommand)
-manager.add_command('initial_seed', InitialSeed)

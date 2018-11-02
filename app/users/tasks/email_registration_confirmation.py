@@ -11,9 +11,8 @@ def email_registration_confirmation(user_id):
     user = User.query.get(user_id)
     token = user.generate_confirmation_token()
 
-    msg = Message(current_app.config['BLOG_TITLE'] or 'Blog' + ': Password Reset Request',
+    msg = Message((current_app.config['BLOG_TITLE'] or 'Blog') + ': Email Registration Confirmation',
                   recipients=[user.email])
     msg.html = render_template('users/confirm_email.html',
-                               confirm_url=url_for('users.confirm_email',
-                                                   token=user.generate_confirmation_token()))
+                               confirm_url=url_for('users.confirm_email', token=token))
     mail.send(msg)

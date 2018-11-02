@@ -4,6 +4,9 @@ def app_state():
     if current_user:
         logged_in = current_user.is_authenticated
         username = current_user.username if current_user.is_authenticated else 'My Account'
+        email = current_user.email if current_user.is_authenticated else None
+        first_name = current_user.first_name if current_user.is_authenticated else ''
+        last_name = current_user.last_name if current_user.is_authenticated else ''
     else:
         logged_in = 0
         username = 'My Account'
@@ -11,7 +14,12 @@ def app_state():
         state={
             'user': {
                 'logged_in': logged_in,
-                'username': username
+                'account': {
+                    'username': username,
+                    'email': email,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                }
             }
         }
     )

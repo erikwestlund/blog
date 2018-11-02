@@ -19,19 +19,19 @@
                   }"
         >
             <div class="text-lg lg:flex-grow">
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                     Blog
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                     About
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                     CV
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker">
                     Contact Me
                 </a>
@@ -39,11 +39,13 @@
             <div class="font-lighter">
                 <div v-if="loggedIn">
                     <a href="/account"
+                       title="Your Account"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'user']"/>
-                        {{ state.user.username }}
+                        {{ state.user.account.username }}
                     </a>
                     <a href="/logout"
+                       title="Log Out"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'sign-out']"/>
                         Log Out
@@ -51,6 +53,7 @@
                 </div>
                 <div v-else>
                     <a href="/login"
+                       title="Log In"
                        @click.prevent
                        @click="showLoginModal = true"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
@@ -58,6 +61,7 @@
                         Log In
                     </a>
                     <a href="/register"
+                       title="Register"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker ">
                         <fa-icon class="mr-1" :icon="['far', 'user-plus']"/>
                         Register
@@ -94,7 +98,6 @@
     import Modal from './Modal'
 
     export default {
-        name: 'NavigationBar',
         components: {
             'modal': Modal,
             'login-user': LoginUser

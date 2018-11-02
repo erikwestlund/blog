@@ -5,6 +5,6 @@
         Log In
     </h1>
     <div class="mt-6">
-        <login-user/>
+        <login-user{% if next %} next="{{ next }}"{% endif %}></login-user>
     </div>
 {% endblock content %}

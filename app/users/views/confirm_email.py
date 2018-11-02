@@ -13,7 +13,7 @@ class ConfirmEmail(MethodView):
         if current_user.is_authenticated:
             return redirect(url_for('main.index'))
 
-        user = User.verify_reset_token(token)
+        user = User.verify_token(token)
 
         if user is None:
             flash('Invalid or expired email confirmation token.', 'danger')
