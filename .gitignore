@@ -1,6 +1,5 @@
 .env
 .docker_env
-node_modules/*
 .idea*
 *__pycache__*
 *.db
