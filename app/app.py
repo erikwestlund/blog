@@ -81,4 +81,4 @@ def create_app(config_class=Config):
 manager = Manager(create_app)
 
 manager.add_command('db', MigrateCommand)
-manager.add_command('init_seed', InitialSeed)
+manager.add_command('initial_seed', InitialSeed)
