@@ -1,17 +1,19 @@
-from config import Config
-from manager.initial_seed import InitialSeed
-from utils.session import RedisSessionInterface
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate, MigrateCommand
 from flask_redis import FlaskRedis
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+
+from app_state import app_state
 from celery_init import FlaskCelery
+from commands.initial_seed import InitialSeed
+from config import Config
+from utils.session import RedisSessionInterface
 
 db = SQLAlchemy()
 celery = FlaskCelery()
@@ -47,32 +49,19 @@ def init_blueprints(app):
     from users.routes import users
     from posts.routes import posts
 
-    from utils.filters import utils
-
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
-    app.register_blueprint(utils)
+
+    from utils.filters import filters
+
+    app.register_blueprint(filters)
 
 
 def init_state(app):
     @app.context_processor
     def context_processor():
-        if current_user:
-            logged_in = current_user.is_authenticated
-            username = current_user.username if current_user.is_authenticated else 'My Account'
-        else:
-            logged_in = 0
-            username = 'My Account'
-
-        return dict(
-            state={
-                'user': {
-                    'logged_in': logged_in,
-                    'username': username
-                }
-            }
-        )
+        return app_state()
 
 
 def create_app(config_class=Config):
