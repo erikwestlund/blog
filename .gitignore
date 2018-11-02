@@ -3,7 +3,6 @@
 node_modules/*
 .idea*
 *__pycache__*
-app/app/site.db
-.DS_store
+*.db
 .DS_Store
-.docker_env
+.npmrc

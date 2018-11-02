@@ -43,13 +43,13 @@ def init_session(app):
 
 
 def init_blueprints(app):
-    from blog.routes import blog
+    from main.routes import main
     from users.routes import users
     from posts.routes import posts
 
     from utils.filters import utils
 
-    app.register_blueprint(blog)
+    app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(utils)

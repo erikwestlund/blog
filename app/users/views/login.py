@@ -10,7 +10,7 @@ class Login(MethodView):
 
     def get(self):
         if current_user.is_authenticated:
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('main.index'))
         else:
             return render_template('users/login.html', title='Log In')
 

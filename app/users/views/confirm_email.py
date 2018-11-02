@@ -11,7 +11,7 @@ class ConfirmEmail(MethodView):
 
     def get(self, token):
         if current_user.is_authenticated:
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('main.index'))
 
         user = User.verify_reset_token(token)
 
@@ -26,4 +26,4 @@ class ConfirmEmail(MethodView):
 
             flash('Your email has been verified!', 'success')
 
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('main.index'))
