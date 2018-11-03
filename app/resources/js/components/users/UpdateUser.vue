@@ -98,6 +98,10 @@
                        v-text="form.errors.get('password_confirm')"></p>
                 </div>
             </div>
+            <user-roles :possible-roles="{}"
+                        :init-user-roles="{}"
+                        :errors="rolesErrors"
+            />
             <div class="flex flex-wrap mb-6">
                 <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
                         :disabled="form.errors.any() || submitting"
@@ -111,8 +115,19 @@
 
 <script>
     import Form from '../../modules/Form.js'
+    import UserRoles from './UserRoles'
 
     export default {
+        components: {
+            'user-roles': UserRoles,
+        },
+        computed: {
+            rolesErrors() {
+                return _.has(this.form.errors.roles) ?
+                    this.form.errors.roles :
+                    []
+            }
+        },
         data() {
             return {
                 submitting: false,
