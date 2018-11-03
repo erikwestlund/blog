@@ -6,7 +6,7 @@
         {{ user.username }}'s Account
     </h1>
 
-    {% if not user.email_unconfirmed %}
+    {% if not user.email_confirmed %}
         <confirm-email-alert class="mt-6"></confirm-email-alert>
     {% endif %}
     <div class="mt-6">
