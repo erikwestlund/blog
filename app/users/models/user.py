@@ -35,6 +35,10 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 
+    # Is confirmed
+    def email_confirmed(self):
+        return True if self.email_confirmed_at else False;
+
     # Token generator
     def generate_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)

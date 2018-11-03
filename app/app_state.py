@@ -5,11 +5,15 @@ def app_state():
         logged_in = current_user.is_authenticated
         username = current_user.username if current_user.is_authenticated else 'My Account'
         email = current_user.email if current_user.is_authenticated else None
-        first_name = current_user.first_name if current_user.is_authenticated else ''
-        last_name = current_user.last_name if current_user.is_authenticated else ''
+        first_name = current_user.first_name if current_user.is_authenticated else None
+        last_name = current_user.last_name if current_user.is_authenticated else None
     else:
         logged_in = 0
-        username = 'My Account'
+        username = None
+        email = None
+        first_name = None
+        last_name = None
+
     return dict(
         state={
             'user': {

@@ -36,7 +36,7 @@
             },
             initShow: {
                 type: Boolean,
-                default: false
+                default: true
             },
             temporary: {
                 type: Boolean,

@@ -35,7 +35,7 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <alert :init-show="true" category="{{ category }}">
+                        <alert category="{{ category }}">
                             {{ message }}
                         </alert>
                     {% endfor %}

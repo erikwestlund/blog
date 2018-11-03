@@ -1,5 +1,6 @@
 from users.views.account import Account
 from users.views.confirm_email import ConfirmEmail
+from users.views.confirm_email_request import ConfirmEmailRequest
 from users.views.login import Login
 from users.views.logout import Logout
 from users.views.reset_password import ResetPassword
@@ -20,3 +21,5 @@ users.add_url_rule('/users/reset-password',
                    view_func=ResetPasswordRequest.as_view('reset_password_request'))
 users.add_url_rule('/users/confirm-email/<token>',
                    view_func=ConfirmEmail.as_view('confirm_email'))
+users.add_url_rule('/users/confirm-email',
+                   view_func=ConfirmEmailRequest.as_view('confirm_email_request'))
