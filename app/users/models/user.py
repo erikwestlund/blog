@@ -5,6 +5,7 @@ from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy.sql import func
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 @login_manager.user_loader
@@ -33,11 +34,20 @@ class User(db.Model, UserMixin):
 
     # Relationships
     roles = db.relationship('Role', secondary=roles_users,
+                            lazy='dynamic',
                             backref=db.backref('users', lazy='dynamic'))
 
+    def has_role(self, role):
+        return True if self.roles.filter_by(name=role).count() > 0 else False
+
     # Is confirmed
+    @hybrid_property
     def email_confirmed(self):
-        return True if self.email_confirmed_at else False;
+        return True if self.email_confirmed_at else False
+
+    @hybrid_property
+    def name(self):
+        return (self.first_name + ' ' + self.last_name).strip()
 
     # Token generator
     def generate_token(self, expires_sec=1800):

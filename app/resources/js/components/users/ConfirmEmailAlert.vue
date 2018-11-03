@@ -4,10 +4,10 @@
             An email has been sent with directions to verify your account. Thank you.
         </div>
         <div v-else>
-            You have not verified you own the email address associated wit this account.
+            You have not verified you own the email address associated with this account.
 
             <a class="text-blue-dark hover:text-blue-darker cursor-pointer" @click="sendVerificationEmail()">
-                Click here to get started.
+                Click here to receive a confirmation email.
             </a>
         </div>
     </alert>

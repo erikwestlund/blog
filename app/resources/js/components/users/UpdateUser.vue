@@ -129,21 +129,23 @@
         methods: {
             onSubmit() {
                 this.submitting = true;
-                this.form.post('/register')
+                this.form.patch('/account')
                     .then((response) => {
-                        flash('Signing you up...')
-
-                        setTimeout(() => {
-                            window.location.replace('/');
-                        }, 500);
-
+                        flash('Your account has been updated.')
+                        this.resetForm(response)
                         this.submitting = false;
                     })
                     .catch((errors) => {
-                        flash('User registration failed.', 'danger')
+                        flash('Failed to update account.', 'danger')
                         this.submitting = false;
                     });
             },
+            resetForm(response) {
+                this.form.username = response.user.username
+                this.form.email = response.user.email
+                this.form.first_name = response.user.first_name
+                this.form.last_name = response.user.last_name
+            }
         },
         props: {
             initUser: {

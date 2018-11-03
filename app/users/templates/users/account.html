@@ -10,7 +10,7 @@
         <confirm-email-alert class="mt-6"></confirm-email-alert>
     {% endif %}
     <div class="mt-6">
-        <update-user :init-user="{{ state['user']['account']|safe }}"></update-user>
+        <update-user :init-user="{{ state.user.account|safe }}"></update-user>
     </div>
 
 {% endblock content %}

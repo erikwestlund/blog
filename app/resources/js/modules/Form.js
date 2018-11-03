@@ -67,7 +67,7 @@ export default class Form {
      * @param {string} url
      */
     patch(url) {
-        return this.submit('patch', url);
+        return this.submit('post', url);
     }
 
     /**
