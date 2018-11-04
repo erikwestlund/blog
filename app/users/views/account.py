@@ -12,8 +12,11 @@ class Account(MethodView):
     @login_required
     @user_has_role(role='administrator')
     def get(self):
-        possible_roles = Role.query.all()
-        return render_template('users/account.html', user=current_user,
+        possible_roles = Role.listify(Role.query.all())
+        user_roles = current_user.pluck('id', current_user.roles)
+        return render_template('users/account.html',
+                               user=current_user,
+                               user_roles=user_roles,
                                possible_roles=possible_roles)
 
     def post(self):

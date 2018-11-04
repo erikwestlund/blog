@@ -10,12 +10,15 @@
         <confirm-email-alert class="mt-6"></confirm-email-alert>
     {% endif %}
     <div class="mt-6">
-        <update-user :init-user="{{ state.user.account|safe }}"></update-user>
+        <update-user :init-user='{{ state.user.account|tojson }}'
+                     :init-user-roles='{{ user_roles|tojson }}'
+                     :possible-roles='{{ possible_roles|tojson }}'></update-user>
     </div>
 
 {% endblock content %}
 <script>
     import ConfirmEmailAlert from "../../../resources/js/components/users/ConfirmEmailAlert";
+
     export default {
         components: {ConfirmEmailAlert}
     }

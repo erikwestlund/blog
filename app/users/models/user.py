@@ -1,11 +1,13 @@
-from app import db
-from app import login_manager
-from users.models.role import roles_users
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from sqlalchemy.sql import func
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql import func
+
+from app import db
+from app import login_manager
+from users.models.role import roles_users
+from utils.model_accessor_mixin import ModelAccessorMixin
 
 
 @login_manager.user_loader
@@ -13,7 +15,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, ModelAccessorMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     # User authentication information (required for Flask-User)
@@ -70,9 +72,6 @@ class User(db.Model, UserMixin):
         except:
             return None
         return User.query.get(user_id)
-
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     # Representation
     def __repr__(self):

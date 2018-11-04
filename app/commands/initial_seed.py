@@ -16,14 +16,16 @@ class InitialSeed(Command):
         from users.models.role import Role
 
         admin_role = Role(name="administrator",
+                          display_name="Administrator",
                           description="Can administrate site")
         db.session.add(admin_role)
 
         user_role = Role(name="user",
-                          description="Basic user")
+                         display_name="User",
+                         description="Basic user")
         db.session.add(user_role)
 
-        #seed user
+        # seed user
         admin_username = flask.current_app.config['ADMIN_INIT_USERNAME']
         admin_password = flask.current_app.config['ADMIN_INIT_PASSWORD']
         admin_password_hashed = bcrypt.generate_password_hash(admin_password).decode('utf-8')

@@ -99,8 +99,8 @@
                 </div>
             </div>
             <user-roles v-if="isAdmin"
-                        :possible-roles="{}"
-                        :init-user-roles="{}"
+                        :possible-roles="possibleRoles"
+                        :user-roles="form.user_roles"
                         :errors="rolesErrors"
             />
             <div class="flex flex-wrap mb-6">
@@ -143,6 +143,7 @@
                     email: this.initUser.email,
                     password: '',
                     password_confirm: '',
+                    user_roles: this.initUserRoles,
                 })
             }
         },
@@ -171,7 +172,15 @@
             initUser: {
                 type: Object,
                 required: true,
-            }
+            },
+            initUserRoles: {
+                type: Array,
+                required: true,
+            },
+            possibleRoles: {
+                type: Array,
+                required: true,
+            },
         }
     }
 </script>
