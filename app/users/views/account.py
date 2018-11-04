@@ -1,11 +1,14 @@
-from flask import url_for, flash, redirect, render_template
+from flask import jsonify
+from flask import render_template
 from flask.views import MethodView
 from flask_login import current_user, login_required
-from users.forms.account import UpdateAccountForm
-from flask import jsonify
+from pluck import pluck
+
 from app import db, bcrypt
-from utils.acl import user_has_role
+from users.forms.account import UpdateAccountForm
 from users.models.role import Role
+from utils.acl import user_has_role
+
 
 class Account(MethodView):
 
@@ -13,7 +16,7 @@ class Account(MethodView):
     @user_has_role(role='administrator')
     def get(self):
         possible_roles = Role.listify(Role.query.all())
-        user_roles = current_user.pluck('id', current_user.roles)
+        user_roles = pluck(current_user.roles, 'id')
         return render_template('users/account.html',
                                user=current_user,
                                user_roles=user_roles,
