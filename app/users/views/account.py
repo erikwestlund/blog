@@ -5,14 +5,16 @@ from users.forms.account import UpdateAccountForm
 from flask import jsonify
 from app import db, bcrypt
 from utils.acl import user_has_role
-
+from users.models.role import Role
 
 class Account(MethodView):
 
     @login_required
     @user_has_role(role='administrator')
     def get(self):
-        return render_template('users/account.html', user=current_user)
+        possible_roles = Role.query.all()
+        return render_template('users/account.html', user=current_user,
+                               possible_roles=possible_roles)
 
     def post(self):
         form = UpdateAccountForm()

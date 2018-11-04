@@ -10,6 +10,9 @@ from flask_login import current_user
 class ConfirmEmail(MethodView):
 
     def get(self, token):
+        if current_user.is_authenticated:
+            return redirect(url_for('main.index'))
+
         user = User.verify_token(token)
 
         if user is None:

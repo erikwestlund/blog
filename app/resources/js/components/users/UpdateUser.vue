@@ -98,7 +98,8 @@
                        v-text="form.errors.get('password_confirm')"></p>
                 </div>
             </div>
-            <user-roles :possible-roles="{}"
+            <user-roles v-if="isAdmin"
+                        :possible-roles="{}"
                         :init-user-roles="{}"
                         :errors="rolesErrors"
             />
@@ -122,6 +123,9 @@
             'user-roles': UserRoles,
         },
         computed: {
+            isAdmin() {
+                return this.state.user.is_admin
+            },
             rolesErrors() {
                 return _.has(this.form.errors.roles) ?
                     this.form.errors.roles :
@@ -130,6 +134,7 @@
         },
         data() {
             return {
+                state: window.State,
                 submitting: false,
                 form: new Form({
                     username: this.initUser.username,
