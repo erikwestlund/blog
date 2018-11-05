@@ -2,7 +2,7 @@ from flask import jsonify
 from flask import render_template
 from flask.views import MethodView
 from flask_login import current_user, login_required
-from pluck import pluck
+from funcy import lpluck_attr
 
 from app import db, bcrypt
 from users.forms.account import UpdateAccountForm
@@ -15,12 +15,12 @@ class Account(MethodView):
     @login_required
     @user_has_role(role='administrator')
     def get(self):
-        possible_roles = Role.listify(Role.query.all())
-        user_roles = pluck(current_user.roles, 'id')
+        user_roles = lpluck_attr('id', current_user.roles)
+        possible_user_roles = Role.listify(Role.query.all())
         return render_template('users/account.html',
                                user=current_user,
                                user_roles=user_roles,
-                               possible_roles=possible_roles)
+                               possible_user_roles=possible_user_roles)
 
     def post(self):
         form = UpdateAccountForm()
@@ -47,6 +47,11 @@ class Account(MethodView):
         user.email = form.email.data
         user.first_name = form.first_name.data
         user.last_name = form.last_name.data
+
+        if current_user.has_role('administrator'):
+            roles = Role.query.filter(Role.id.in_(form.user_roles.data)).all()
+            user.roles = []
+            user.roles.extend(roles)
 
         if form.password.data:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')

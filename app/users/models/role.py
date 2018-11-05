@@ -1,5 +1,5 @@
 from app import db
-from utils.model_accessor_mixin import ModelAccessorMixin
+from utils.models.accessor_mixin import ModelAccessorMixin
 
 roles_users = db.Table('roles_users',
                        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),

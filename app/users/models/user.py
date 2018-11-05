@@ -7,7 +7,7 @@ from sqlalchemy.sql import func
 from app import db
 from app import login_manager
 from users.models.role import roles_users
-from utils.model_accessor_mixin import ModelAccessorMixin
+from utils.models.accessor_mixin import ModelAccessorMixin
 
 
 @login_manager.user_loader
@@ -37,6 +37,7 @@ class User(db.Model, UserMixin, ModelAccessorMixin):
     # Relationships
     roles = db.relationship('Role', secondary=roles_users,
                             lazy='dynamic',
+                            cascade='save-update',
                             backref=db.backref('users', lazy='dynamic'))
 
     def has_role(self, role):

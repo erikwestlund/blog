@@ -100,7 +100,7 @@
             </div>
             <user-roles v-if="isAdmin"
                         :possible-roles="possibleRoles"
-                        :user-roles="form.user_roles"
+                        :init-user-roles="form.user_roles"
                         :errors="rolesErrors"
             />
             <div class="flex flex-wrap mb-6">
@@ -121,6 +121,9 @@
     export default {
         components: {
             'user-roles': UserRoles,
+        },
+        created() {
+            Event.listen('updateUserRoles', (user_roles) => this.updateUserRoles(user_roles))
         },
         computed: {
             isAdmin() {
@@ -166,6 +169,9 @@
                 this.form.email = response.user.email
                 this.form.first_name = response.user.first_name
                 this.form.last_name = response.user.last_name
+            },
+            updateUserRoles(user_roles) {
+                this.form.user_roles = user_roles
             }
         },
         props: {

@@ -3,9 +3,13 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from flask_login import current_user
+from utils.forms.multicheckboxfield import MultiCheckboxField
+from users.models.role import Role
+from funcy import lpluck_attr
 
 
 class UpdateAccountForm(FlaskForm):
+
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
@@ -15,6 +19,7 @@ class UpdateAccountForm(FlaskForm):
     password = PasswordField('Password', validators=[Optional(), Length(min=6)])
     password_confirm = PasswordField('Confirm Password',
                                      validators=[EqualTo('password')])
+    user_roles = MultiCheckboxField(choices=['1', '2'])
 
     def validate_username(self, username):
         if current_user.username != username.data:

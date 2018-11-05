@@ -7,9 +7,12 @@
                 Roles
             </label>
 
-            <div class="flex flex-wrap mb-3" v-for="role in possibleRoles" >
+            <div class="flex flex-wrap mb-3" v-for="role in possibleRoles" :key="role.id">
                 <label class="text-grey-dark">
-                    <input class="mr-2 leading-tight" :value="role.id" type="checkbox">
+                    <input class="mr-2 leading-tight"
+                           :value="role.id"
+                           v-model="userRoles"
+                           type="checkbox">
                     <span class="cursor-pointer">
                             {{ role.display_name }}
                     </span>
@@ -36,12 +39,22 @@
                     null
             }
         },
+        data() {
+            return {
+                userRoles: this.initUserRoles,
+            }
+        },
+        methods: {
+          sendUpdate() {
+              Event.fire('updateUserRoles', this.userRoles)
+          }
+        },
         props: {
             errors: {
                 type: Array,
                 required: true,
             },
-            userRoles: {
+            initUserRoles: {
                 type: Array,
                 required: true,
             },
@@ -49,6 +62,9 @@
                 type: Array,
                 required: true,
             }
+        },
+        watch: {
+            userRoles: 'sendUpdate'
         }
     }
 </script>

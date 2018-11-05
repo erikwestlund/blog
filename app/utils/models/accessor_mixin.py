@@ -1,11 +1,12 @@
-from pluck import pluck
+from funcy import lpluck_attr
+
 
 class ModelAccessorMixin(object):
 
     def pluck(self, key, collection=None):
         if not collection:
             collection = self.query.all()
-        return pluck(collection, key)
+        return lpluck_attr(key, collection)
 
     @staticmethod
     def listify(collection):
