@@ -13,7 +13,6 @@ from utils.acl import user_has_role
 class Account(MethodView):
 
     @login_required
-    @user_has_role(role='administrator')
     def get(self):
         user_roles = lpluck_attr('id', current_user.roles)
         possible_user_roles = Role.listify(Role.query.all())
