@@ -3,6 +3,7 @@
 
 @import 'transitions';
 @import 'headings';
+@import 'tables';
 @import 'colors';
 @import 'forms';
 @import 'buttons';
@@ -13,7 +14,12 @@ body {
 }
 
 a {
-  color: $blue-darkest;
+  color: $blue-dark;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $blue-darker;
   text-decoration: none;
 }
 

@@ -1,0 +1,18 @@
+table tr:first-child,
+table tr:last-child {
+  @apply border-b border-grey-light;
+}
+
+table tr {
+  @apply border-b border-grey-lightest;
+}
+
+table th,
+table td {
+  @apply pt-2 pb-2 pl-1 pr-10 mb-2 text-left;
+}
+
+table th:last-child,
+table td:last-child {
+  @apply pr-0;
+}

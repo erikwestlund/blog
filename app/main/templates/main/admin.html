@@ -1,0 +1,18 @@
+{% extends "main/layout.html" %}
+{% block content %}
+
+    <h1>
+        <fa-icon class="mr-2" :icon="['far', 'lock']"></fa-icon>
+        Administration
+    </h1>
+
+    <div class="mt-12">
+        <ul class="list-reset text-lg">
+            <fa-icon class="mr-2" :icon="['far', 'user']"></fa-icon>
+            <a href="/admin/users">
+                Users
+            </a>
+        </ul>
+    </div>
+
+{% endblock content %}

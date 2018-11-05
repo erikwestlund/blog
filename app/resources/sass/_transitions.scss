@@ -4,3 +4,12 @@
 .trx-fade-enter, .trx-fade-leave-to {
   opacity: 0;
 }
+
+.trx-slide-fade-enter-active {
+  transition: all .4s ease;
+}
+
+.trx-slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}

@@ -16,6 +16,9 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin, ModelAccessorMixin):
+
+    visible = ['id', 'username', 'email', 'first_name', 'last_name']
+
     id = db.Column(db.Integer, primary_key=True)
 
     # User authentication information (required for Flask-User)

@@ -2,9 +2,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-require ('./font-awesome')
+require('./font-awesome')
 
 import Event from './modules/Event';
+
 window.Event = new Event;
 
 window.flash = function (message, level = 'success', timeout = 3) {
@@ -14,12 +15,14 @@ window.flash = function (message, level = 'success', timeout = 3) {
 import Alert from './components/ui/Alert'
 import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
+import Paginate from './components/ui/Paginate'
 import ConfirmEmailAlert from './components/users/ConfirmEmailAlert'
+import EditUser from './components/users/EditUser'
 import LoginUser from './components/users/LoginUser'
 import RegisterUser from './components/users/RegisterUser'
 import ResetPassword from './components/users/ResetPassword'
 import ResetPasswordRequest from './components/users/ResetPasswordRequest'
-import UpdateUser from './components/users/UpdateUser'
+import UsersAdminPanel from './components/users/UsersAdminPanel'
 
 const app = new Vue({
     el: '#app',
@@ -28,12 +31,14 @@ const app = new Vue({
         'alert': Alert,
         'flash': Flash,
         'navigation-bar': NavigationBar,
+        'paginate': Paginate,
         // users
         'confirm-email-alert': ConfirmEmailAlert,
+        'edit-user': EditUser,
         'login-user': LoginUser,
         'register-user': RegisterUser,
         'reset-password': ResetPassword,
         'reset-password-request': ResetPasswordRequest,
-        'update-user': UpdateUser,
+        'users-admin-panel': UsersAdminPanel,
     }
 });

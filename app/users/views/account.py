@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import abort, jsonify
 from flask import render_template
 from flask.views import MethodView
 from flask_login import current_user, login_required
@@ -7,32 +7,49 @@ from funcy import lpluck_attr
 from app import db, bcrypt
 from users.forms.account import UpdateAccountForm
 from users.models.role import Role
-from utils.acl import user_has_role
+from users.models.user import User
 
 
 class Account(MethodView):
 
     @login_required
-    def get(self):
-        user_roles = lpluck_attr('id', current_user.roles)
-        possible_user_roles = Role.listify(Role.query.all())
+    def get(self, user_id=None):
+        if user_id:
+            user = User.query.get(user_id)
+        else:
+            user = current_user
+
+        if not self.has_permission(user):
+            abort(403)
+
+        own_account = True if user == current_user else False
+
+        possible_user_roles = Role.jsonify(Role.query.all())
+        user_roles = lpluck_attr('id', user.roles)
         return render_template('users/account.html',
-                               user=current_user,
+                               user=user,
                                user_roles=user_roles,
+                               own_account=own_account,
                                possible_user_roles=possible_user_roles)
 
-    def post(self):
-        form = UpdateAccountForm()
+    @login_required
+    def post(self, user_id):
+        user = User.query.get(user_id)
+
+        if not self.has_permission(user):
+            abort(403)
+
+        form = UpdateAccountForm(user_being_edited=user)
         if form.validate_on_submit():
-            user = self.update_user(form)
+            updated_user = self.update_user(user, form)
 
             return jsonify({
                 'success': True,
                 'user': {
-                    'username': user.username,
-                    'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
+                    'username': updated_user.username,
+                    'email': updated_user.email,
+                    'first_name': updated_user.first_name,
+                    'last_name': updated_user.last_name,
                 }
             })
         else:
@@ -40,9 +57,13 @@ class Account(MethodView):
 
         return 'true'
 
+    def has_permission(self, user):
+        if user == current_user:
+            return True
+        else:
+            return current_user.has_role('administrator')
 
-    def update_user(self, form):
-        user = current_user
+    def update_user(self, user, form):
         user.username = form.username.data
         user.email = form.email.data
         user.first_name = form.first_name.data

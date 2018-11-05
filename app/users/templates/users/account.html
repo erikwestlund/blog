@@ -3,16 +3,17 @@
 
     <h1>
         <fa-icon class="mr-2" :icon="['far', 'user']"></fa-icon>
-        {{ user.username }}'s Account
+        {{ 'My Account' if own_account else user.username }}
     </h1>
 
     {% if not user.email_confirmed %}
         <confirm-email-alert class="mt-6"></confirm-email-alert>
     {% endif %}
     <div class="mt-6">
-        <update-user :init-user='{{ state.user.account|tojson }}'
-                     :init-user-roles='{{ user_roles|tojson }}'
-                     :possible-roles='{{ possible_user_roles|tojson }}'></update-user>
+        <edit-user :init-user="{{ user.to_json() }}"
+                   :own-account="{{ 'true' if own_account else 'false' }}"
+                   :init-user-roles="{{ user_roles }}"
+                   :possible-roles="{{ possible_user_roles }}"></edit-user>
     </div>
 
 {% endblock content %}

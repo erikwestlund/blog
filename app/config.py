@@ -28,3 +28,5 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+    PAGINATE_DEFAULT = os.getenv('PAGINATE_DEFAULT')

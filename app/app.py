@@ -11,6 +11,7 @@ from flask_wtf.csrf import CSRFProtect
 from app_state import app_state
 from celery_context import FlaskCelery
 from config import Config
+from utils.models.json_encoder import AlchemyEncoder
 from utils.session import RedisSessionInterface
 
 db = SQLAlchemy()
@@ -26,6 +27,10 @@ login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'warning'
 login_manager.refresh_view = 'users.login'
 login_manager.needs_refresh_message_category = 'warning'
+
+
+def init_flask_config(app):
+    app.json_encoder = AlchemyEncoder
 
 
 def init_extensions(app):
@@ -68,10 +73,13 @@ def init_state(app):
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    app.json_encoder = AlchemyEncoder
+
     app.config.from_object(Config)
 
     DebugToolbarExtension(app)
 
+    init_flask_config(app)
     init_extensions(app)
     init_session(app)
     init_blueprints(app)

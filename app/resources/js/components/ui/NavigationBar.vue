@@ -39,32 +39,57 @@
             <div class="font-lighter">
                 <div v-if="loggedIn">
                     <a href="/account"
+                       @mouseover="showUsernameText = true"
+                       @mouseout="showUsernameText = false"
                        title="Your Account"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'user']"/>
-                        {{ state.user.account.username }}
+                        <transition name="trx-slide-fade">
+                            <span v-show="showUsernameText">
+                                {{ state.user.account.username }}
+                            </span>
+                        </transition>
                     </a>
                     <a href="/logout"
+                       @mouseover="showLogoutText = true"
+                       @mouseout="showLogoutText = false"
                        title="Log Out"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'sign-out']"/>
-                        Log Out
+                        <transition name="trx-slide-fade">
+                            <span v-show="showLogoutText">
+                                Log Out
+                            </span>
+                        </transition>
                     </a>
+                    <admin-menu-dropdown v-if="state.user.is_admin"/>
                 </div>
                 <div v-else>
                     <a href="/login"
                        title="Log In"
+                       @mouseover="showLoginText = true"
+                       @mouseout="showLoginText = false"
                        @click.prevent
                        @click="showLoginModal = true"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'sign-in']"/>
-                        Log In
+                        <transition name="trx-slide-fade">
+                            <span v-show="showLoginText">
+                                Log In
+                            </span>
+                        </transition>
                     </a>
                     <a href="/register"
+                       @mouseover="showRegisterText = true"
+                       @mouseout="showRegisterText = false"
                        title="Register"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker ">
                         <fa-icon class="mr-1" :icon="['far', 'user-plus']"/>
-                        Register
+                        <transition name="trx-slide-fade">
+                            <span v-show="showRegisterText">
+                                Register
+                            </span>
+                        </transition>
                     </a>
                 </div>
             </div>
@@ -94,11 +119,13 @@
 </template>
 
 <script>
+    import AdminMenuDropdown from './AdminMenuDropdown'
     import LoginUser from '../users/LoginUser'
     import Modal from './Modal'
 
     export default {
         components: {
+            'admin-menu-dropdown': AdminMenuDropdown,
             'modal': Modal,
             'login-user': LoginUser
         },
@@ -115,6 +142,10 @@
                 state: State,
                 showLoginModal: false,
                 showMobileNav: false,
+                showLoginText: false,
+                showLogoutText: false,
+                showUsernameText: false,
+                showRegisterText: false,
             }
         },
         methods: {

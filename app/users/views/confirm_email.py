@@ -10,7 +10,7 @@ from flask_login import current_user
 class ConfirmEmail(MethodView):
 
     def get(self, token):
-        if current_user.is_authenticated:
+        if current_user.is_authenticated and current_user.email_confirmed:
             return redirect(url_for('main.index'))
 
         user = User.verify_token(token)

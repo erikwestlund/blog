@@ -2,7 +2,7 @@
     <div class="flex mt-8">
         <form class="w-full max-w-md"
               method="PATCH"
-              action="/account"
+              :action="endpoint"
               @submit.prevent="onSubmit"
               @keydown="form.errors.clear($event.target.name)"
         >
@@ -126,6 +126,9 @@
             Event.listen('updateUserRoles', (user_roles) => this.updateUserRoles(user_roles))
         },
         computed: {
+            endpoint() {
+              return `/users/${this.user_id}/edit`
+            },
             isAdmin() {
                 return this.state.user.is_admin
             },
@@ -137,6 +140,7 @@
         },
         data() {
             return {
+                user_id: this.initUser.id,
                 state: window.State,
                 submitting: false,
                 form: new Form({
@@ -153,7 +157,7 @@
         methods: {
             onSubmit() {
                 this.submitting = true;
-                this.form.patch('/account')
+                this.form.patch(this.endpoint)
                     .then((response) => {
                         flash('Your account has been updated.')
                         this.resetForm(response)

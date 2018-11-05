@@ -1,0 +1,17 @@
+{% extends "main/layout.html" %}
+{% block content %}
+    <h1>
+        <fa-icon class="mr-2" :icon="['far', 'user']"></fa-icon>
+        Users
+    </h1>
+    <div class="mt-6">
+        <users-admin-panel>
+        </users-admin-panel>
+    </div>
+{% endblock content %}
+<script>
+    import UsersAdminPanel from "../../../resources/js/components/users/UsersAdminPanel";
+    export default {
+        components: {UsersAdminPanel}
+    }
+</script>
