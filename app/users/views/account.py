@@ -40,6 +40,7 @@ class Account(MethodView):
 
         return 'true'
 
+
     def update_user(self, form):
         user = current_user
         user.username = form.username.data
@@ -49,7 +50,6 @@ class Account(MethodView):
 
         if current_user.has_role('administrator'):
             roles = Role.query.filter(Role.id.in_(form.user_roles.data)).all()
-            user.roles = []
             user.roles.extend(roles)
 
         if form.password.data:
