@@ -6,7 +6,7 @@
                 <th>Email</th>
                 <th></th>
             </tr>
-            <tr v-for="user in users" :key="user.id">
+            <tr v-for="user in users.data" :key="user.id">
                 <td v-text="user.username"></td>
                 <td v-text="user.email"></td>
                 <td>

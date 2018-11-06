@@ -1,18 +1,20 @@
-from flask import render_template, request, jsonify
+from flask import render_template
 from flask.views import MethodView
-from utils.requests import request_wants_json
-from users.models.user import User
+from flask_login import login_required
 
+from users.models.user import User
+from utils.models.paginated_json_response import paginated_json_response
+from utils.acl import user_has_role
 
 class AdminUsersIndex(MethodView):
 
+    @user_has_role('administrator')
     def get(self):
         return render_template('users/admin.html')
 
 
 class AdminUsersIndexJson(MethodView):
 
+    @user_has_role('administrator')
     def get(self):
-        return jsonify(
-            User.query.order_by(User.created_at).paginate().items
-        )
+        return paginated_json_response(User, per_page=3, page=1)
