@@ -107,7 +107,7 @@
                 <button class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
                         :disabled="form.errors.any() || submitting"
                 >
-                    Update My Account
+                    Update Account
                 </button>
             </div>
         </form>

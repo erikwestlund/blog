@@ -31,3 +31,20 @@ class ModelAccessorMixin(object):
 
     def __json__(self):
         return self.visible
+
+    @staticmethod
+    def paginated_response(paginated, url='/'):
+        return json.dumps({
+            'current_page': paginated.page,
+            'data': paginated.items,
+            # from=1
+            # last_page=68
+            # first_page_url="https://www.letsrun.com/users/banned?page=68"
+            # last_page_url="https://www.letsrun.com/users/banned?page=68"
+            # next_page_url="https://www.letsrun.com/users/banned?page=2"
+            # path="https://www.letsrun.com/users/banned"
+            'per_page': paginated.per_page,
+            # prev_page_url=null
+            # to=25
+            'total': paginated.total
+        }, cls=AlchemyEncoder)
