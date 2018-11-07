@@ -1,0 +1,14 @@
+ul.pagination {
+  @apply rounded;
+}
+ul.pagination li {
+  @apply pt-2 pb-2 pl-4 pr-4 border-l border-t border-b;
+}
+
+ul.pagination li:first-child {
+  @apply rounded-l;
+}
+
+ul.pagination li:last-child {
+  @apply border-r rounded-r;
+}

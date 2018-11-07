@@ -703,6 +703,31 @@ table td:last-child {
   padding-right: 0;
 }
 
+ul.pagination {
+  border-radius: .25rem;
+}
+
+ul.pagination li {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-left-width: 1px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+
+ul.pagination li:first-child {
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+}
+
+ul.pagination li:last-child {
+  border-right-width: 1px;
+  border-top-right-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+}
+
 .form-control {
   -webkit-appearance: none;
      -moz-appearance: none;

@@ -41,6 +41,7 @@ def paginated_json_response(model, url='',
                     right_edge=right_edge,
                     right_current=right_current
                 )],
+                'base_url': url,
                 'first_page_url': url + '?page=1',
                 'last_page_url': url + '?page=' + str(paginated.pages),
                 'prev_page_url': url + '?page=' + str(paginated.prev_num) if paginated.has_prev else None,

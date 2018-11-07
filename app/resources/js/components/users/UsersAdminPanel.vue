@@ -16,7 +16,10 @@
                 </td>
             </tr>
         </table>
-        <paginate name="users" :data="paginationMeta" />
+        <paginate class="mt-4"
+                  name="users"
+                  :data="paginationMeta"
+        />
     </div>
 </template>
 
