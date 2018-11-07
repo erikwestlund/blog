@@ -17,4 +17,4 @@ class AdminUsersIndexJson(MethodView):
 
     @user_has_role('administrator')
     def get(self):
-        return paginated_json_response(User, per_page=3, page=1)
+        return paginated_json_response(User, per_page=1, page=1)

@@ -119,6 +119,7 @@
     import UserRoles from './UserRoles'
 
     export default {
+        name: "EditUser",
         components: {
             'user-roles': UserRoles,
         },

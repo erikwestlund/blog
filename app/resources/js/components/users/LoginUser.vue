@@ -72,6 +72,7 @@
     import Form from '../../modules/Form.js'
 
     export default {
+        name: "LoginUser",
         data() {
             return {
                 submitting: false,

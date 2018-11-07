@@ -1,5 +1,6 @@
 <script>
     export default {
+        name: "OnClickOutside",
         props: ["do"],
         mounted() {
             const listener = e => {

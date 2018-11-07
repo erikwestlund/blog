@@ -11,6 +11,7 @@
 
 <script>
     export default {
+        name: "Flash",
         props: {
             initialMessage: {
                 required: true,

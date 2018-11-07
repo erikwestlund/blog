@@ -29,6 +29,7 @@
     import OnClickOutside from "../utils/OnClickOutside.vue";
 
     export default {
+        name: "AdminMenuDropdown",
         components: {
             OnClickOutside
         },

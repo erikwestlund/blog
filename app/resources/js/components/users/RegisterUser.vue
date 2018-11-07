@@ -113,6 +113,7 @@
     import Form from '../../modules/Form.js'
 
     export default {
+        name: "RegisterUser",
         data() {
             return {
                 submitting: false,

@@ -54,6 +54,7 @@
     import Form from '../../modules/Form.js'
 
     export default {
+        name: "ResetPassword",
         computed: {
             endpoint() {
                 return `/users/reset-password/${this.token}`

@@ -17,6 +17,7 @@
     import Alert from "../ui/Alert"
 
     export default {
+        name: "ConfirmEmailAlert",
         components: {
             'alert': Alert,
         },

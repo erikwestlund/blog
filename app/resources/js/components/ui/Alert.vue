@@ -18,6 +18,7 @@
 
 <script>
     export default {
+        name: "Alert",
         created() {
             Event.listen('hideAlert', () => this.hide())
         },

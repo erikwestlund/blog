@@ -43,6 +43,7 @@
 
 <script>
     export default {
+        name: "Modal",
         created() {
             document.addEventListener('keyup', this.escapeKeyListener);
         },

@@ -6,7 +6,7 @@
                 <th>Email</th>
                 <th></th>
             </tr>
-            <tr v-for="user in users.data" :key="user.id">
+            <tr v-for="user in data.data" :key="user.id">
                 <td v-text="user.username"></td>
                 <td v-text="user.email"></td>
                 <td>
@@ -16,26 +16,16 @@
                 </td>
             </tr>
         </table>
+        <paginate name="users" :data="paginationMeta" />
     </div>
 </template>
 
 <script>
+    import AdminPanel from '../ui/AdminPanel'
+
     export default {
         name: "UsersAdminPanel",
-        data() {
-          return {
-              users: [],
-          }
-        },
-        created() {
-            axios.get('/admin/users.json')
-                .then(response => {
-                    this.users = response.data;
-                })
-                .catch(errors => {
-                    flash('Could not get users', 'danger')
-                })
-        }
+        extends: AdminPanel,
     }
 </script>
 

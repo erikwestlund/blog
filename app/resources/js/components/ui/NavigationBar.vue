@@ -124,6 +124,7 @@
     import Modal from './Modal'
 
     export default {
+        name: "NavigationBar",
         components: {
             'admin-menu-dropdown': AdminMenuDropdown,
             'modal': Modal,

@@ -39,6 +39,7 @@
     import Form from '../../modules/Form.js'
 
     export default {
+        name: "ResetPasswordRequest",
         data() {
             return {
                 submitting: false,
