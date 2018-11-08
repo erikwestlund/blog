@@ -7,7 +7,7 @@ services:
      - postgresdata:/var/lib/postgresql/data
     env_file: .docker_env
     environment:
-    - POSTGRES_USER=root
+    - POSTGRES_USER=blog
     - POSTGRES_PASSWORD=secret
     - POSTGRES_DB=main
     ports:

@@ -9,6 +9,11 @@ from flask_sqlalchemy import SQLAlchemy
 class InitialSeed(Command):
 
     def run(self):
+        prod = input('Is this a production seed? [yes/no]' + "\n")
+
+        if str(prod).lower() == 'yes' and not self.check_safe():
+            return
+
         bcrypt = Bcrypt(flask.current_app)
         db = SQLAlchemy(flask.current_app)
 
@@ -42,3 +47,19 @@ class InitialSeed(Command):
 
         db.session.add(admin_user)
         db.session.commit()
+
+    def check_safe(self):
+        admin_password = flask.current_app.config['ADMIN_INIT_PASSWORD']
+        secret_key = flask.current_app.config['SECRET_KEY']
+
+        if not admin_password:
+            print("Please enter a password for the administrator user in your .env file.")
+            return False
+        elif admin_password == 'password':
+            print('Please change the admin password in your .env file.')
+            return False
+        elif secret_key == 'supersecretkey':
+            print('Please set the secret key in your .env to something secure.')
+            return False
+
+        return True
