@@ -12,7 +12,7 @@
                          class="shadow absolute w-48 pin-r mt-1 text-md text-grey-darker leading-normal rounded bg-white border p-3">
                         <ul class="list-reset">
                             <li>
-                                <fa-icon class="mr-2" :icon="['far', 'user']"/>
+                                <fa-icon class="mr-2 text-grey" :icon="['far', 'user']"/>
                                 <a href="/admin/users" class="text-blue-dark hover:text-blue-darker" @click.exact>
                                     Users
                                 </a>

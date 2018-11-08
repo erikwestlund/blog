@@ -1,0 +1,24 @@
+ul.pagination {
+  @apply rounded;
+}
+
+ul.pagination li {
+  @apply border-l border-t border-b;
+}
+
+ul.pagination a,
+ul.pagination span {
+  @apply pt-2 pb-2 pl-4 pr-4 block h-full w-full h-full;
+}
+
+ul.pagination li.active {
+  @apply border-blue-darker bg-blue-darker text-white;
+}
+
+ul.pagination li:first-child {
+  @apply rounded-l;
+}
+
+ul.pagination li:last-child {
+  @apply border-r rounded-r;
+}
