@@ -13,8 +13,10 @@ from celery_context import FlaskCelery
 from config import Config
 from utils.models.json_encoder import AlchemyEncoder
 from utils.session import RedisSessionInterface
+from utils.models.base_model import BaseModel
+from utils.models.base_query import BaseQuery
 
-db = SQLAlchemy()
+db = SQLAlchemy(model_class=BaseModel, query_class=BaseQuery)
 celery = FlaskCelery()
 redis = FlaskRedis()
 mail = Mail()

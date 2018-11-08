@@ -7,7 +7,6 @@ from sqlalchemy.sql import func
 from app import db
 from app import login_manager
 from users.models.role import roles_users
-from utils.models.accessor_mixin import ModelAccessorMixin
 
 
 @login_manager.user_loader
@@ -15,7 +14,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin, ModelAccessorMixin):
+class User(db.Model, UserMixin):
 
     visible = ['id', 'username', 'email', 'first_name', 'last_name']
 

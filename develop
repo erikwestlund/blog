@@ -6,11 +6,15 @@ CELERY_CONTAINER=celery
 CELERY_BEAT_CONTAINER=celery-beat
 
 if [ $# -gt 0 ];then
-    if [ "$1" == "cmd" ]; then
+    if [ "$1" == "dc" ]; then
         shift 1
-		$COMPOSE exec \
-			$APP_CONTAINER \
-			python manage.py "$@"
+        $COMPOSE "$@"
+    elif [ "$1" == "build" ]; then
+        shift 1
+        $COMPOSE build
+    elif [ "$1" == "up" ]; then
+        shift 1
+        $COMPOSE up
     elif [ "$1" == "celery" ]; then
         shift 1
 		$COMPOSE exec \
@@ -26,8 +30,9 @@ if [ $# -gt 0 ];then
         shift 1
         $COMPOSE exec web flask shell
     else
-        $COMPOSE "$@"
+        shift 1
+		$COMPOSE exec \
+			$APP_CONTAINER \
+			python manage.py "$@"
     fi
-else
-    $COMPOSE ps
 fi

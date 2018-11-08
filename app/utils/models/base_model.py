@@ -1,9 +1,26 @@
-from funcy import lpluck_attr
 import json
+
+import sqlalchemy as sa
+from flask_sqlalchemy import Model
+from funcy import lpluck_attr
+from sqlalchemy.ext.declarative import declared_attr
+
 from utils.models.json_encoder import AlchemyEncoder
 
 
-class ModelAccessorMixin(object):
+class BaseModel(Model):
+
+    @declared_attr
+    def id(cls):
+        for base in cls.__mro__[1:-1]:
+            if getattr(base, '__table__', None) is not None:
+                type = sa.ForeignKey(base.id)
+                break
+        else:
+            type = sa.Integer
+
+        return sa.Column(type, primary_key=True)
+
 
     def pluck(self, key, collection=None):
         if not collection:
