@@ -16,7 +16,7 @@
                 </td>
             </tr>
         </table>
-        <paginate class="mt-4"
+        <paginate class="mt-8"
                   name="users"
                   :data="paginationMeta"
         />
