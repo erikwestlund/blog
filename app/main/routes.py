@@ -2,6 +2,7 @@ from flask import Blueprint
 
 from main.views.index import Index
 from main.views.admin import Admin
+from main.models.tag import Tag
 
 main = Blueprint('main', __name__, template_folder='templates', static_folder='static')
 

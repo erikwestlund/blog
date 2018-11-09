@@ -1,8 +1,8 @@
 from app import db
 
 roles_users = db.Table('roles_users',
-                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')),
+                       db.Column('user_id', db.Integer(), db.ForeignKey('user.id')))
 
 
 class Role(db.Model):
@@ -14,4 +14,3 @@ class Role(db.Model):
     # Representation
     def __repr__(self):
         return f"Role('{self.name}', '{self.display_name}', '{self.description}')"
-
