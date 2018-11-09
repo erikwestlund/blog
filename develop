@@ -20,17 +20,23 @@ if [ $# -gt 0 ];then
 		$COMPOSE exec \
 			$APP_CONTAINER \
 			celery "$@"
+
     elif [ "$1" == "terminal" ]; then
         shift 1
-        $COMPOSE exec web /bin/sh
+        $COMPOSE exec \
+        $APP_CONTAINER \
+        /bin/sh
     elif [ "$1" == "python" ]; then
         shift 1
-        $COMPOSE exec web python
+         $COMPOSE \
+          exec $APP_CONTAINER \
+          python
     elif [ "$1" == "shell" ]; then
         shift 1
-        $COMPOSE exec web flask shell
+        $COMPOSE \
+        exec $APP_CONTAINER \
+        flask shell
     else
-        shift 1
 		$COMPOSE exec \
 			$APP_CONTAINER \
 			python manage.py "$@"

@@ -7,6 +7,7 @@ from sqlalchemy.sql import func
 from app import db
 from app import login_manager
 from users.models.role import roles_users
+from utils.models.timestamps import TimestampMixin
 
 
 @login_manager.user_loader
@@ -14,7 +15,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, TimestampMixin):
 
     visible = ['id', 'username', 'email', 'first_name', 'last_name']
 
@@ -30,11 +31,10 @@ class User(db.Model, UserMixin):
     # User information
     first_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     last_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    about = db.Column(db.Text, nullable=False, server_default=u'')
 
     # Timestamps
     email_confirmed_at = db.Column(db.DateTime())
-    created_at = db.Column(db.DateTime, server_default=func.now())
-    updated_at = db.Column(db.DateTime, onupdate=func.now())
 
     # Relationships
     roles = db.relationship('Role', secondary=roles_users,

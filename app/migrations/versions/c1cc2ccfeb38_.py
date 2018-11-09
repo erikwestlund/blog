@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1b8b63f55576
+Revision ID: c1cc2ccfeb38
 Revises: 
-Create Date: 2018-11-04 22:17:39.160735
+Create Date: 2018-11-09 02:40:13.018040
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1b8b63f55576'
+revision = 'c1cc2ccfeb38'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,8 @@ def upgrade():
     sa.UniqueConstraint('name')
     )
     op.create_table('user',
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=50), server_default='', nullable=False),
     sa.Column('email', sa.Unicode(length=255), server_default='', nullable=False),
@@ -35,9 +37,8 @@ def upgrade():
     sa.Column('active', sa.Boolean(), server_default='0', nullable=False),
     sa.Column('first_name', sa.Unicode(length=50), server_default='', nullable=False),
     sa.Column('last_name', sa.Unicode(length=50), server_default='', nullable=False),
+    sa.Column('about', sa.Text(), server_default='', nullable=False),
     sa.Column('email_confirmed_at', sa.DateTime(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
