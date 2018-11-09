@@ -10,17 +10,16 @@ if [ $# -gt 0 ];then
         shift 1
         $COMPOSE "$@"
     elif [ "$1" == "build" ]; then
-        shift 1
         $COMPOSE build
     elif [ "$1" == "up" ]; then
-        shift 1
         $COMPOSE up
+    elif [ "$1" == "down" ]; then
+        $COMPOSE down
     elif [ "$1" == "celery" ]; then
         shift 1
 		$COMPOSE exec \
 			$APP_CONTAINER \
 			celery "$@"
-
     elif [ "$1" == "terminal" ]; then
         shift 1
         $COMPOSE exec \
