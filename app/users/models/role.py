@@ -1,6 +1,6 @@
 from app import db
 
-roles_users = db.Table('roles_users',
+role_user = db.Table('role_user',
                        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')),
                        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')))
 

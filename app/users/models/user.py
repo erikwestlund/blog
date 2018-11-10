@@ -6,7 +6,7 @@ from sqlalchemy.sql import func
 
 from app import db
 from app import login_manager
-from users.models.role import roles_users
+from users.models.role import role_user
 from utils.models.timestamps import TimestampMixin
 
 
@@ -37,7 +37,7 @@ class User(db.Model, UserMixin, TimestampMixin):
     email_confirmed_at = db.Column(db.DateTime())
 
     # Relationships
-    roles = db.relationship('Role', secondary=roles_users,
+    roles = db.relationship('Role', secondary=role_user,
                             lazy='dynamic',
                             cascade='save-update',
                             backref=db.backref('users', lazy='dynamic'))

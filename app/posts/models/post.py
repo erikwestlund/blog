@@ -1,7 +1,7 @@
 from app import db
 from utils.models.timestamps import TimestampMixin
 
-tags_posts = db.Table('tags_posts',
+tag_post = db.Table('tag_post',
                       db.Column('tag_id', db.Integer(), db.ForeignKey('tag.id')),
                       db.Column('post_id', db.Integer(), db.ForeignKey('post.id')))
 
@@ -18,7 +18,7 @@ class Post(db.Model, TimestampMixin):
     published_at = db.Column(db.DateTime())
 
     # Relationships
-    tags = db.relationship('Tag', secondary=tags_posts,
+    tags = db.relationship('Tag', secondary=tag_post,
                             lazy='dynamic',
                             cascade='save-update',
                             backref=db.backref('posts', lazy='dynamic'))

@@ -25,6 +25,11 @@ class InitialSeed(Command):
                           description="Can administrate site")
         db.session.add(admin_role)
 
+        writer_role = Role(name="writer",
+                          display_name="Writer",
+                          description="Can write posts for site")
+        db.session.add(writer_role)
+
         user_role = Role(name="user",
                          display_name="User",
                          description="Basic user")
@@ -44,6 +49,7 @@ class InitialSeed(Command):
                           email_confirmed_at=datetime.datetime.now())
 
         admin_user.roles.append(admin_role)
+        admin_user.roles.append(writer_role)
 
         db.session.add(admin_user)
         db.session.commit()

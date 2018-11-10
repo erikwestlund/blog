@@ -1,9 +1,11 @@
 <template>
     <div>
         <vue-tags-input
-                v-model="tag"
+                v-model="input"
                 :tags="tags"
+                :autocomplete-items="autoCompleteItems"
                 @tags-changed="updateTags"
+                @before-adding-tag="createTag"
         />
     </div>
 </template>
@@ -17,15 +19,34 @@
         },
         data() {
             return {
-                tag: '',
+                input: '',
+                autoCompleteItems: [],
                 tags: [],
             };
         },
         methods: {
+            createTag(obj) {
+                axios.post('/tags', obj)
+            },
+            fetchTags() {
+                axios.get('/tags', {
+                    params: {
+                        'q': this.input,
+                    }
+                })
+                    .then(response => {
+                        this.autoCompleteItems = response.data.data.map(tag => {
+                            return {text: tag.name};
+                        });
+                    })
+            },
             updateTags(tags) {
                 this.tags = tags
             }
-        }
+        },
+        watch: {
+            'input': 'fetchTags',
+        },
     };
 </script>
 
