@@ -17,6 +17,7 @@ import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
 import Paginate from './components/ui/Paginate'
 import ConfirmEmailAlert from './components/users/ConfirmEmailAlert'
+import CreatePost from './components/posts/CreatePost'
 import EditUser from './components/users/EditUser'
 import LoginUser from './components/users/LoginUser'
 import RegisterUser from './components/users/RegisterUser'
@@ -32,6 +33,8 @@ const app = new Vue({
         'flash': Flash,
         'navigation-bar': NavigationBar,
         'paginate': Paginate,
+        //posts
+        'create-post': CreatePost,
         // users
         'confirm-email-alert': ConfirmEmailAlert,
         'edit-user': EditUser,
