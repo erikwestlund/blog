@@ -38,16 +38,17 @@
             </div>
             <div class="font-lighter">
                 <div v-if="loggedIn">
+                    <a href="/posts/create"
+                       title="Create Post"
+                       class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
+                        <fa-icon class="mr-1" :icon="['far', 'pencil']"/>
+                    </a>
                     <a href="/account"
-                       @mouseover="showUsernameText = true"
-                       @mouseout="showUsernameText = false"
                        title="Your Account"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'user']"/>
                     </a>
                     <a href="/logout"
-                       @mouseover="showLogoutText = true"
-                       @mouseout="showLogoutText = false"
                        title="Log Out"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'sign-out']"/>
@@ -57,16 +58,12 @@
                 <div v-else>
                     <a href="/login"
                        title="Log In"
-                       @mouseover="showLoginText = true"
-                       @mouseout="showLoginText = false"
                        @click.prevent
                        @click="showLoginModal = true"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6">
                         <fa-icon class="mr-1" :icon="['far', 'sign-in']"/>
                     </a>
                     <a href="/register"
-                       @mouseover="showRegisterText = true"
-                       @mouseout="showRegisterText = false"
                        title="Register"
                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker ">
                         <fa-icon class="mr-1" :icon="['far', 'user-plus']"/>

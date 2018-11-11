@@ -4,8 +4,8 @@
                 v-model="input"
                 :tags="tags"
                 :autocomplete-items="autoCompleteItems"
-                @tags-changed="updateTags"
-                @before-adding-tag="createTag"
+                @tags-changed="newTags => tags = newTags"
+                @before-adding-tag="storeTag"
         />
     </div>
 </template>
@@ -22,11 +22,27 @@
                 input: '',
                 autoCompleteItems: [],
                 tags: [],
+                storedTags: [],
             };
         },
         methods: {
-            createTag(obj) {
-                axios.post('/tags', obj)
+
+            storeTag(obj) {
+                axios.post('/tags', {
+                    tag: obj.tag.text
+                })
+                    .then(response => {
+                        obj.tag.classes = this.for + ' component-tagBox';
+                        obj.addTag()
+                        this.addStoredTag(response.data)
+                    })
+
+            },
+            addStoredTag(tag) {
+                let newTags = this.storedTags
+                newTags.push(tag)
+
+                this.storedTags = _.uniq(this.storedTags)
             },
             fetchTags() {
                 axios.get('/tags', {
@@ -40,12 +56,29 @@
                         });
                     })
             },
-            updateTags(tags) {
-                this.tags = tags
+            sendUpdate() {
+
+                const savedStoredTags = _.map(this.tags, (tag) => {
+                    return _.find(this.storedTags, (storedTag) => {
+                        return storedTag.name == tag.text;
+                    })
+                })
+                console.log(savedStoredTags)
+                Event.fire('tagsUpdated', {
+                    for: this.for,
+                    tags: savedStoredTags,
+                })
+            }
+        },
+        props: {
+            for: {
+                type: String,
+                required: true,
             }
         },
         watch: {
             'input': 'fetchTags',
+            'tags': 'sendUpdate'
         },
     };
 </script>

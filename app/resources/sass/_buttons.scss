@@ -2,6 +2,10 @@
   @apply py-1 px-2 rounded  text-sm border-4;
 }
 
+.btn-white {
+  @apply flex-no-shrink border bg-white border-grey-light text-grey-darkest;
+}
+
 .btn-blue {
   @apply flex-no-shrink bg-blue-darker border-blue-darker  text-white;
 }

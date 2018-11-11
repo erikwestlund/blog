@@ -5,9 +5,12 @@ import faAngleDoubleRight from '@fortawesome/fontawesome-pro-regular/faAngleDoub
 import faEllipsisH from '@fortawesome/fontawesome-pro-regular/faEllipsisH';
 import faEdit from '@fortawesome/fontawesome-pro-regular/faEdit';
 import faExclamationCircle from '@fortawesome/fontawesome-pro-regular/faExclamationCircle';
+import faEye from '@fortawesome/fontawesome-pro-regular/faEye';
 import faKey from '@fortawesome/fontawesome-pro-regular/faKey';
 import faLock from '@fortawesome/fontawesome-pro-regular/faLock';
+import faPencil from '@fortawesome/fontawesome-pro-regular/faPencil';
 import faPlusCircle from '@fortawesome/fontawesome-pro-regular/faPlusCircle';
+import faSave from '@fortawesome/fontawesome-pro-regular/faSave';
 import faSignIn from '@fortawesome/fontawesome-pro-regular/faSignIn';
 import faSignOut from '@fortawesome/fontawesome-pro-regular/faSignOut';
 import faTimes from '@fortawesome/fontawesome-pro-regular/faTimes';
@@ -20,9 +23,12 @@ fontawesome.library.add(
     faEllipsisH,
     faEdit,
     faExclamationCircle,
+    faEye,
     faKey,
     faLock,
+    faPencil,
     faPlusCircle,
+    faSave,
     faSignIn,
     faSignOut,
     faTimes,

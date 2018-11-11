@@ -32,6 +32,7 @@ if (mix.inProduction()) {
     const whitelistPatterns = [
         /^alert/,
         /^trx-/,
+        /^component-*/,
     ];
 
     mix.webpackConfig({
