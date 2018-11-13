@@ -1,12 +1,9 @@
-<template>
-
-</template>
-
 <script>
     import Paginate from '../ui/Paginate'
 
     export default {
         name: "AdminPanel",
+        abstract: true,
         components: {
             'paginate': Paginate
         },
@@ -67,7 +64,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
