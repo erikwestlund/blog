@@ -6,6 +6,7 @@ from flask import render_template, flash, jsonify
 from flask.views import MethodView
 from users.models.role import Role
 
+
 class Register(MethodView):
 
     def get(self):

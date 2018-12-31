@@ -9,6 +9,17 @@
                 name: 'create',
                 loaded: true
             }
+        },
+        methods: {
+            savePost() {
+                this.form.submit('post', '/posts/create')
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            }
         }
     }
 </script>

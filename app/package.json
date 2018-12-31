@@ -20,12 +20,15 @@
     "@johmun/vue-tags-input": "^1.5.9",
     "axios": "^0.18.0",
     "glob-all": "^3.1.0",
-    "laravel-mix": "^2.1.14",
+    "laravel-mix": "^4.0",
     "lodash": "^4.17.11",
     "purgecss-webpack-plugin": "^1.3.1",
+    "sass": "^1.15.2",
+    "sass-loader": "^7.1.0",
     "tailwindcss": "^0.6.6",
-    "vue": "^2.5.17",
-    "vue-simplemde": "^0.4.9"
+    "vue": "^2.5.21",
+    "vue-simplemde": "^0.4.9",
+    "vue-template-compiler": "^2.5.21"
   },
   "dependencies": {}
 }
