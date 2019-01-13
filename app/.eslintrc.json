@@ -4,9 +4,11 @@
     "plugin:vue/recommended"
   ],
   "globals": {
-    "axios": true,
-    "app": true,
     "_": true,
+    "app": true,
+    "axios": true,
+    "flash": true,
+    "State": true,
     "Vue": true
   }
 }

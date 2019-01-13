@@ -1,86 +1,92 @@
 <template>
-    <div>
-        <transition name="modal">
-            <div class="modal-mask" @click="$emit('close')">
-                <div class="modal-wrapper">
-                    <div class="modal-container"
-                         :class="{'lg': large, 'sm':small}"
-                         @click.stop
-                    >
-
-                        <div class="modal-header">
-                            <slot name="header">
-                                default header
-                            </slot>
-                        </div>
-
-                        <div class="modal-body mt-10">
-                            <slot name="body">
-                                default body
-                            </slot>
-                        </div>
-
-                        <div class="modal-footer mt-10 flex content-end flex-wrap">
-                            <div class="w-3/4 m-auto text-sm">
-                                <slot name="footer">
-
-                                </slot>
-                            </div>
-                            <div class="w-1/4 text-right">
-                                <button class="btn btn-grey hover:bg-grey-darkest hover:border-grey-darkest"
-                                        @click="$emit('close')">
-                                    <fa-icon class="mr-2" :icon="['far', 'times']"/>
-                                    {{ doneText }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div>
+    <transition name="modal">
+      <div
+        class="modal-mask"
+        @click="$emit('close')"
+      >
+        <div class="modal-wrapper">
+          <div
+            class="modal-container"
+            :class="{'lg': large, 'sm':small}"
+            @click.stop
+          >
+            <div class="modal-header">
+              <slot name="header">
+                default header
+              </slot>
             </div>
-        </transition>
-    </div>
+
+            <div class="modal-body mt-10">
+              <slot name="body">
+                default body
+              </slot>
+            </div>
+
+            <div class="modal-footer mt-10 flex content-end flex-wrap">
+              <div class="w-3/4 m-auto text-sm">
+                <slot name="footer" />
+              </div>
+              <div class="w-1/4 text-right">
+                <button
+                  class="btn btn-grey hover:bg-grey-darkest hover:border-grey-darkest"
+                  @click="$emit('close')"
+                >
+                  <fa-icon
+                    class="mr-2"
+                    :icon="['far', 'times']"
+                  />
+                  {{ doneText }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "Modal",
-        created() {
-            document.addEventListener('keyup', this.escapeKeyListener);
-        },
-        destroyed() {
-            document.removeEventListener('keyup', this.escapeKeyListener);
-        },
-        data() {
-            return {
-                showModal: false,
-            }
-        },
-        methods: {
-            escapeKeyListener(event) {
-                if (event.keyCode === 27) {
-                    this.$emit('close');
-                }
-            },
-        },
-        props: {
-            doneText: {
-                type: String,
-                default: 'OK',
-            },
-            doneIcon: {
-                type: String,
-                default: 'times',
-            },
-            large: {
-                type: Boolean,
-                default: false
-            },
-            small: {
-                type: Boolean,
-                default: false
-            }
-        }
+export default {
+  name: 'Modal',
+  props: {
+    doneText: {
+      type: String,
+      default: 'OK'
+    },
+    doneIcon: {
+      type: String,
+      default: 'times'
+    },
+    large: {
+      type: Boolean,
+      default: false
+    },
+    small: {
+      type: Boolean,
+      default: false
     }
+  },
+  data () {
+    return {
+      showModal: false
+    }
+  },
+  created () {
+    document.addEventListener('keyup', this.escapeKeyListener)
+  },
+  destroyed () {
+    document.removeEventListener('keyup', this.escapeKeyListener)
+  },
+  methods: {
+    escapeKeyListener (event) {
+      if (event.keyCode === 27) {
+        this.$emit('close')
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
