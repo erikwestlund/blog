@@ -1,6 +1,7 @@
 {% extends "main/layout.html" %}
 {% block content %}
 
-<create-post endpoint="/posts/create"></create-post>
+<post init-action="create"
+        endpoint="/posts/create"></post>
 
 {% endblock content %}

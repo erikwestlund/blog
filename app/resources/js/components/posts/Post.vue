@@ -8,7 +8,7 @@
         >
             <h1 class="p-3">
                 <fa-icon class="mr-2 text-grey" :icon="['far', actionIcon ]"></fa-icon>
-                {{ action }} Post
+                <span class="capitalize">{{ action }}</span> Post
             </h1>
             <div class="flex mt-6">
                 <div class="w-3/4">
@@ -46,7 +46,7 @@
                                for="grid-tags">
                             Tags
                         </label>
-                        <tags class="component-tags" name="tags" :for="name"></tags>
+                        <tags class="component-tags" name="tags" :for="action"></tags>
                     </div>
                     <div class="mt-6 px-3">
                         <button class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2"
@@ -78,17 +78,25 @@
         name: "Post",
         created() {
             Event.listen('tagsUpdated', (payload) => this.updateTags(payload))
+
+            this.loaded = true
         },
         computed: {
-            action() {
-                return _.isEmpty(this.savedPost) ?
-                    'Create' :
-                    'Edit'
-            },
             actionIcon() {
-                return this.action == 'Create' ?
+                return this.action == 'create' ?
                     'plus-circle' :
                     'pencil'
+            },
+
+            isPublished() {
+                if(
+                    ! _.isEmpty(this.savedPost) &&
+                    _.isDate(this.savedPost.published_at)
+                ){
+                    return true;
+                }
+
+                return false;
             }
         },
         components: {
@@ -97,6 +105,7 @@
         },
         data() {
             return {
+                action: this.initAction,
                 submitting: false,
                 savedPost: {},
                 loaded: false,
@@ -113,11 +122,37 @@
                     this.form.tags = payload.tags
                 }
             },
+
+            publishPost() {
+                this.form.submit('post', '/posts/publish')
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            },
+
+
+            savePost() {
+                this.form.submit('post', '/posts/save')
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            }
         },
         props: {
             endpoint: {
                 type: String,
                 required: true
+            },
+
+            initAction: {
+                type: String,
+                required: true,
             }
         }
     }
