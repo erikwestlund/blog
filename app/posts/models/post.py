@@ -7,14 +7,12 @@ tag_post = db.Table('tag_post',
 
 
 class Post(db.Model, TimestampMixin):
-    visible = ['id', 'draft_of', 'user_id', 'title', 'body', 'auto_save', 'published_at', ]
+    visible = ['id', 'user_id', 'title', 'body', 'published_at', ]
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
-    draft_of = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(255), nullable=False, server_default=u'')
     body = db.Column(db.Text(), nullable=False, server_default=u'')
-    auto_save = db.Column(db.Boolean(), default=False)
     published_at = db.Column(db.DateTime())
 
     # Relationships
@@ -23,5 +21,15 @@ class Post(db.Model, TimestampMixin):
                             cascade='save-update',
                             backref=db.backref('posts', lazy='dynamic'))
 
+    revisions = db.relationship('PostRevision', backref='post', lazy=True)
+
     def __repr__(self):
         return f"Post('{self.title}, {self.body}')"
+
+
+class PostRevision(db.Model, TimestampMixin):
+    visible = ['id', 'post_id', 'revision']
+
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    revision = db.Column(db.JSON)

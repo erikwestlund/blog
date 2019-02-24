@@ -10,6 +10,10 @@
   @apply flex-no-shrink bg-blue-darker border-blue-darker  text-white;
 }
 
+.btn-red {
+  @apply flex-no-shrink bg-red-darker border-red-darker  text-white;
+}
+
 button:disabled,
 button[disabled],
 button:disabled:hover,

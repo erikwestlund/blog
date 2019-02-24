@@ -6,6 +6,7 @@ import faEllipsisH from '@fortawesome/fontawesome-pro-regular/faEllipsisH'
 import faEdit from '@fortawesome/fontawesome-pro-regular/faEdit'
 import faExclamationCircle from '@fortawesome/fontawesome-pro-regular/faExclamationCircle'
 import faEye from '@fortawesome/fontawesome-pro-regular/faEye'
+import faEyeSlash from '@fortawesome/fontawesome-pro-regular/faEyeSlash'
 import faKey from '@fortawesome/fontawesome-pro-regular/faKey'
 import faLock from '@fortawesome/fontawesome-pro-regular/faLock'
 import faPencil from '@fortawesome/fontawesome-pro-regular/faPencil'
@@ -26,6 +27,7 @@ fontawesome.library.add(
   faEdit,
   faExclamationCircle,
   faEye,
+  faEyeSlash,
   faKey,
   faLock,
   faPencil,

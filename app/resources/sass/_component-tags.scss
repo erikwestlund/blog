@@ -1,7 +1,8 @@
-.component-tags .input {
+.component-tags .vue-tags-input .ti-input {
   @apply rounded;
 }
-.component-tagBox {
+.ti-tag.ti-valid.component-tagBox,
+.ti-autocomplete .ti-item.ti-valid.ti-selected-item {
   @apply bg-blue;
 }
 

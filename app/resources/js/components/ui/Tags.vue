@@ -71,7 +71,7 @@ export default {
           return storedTag.name === tag.text
         })
       })
-      console.log(savedStoredTags)
+
       Event.fire('tagsUpdated', {
         for: this.for,
         tags: savedStoredTags
