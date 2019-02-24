@@ -17,26 +17,26 @@
         </span> Post
       </h1>
       <div class="flex mt-6">
-        <div class="w-3/4">
+        <div class="w-3/4 bg-white rounded shadow pt-5 pb-5 pl-3 pr-3">
           <div class="w-full px-3">
             <label
               class="text-input-label"
               for="grid-body"
             >
-              Subject
+              Title
             </label>
             <input
-              id="grid-subject"
-              v-model="form.subject"
+              id="grid-title"
+              v-model="form.title"
               class="text-input focus:outline-none focus:border-grey"
-              name="subject"
-              :class="{'border border-red' : form.errors.has('subject')}"
-              placeholder="Subject"
+              name="title"
+              :class="{'border border-red' : form.errors.has('title')}"
+              placeholder="Title"
             >
             <p
-              v-if="form.errors.has('subject')"
+              v-if="form.errors.has('title')"
               class="text-red text-xs italic"
-              v-text="form.errors.get('subject')"
+              v-text="form.errors.get('title')"
             />
           </div>
           <div class="w-full px-3 mt-3">
@@ -49,7 +49,7 @@
             <markdown-editor
               ref="markdownEditor"
               v-model="form.body"
-              :class="{'border border-red' : form.errors.has('subject')}"
+              :class="{'border border-red' : form.errors.has('title')}"
             />
             <p
               v-if="form.errors.has('body')"
@@ -84,9 +84,10 @@
               />
               Save
             </button>
-            <button
+            <button v-show="! isPublished "
               class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
               :disabled="form.errors.any() || submitting"
+              @click="publishPost()"
             >
               <fa-icon
                 class="mr-2"
@@ -112,6 +113,11 @@ export default {
     'tags': Tags,
     'markdown-editor': MarkdownEditor
   },
+  computed: {
+    isPublished() {
+      return !_.isEmpty(this.publishedPost)
+    }
+  },
   props: {
     endpoint: {
       type: String,
@@ -128,10 +134,13 @@ export default {
       action: this.initAction,
       submitting: false,
       savedPost: {},
+      publishedPost: {},
       loaded: false,
       form: new Form({
+        action: 'save',
+        post_id: '',
         tags: [],
-        subject: '',
+        title: '',
         body: ''
       })
     }
@@ -167,17 +176,13 @@ export default {
     },
 
     publishPost () {
-      this.form.submit('post', '/posts/publish')
-        .then(response => {
-          console.log(response)
-        })
-        .catch(errors => {
-          console.log(errors)
-        })
+      this.savePost('publish');
     },
 
-    savePost () {
-      this.form.submit('post', '/posts/save')
+    savePost (action = 'save') {
+      this.form.action = action
+
+      this.form.submit('post', this.endpoint)
         .then(response => {
           console.log(response)
         })

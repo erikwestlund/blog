@@ -1,10 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms import StringField, IntegerField
+from wtforms.validators import DataRequired, Optional
 
 
 class SavePostForm(FlaskForm):
-    subject = StringField('Subject',
+    action = StringField('Action',
+                           validators=[DataRequired()])
+
+    post_id = IntegerField('Post ID',
+                           validators=[Optional()])
+
+    title = StringField('Title',
                            validators=[DataRequired()])
     body = StringField('Body',
                        validators=[DataRequired()])

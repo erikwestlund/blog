@@ -7,14 +7,14 @@ tag_post = db.Table('tag_post',
 
 
 class Post(db.Model, TimestampMixin):
-    visible = ['id', 'draft_of', 'user_id', 'title', 'body', 'autosave', 'published_at', ]
+    visible = ['id', 'draft_of', 'user_id', 'title', 'body', 'auto_save', 'published_at', ]
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
-    draft_of = db.Column(db.Integer)
+    draft_of = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(255), nullable=False, server_default=u'')
     body = db.Column(db.Text(), nullable=False, server_default=u'')
-    auto_save = db.Column(db.Boolean())
+    auto_save = db.Column(db.Boolean(), default=False)
     published_at = db.Column(db.DateTime())
 
     # Relationships
