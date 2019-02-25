@@ -59,8 +59,8 @@
                         />
                     </div>
                 </div>
-                <div class="w-1/4 p-3">
-                    <div class="w-full px-3">
+                <div class="w-1/4  px-8">
+                    <div class="w-full">
                         <label
                                 class="text-input-label"
                                 for="grid-tags"
@@ -68,12 +68,13 @@
                             Tags
                         </label>
                         <tags
+                                :init-tags="seedTags"
                                 class="component-tags"
                                 name="tags"
                                 for="tags"
                         />
                     </div>
-                    <div class="mt-6 px-3">
+                    <div class="mt-6">
                         <button
                                 class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2"
                                 :disabled="form.errors.any() || saving"
@@ -117,14 +118,47 @@
                             </span>
                         </button>
                     </div>
+                    <div class="mt-5">
+                        <button class="text-sm text-red-darker" @click="showDeletePost = true">
+                            <fa-icon class="mr-2" :icon="['far', 'trash']"/>
+                            Delete
+                        </button>
+                    </div>
+                    <div class="mt-5 text-grey text-sm" v-show="savedButNotPublished">
+                        This post has not been published.
+                    </div>
+                    <div class="mt-5 text-grey text-sm" v-show="notSaved">
+                        This post has not been saved.
+                    </div>
                 </div>
             </div>
+            <modal
+                    v-if="showDeletePost"
+                    no-footer
+                    @close="showDeletePost = false"
+            >
+                <h3 slot="header">
+                    Delete Post
+                </h3>
+
+                <div slot="body" class="mb-5">
+                    Are you you want to delete this post?
+
+                    <div class="mt-10">
+                        <button class="btn btn-white p-2 hover:bg-white hover:border-grey hover:text-red-darker" @click="deletePost()">
+                            <fa-icon class="mr-2" :icon="['far', 'trash']"/>
+                            Yes
+                        </button>
+                    </div>
+                </div>
+            </modal>
         </form>
     </div>
 </template>
 
 <script>
     import Form from '../../modules/Form'
+    import Modal from '../ui/Modal'
     import Tags from '../ui/Tags'
     import SubmittingMixin from '../mixins/SubmittingMixin'
     import MarkdownEditor from 'vue-simplemde/src/markdown-editor'
@@ -133,22 +167,31 @@
         name: 'Post',
         mixins: [SubmittingMixin],
         components: {
-            'tags': Tags,
-            'markdown-editor': MarkdownEditor
+            Modal,
+            Tags,
+            MarkdownEditor
         },
 
         props: {
             initAction: {
                 type: String,
                 default: 'create'
+            },
+
+            initPostId: {
+                type: Number,
+                required: false,
+                default: null,
             }
         },
         data() {
             return {
                 savedPost: {},
                 loaded: false,
-                postId: '',
+                postId: this.initPostId,
                 action: this.initAction,
+                seedTags: [],
+                showDeletePost: false,
                 form: new Form(
                     {
                         tags: [],
@@ -175,8 +218,15 @@
             },
 
             hasPostRecord() {
-                return !_.isEmpty(this.savedPost) &&
-                    this.savedPost.id
+                return this.postId
+            },
+
+            notSaved() {
+                return !this.postId
+            },
+
+            savedButNotPublished() {
+                return this.hasPostRecord && !this.isPublished
             },
 
             isPublished() {
@@ -197,9 +247,39 @@
         created() {
             Event.listen('tagsUpdated', (payload) => this.updateTags(payload))
 
-            this.loaded = true
+            if (this.initPostId && this.initAction === 'edit') {
+                this.fetchPost(this.initPostId)
+                    .then(response => {
+                        this.savedPost = response.data.data
+
+                        this.form.title = this.savedPost.title
+                        this.form.body = this.savedPost.title
+
+                        this.seedTags = this.savedPost.tags.map(tag => {
+                            return {
+                                id: tag.id,
+                                text: tag.name,
+                            }
+                        })
+
+                        this.form.tags = this.savedPost.tags.map(tag => {
+                            return tag.id
+                        })
+
+                        this.loaded = true
+                    })
+                    .catch(errors => {
+                        flash('Failed to lost post data', 'danger')
+                    })
+            } else {
+                this.loaded = true
+            }
         },
         methods: {
+            fetchPost(post_id) {
+                return axios.get(`/api/posts/${post_id}`)
+            },
+
             updateTags(payload) {
                 if (payload.for === 'tags') {
                     this.form.tags = _.map(payload.tags, 'id')
@@ -210,6 +290,11 @@
                 this.postId = post.id
                 this.form.title = post.title
                 this.form.body = post.body
+            },
+
+            deletePost() {
+              this.showDeletePost = false;
+              
             },
 
             savePost() {
@@ -269,12 +354,15 @@
 
                         setTimeout(() => {
                             this.savedPost = response.post
+
+                            history.pushState({}, 'Edit Post', this.endpoint)
                         }, this.timerDelay)
 
                         this.turnOffSubmitting()
                     })
                     .catch(errors => {
-                        if (this.action === 'save') {
+                        console.log('test')
+                        if (this.action === 'save' || this.action === 'create') {
                             flash('Failed to save post.', 'danger')
                         } else if (this.action === 'publish') {
                             flash('Failed to publish post.', 'danger')

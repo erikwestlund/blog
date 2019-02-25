@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="trx-fade">
     <div
       v-show="show"
       class="alert alert-flash"

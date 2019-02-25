@@ -7,7 +7,7 @@ tag_post = db.Table('tag_post',
 
 
 class Post(db.Model, TimestampMixin):
-    visible = ['id', 'user_id', 'title', 'body', 'published_at', ]
+    visible = ['id', 'user_id', 'title', 'body', 'published_at', 'tags']
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)

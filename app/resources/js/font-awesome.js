@@ -16,6 +16,7 @@ import { faSave } from '@fortawesome/pro-regular-svg-icons'
 import { faSignIn } from '@fortawesome/pro-regular-svg-icons'
 import { faSignOut } from '@fortawesome/pro-regular-svg-icons'
 import { faTimes } from '@fortawesome/pro-regular-svg-icons'
+import { faTrash } from '@fortawesome/pro-regular-svg-icons'
 import { faUser } from '@fortawesome/pro-regular-svg-icons'
 import { faUserPlus } from '@fortawesome/pro-regular-svg-icons'
 
@@ -36,6 +37,7 @@ library.add(
   faSignIn,
   faSignOut,
   faTimes,
+  faTrash,
   faUser,
   faUserPlus
 )

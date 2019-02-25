@@ -13,8 +13,9 @@ from flask import abort
 class EditPost(MethodView):
 
     @login_required
-    def get(self):
-        return render_template('posts/edit_post.html')
+    def get(self, post_id):
+        post = Post.query.get(post_id)
+        return render_template('posts/edit_post.html', post_id=post_id)
 
     @login_required
     def patch(self, post_id):
