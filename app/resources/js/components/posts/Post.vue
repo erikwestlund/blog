@@ -145,7 +145,8 @@
                     Are you you want to delete this post?
 
                     <div class="mt-10">
-                        <button class="btn btn-white p-2 hover:bg-white hover:border-grey hover:text-red-darker" @click="deletePost()">
+                        <button class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2"
+                                @click="deletePost()">
                             <fa-icon class="mr-2" :icon="['far', 'trash']"/>
                             Yes
                         </button>
@@ -294,7 +295,7 @@
 
             deletePost() {
               this.showDeletePost = false;
-              
+
             },
 
             savePost() {
