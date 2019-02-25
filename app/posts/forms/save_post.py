@@ -1,20 +1,18 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, FieldList
+from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Optional
-from utils.forms.nonvalidatingselectfield import NonValidatingSelectField
+
+from utils.forms.nonvalidatingmultiselectfield import NonValidatingMultiSelectField
 
 
 class SavePostForm(FlaskForm):
-    action = StringField('Action',
-                           validators=[DataRequired()])
-
-    post_id = IntegerField('Post ID',
-                           validators=[Optional()])
-
     title = StringField('Title',
-                           validators=[DataRequired()])
+                        validators=[DataRequired()])
+
     body = StringField('Body',
                        validators=[DataRequired()])
 
-    tags = NonValidatingSelectField('Tags', choices=[]
-                                    )
+    tags = NonValidatingMultiSelectField('Tags', choices=[])
+
+    published_at = StringField('Published At',
+                           validators=[Optional()])

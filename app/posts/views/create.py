@@ -1,13 +1,13 @@
-from app import db
-from posts.models.post import Post, PostRevision
-from main.models.tag import Tag
-from flask import render_template, flash, jsonify
+from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
-
-from posts.forms.save_post import SavePostForm
-
 from sqlalchemy import func
+
+from app import db
+from main.models.tag import Tag
+from posts.forms.save_post import SavePostForm
+from posts.models.post import Post
+
 
 class CreatePost(MethodView):
 
@@ -15,48 +15,7 @@ class CreatePost(MethodView):
     def get(self):
         return render_template('posts/create_post.html')
 
-    def patch(self):
-        form = SavePostForm()
-        post = Post.query.get(form.post_id.data)
-
-        if form.action.data == 'unpublish':
-            post.published_at = None
-
-            db.session.commit()
-
-            return jsonify({
-                'action': form.action.data,
-                'success': True,
-                'post': post
-            })
-        elif form.validate_on_submit():
-            # save revision
-            revision = PostRevision(post_id=form.post_id.data,
-                                    revision=post.to_json())
-            db.session.add(revision)
-
-            # update current post
-            if form.action.data == 'publish':
-                post.published_at = func.now()
-
-            # append tags!
-            # if form.tags.data:
-            # post.tags.extend(Tag.query.filter(Tag.id.in_(form.tags.data)).all())
-            post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
-
-            post.title = form.title.data
-            post.body = form.body.data
-
-            db.session.commit()
-
-            return jsonify({
-                'action': form.action.data,
-                'success': True,
-                'post': post
-            })
-        else:
-            return jsonify(errors=form.errors), 422
-
+    @login_required
     def post(self):
         form = SavePostForm()
 
@@ -65,14 +24,16 @@ class CreatePost(MethodView):
                         title=form.title.data,
                         body=form.body.data)
 
-            if form.action.data == 'publish':
+            if form.published_at.data and not post.published_at:
                 post.published_at = func.now()
+
+            post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.add(post)
             db.session.commit()
 
             return jsonify({
-                'action': form.action.data,
+                'action': 'create',
                 'success': True,
                 'post': post
             })

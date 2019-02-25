@@ -13,7 +13,7 @@
                         :icon="['far', actionIcon ]"
                 />
                 <span class="capitalize">
-          {{ form.action }}
+          {{ action }}
         </span> Post
             </h1>
             <div class="flex mt-6">
@@ -105,7 +105,7 @@
                         <button v-show="isPublished"
                                 class="btn btn-red hover:bg-red-darkest hover:border-red-darkest"
                                 :disabled="form.errors.any() || unpublishing"
-                                @click="unpublishPost()"
+                                @click.prevent="unpublishPost()"
                         >
                             <submitting-label v-if="unpublishing" type="unpublishing"/>
                             <span v-else>
@@ -138,35 +138,40 @@
         },
 
         props: {
-            endpoint: {
-                type: String,
-                required: true
-            },
-
             initAction: {
                 type: String,
-                required: true
+                default: 'create'
             }
         },
         data() {
             return {
                 savedPost: {},
                 loaded: false,
-                form: new Form({
-                    action: this.initAction,
-                    post_id: '',
-                    tags: [],
-                    title: '',
-                    body: '',
-                    dontReset: true,
-                }, this.isUpdateForm)
+                postId: '',
+                action: this.initAction,
+                form: new Form(
+                    {
+                        tags: [],
+                        title: '',
+                        body: '',
+                        published_at: ''
+                    },
+                    this.isUpdateForm,
+                    true
+                )
             }
         },
         computed: {
             actionIcon() {
-                return this.form.action === 'create'
+                return this.action === 'create'
                     ? 'plus-circle'
                     : 'pencil'
+            },
+
+            endpoint() {
+                return this.action === 'edit' ?
+                    `/posts/${this.postId}` :
+                    '/posts/create'
             },
 
             hasPostRecord() {
@@ -180,7 +185,7 @@
             },
 
             isUpdateForm() {
-                return this.form.action === 'edit'
+                return this.action !== 'create'
             },
 
             requestType() {
@@ -197,32 +202,52 @@
         methods: {
             updateTags(payload) {
                 if (payload.for === 'tags') {
-
                     this.form.tags = _.map(payload.tags, 'id')
                 }
             },
 
             updatePostFromServer(post) {
-                this.form.post_id = post.id
+                this.postId = post.id
                 this.form.title = post.title
                 this.form.body = post.body
             },
 
             savePost() {
+                this.action = this.postId ?
+                    'edit' :
+                    'create'
+
                 this.submittingType = 'saving';
                 this.persistPost()
             },
 
             publishPost() {
-                this.form.action = 'publish'
+                this.form.published_at = new Date()
                 this.submittingType = 'publishing'
                 this.persistPost();
             },
 
             unpublishPost() {
-                this.form.action = 'unpublish'
+                this.action = 'unpublish'
                 this.submittingType = 'unpublishing'
-                this.persistPost();
+                this.turnOnSubmitting()
+
+                axios.patch(`/posts/${this.postId}/unpublish`)
+                    .then(response => {
+                        flash('Post successfully unpublished!')
+
+                        this.action = 'edit'
+
+                        setTimeout(() => {
+                            this.savedPost = response.post
+                        }, this.timerDelay)
+
+                        this.turnOffSubmitting()
+                    })
+                    .catch(errors => {
+                        flash('Could not unpublish post.')
+                        this.turnOffSubmitting()
+                    })
             },
 
             persistPost() {
@@ -230,18 +255,16 @@
 
                 this.form.submit(this.requestType, this.endpoint)
                     .then(response => {
-                        this.form.action = 'edit'
+                        this.action = 'edit'
 
                         if (response.action === 'create') {
                             flash('Post successfully created!')
-                            this.form.post_id = response.post.id
+                            this.postId = response.post.id
                         } else if (response.action === 'edit') {
                             flash('Post successfully saved!')
                         } else if (response.action === 'publish') {
                             flash('Post successfully published!')
-                            this.form.post_id = response.post.id
-                        } else if (response.action === 'unpublish') {
-                            flash('Post successfully unpublished!')
+                            this.postId = response.post.id
                         }
 
                         setTimeout(() => {
@@ -251,9 +274,9 @@
                         this.turnOffSubmitting()
                     })
                     .catch(errors => {
-                        if (this.form.action === 'save') {
+                        if (this.action === 'save') {
                             flash('Failed to save post.', 'danger')
-                        } else if (this.form.action === 'publish') {
+                        } else if (this.action === 'publish') {
                             flash('Failed to publish post.', 'danger')
                         }
 
@@ -261,16 +284,10 @@
                     })
             }
         },
-        watch: {
-            'action': 'updateFormAction'
-        }
+        watch: {}
     }
 </script>
 
 <style>
     @import '~simplemde/dist/simplemde.min.css';
-
-    /*.ti-tag.ti-valid {*/
-    /*background-color: #3490cd !important;*/
-    /*}*/
 </style>
