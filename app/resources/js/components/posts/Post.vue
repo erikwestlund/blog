@@ -76,36 +76,45 @@
                     <div class="mt-6 px-3">
                         <button
                                 class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2"
-                                :disabled="form.errors.any() || submitting"
+                                :disabled="form.errors.any() || saving"
                                 @click="savePost()"
                         >
-                            <fa-icon
-                                    class="mr-2"
-                                    :icon="['far', 'save']"
-                            />
-                            Save
+                            <submitting-label v-if="saving" type="saving"/>
+                            <span v-else>
+                                <fa-icon
+                                        class="mr-2"
+                                        :icon="['far', 'save']"
+                                />
+                                Save
+                            </span>
                         </button>
                         <button v-show="! isPublished"
                                 class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
-                                :disabled="form.errors.any() || submitting"
+                                :disabled="form.errors.any() || publishing"
                                 @click="publishPost()"
                         >
-                            <fa-icon
-                                    class="mr-2"
-                                    :icon="['far', 'eye']"
-                            />
-                            Publish
+                            <submitting-label v-if="publishing" type="publishing"/>
+                            <span v-else>
+                                <fa-icon
+                                        class="mr-2"
+                                        :icon="['far', 'eye']"
+                                />
+                                Publish
+                            </span>
                         </button>
                         <button v-show="isPublished"
                                 class="btn btn-red hover:bg-red-darkest hover:border-red-darkest"
-                                :disabled="form.errors.any() || submitting"
+                                :disabled="form.errors.any() || unpublishing"
                                 @click="unpublishPost()"
                         >
-                            <fa-icon
-                                    class="mr-2"
-                                    :icon="['far', 'eye-slash']"
-                            />
-                            Unpublish
+                            <submitting-label v-if="unpublishing" type="unpublishing"/>
+                            <span v-else>
+                                <fa-icon
+                                        class="mr-2"
+                                        :icon="['far', 'eye-slash']"
+                                />
+                                Unpublish
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -117,10 +126,12 @@
 <script>
     import Form from '../../modules/Form'
     import Tags from '../ui/Tags'
+    import SubmittingMixin from '../mixins/SubmittingMixin'
     import MarkdownEditor from 'vue-simplemde/src/markdown-editor'
 
     export default {
         name: 'Post',
+        mixins: [SubmittingMixin],
         components: {
             'tags': Tags,
             'markdown-editor': MarkdownEditor
@@ -139,7 +150,6 @@
         },
         data() {
             return {
-                submitting: false,
                 savedPost: {},
                 loaded: false,
                 form: new Form({
@@ -198,43 +208,56 @@
                 this.form.body = post.body
             },
 
+            savePost() {
+                this.submittingType = 'saving';
+                this.persistPost()
+            },
+
             publishPost() {
                 this.form.action = 'publish'
-                this.savePost();
+                this.submittingType = 'publishing'
+                this.persistPost();
             },
 
             unpublishPost() {
                 this.form.action = 'unpublish'
-                this.savePost();
+                this.submittingType = 'unpublishing'
+                this.persistPost();
             },
 
-            savePost() {
+            persistPost() {
+                this.turnOnSubmitting()
 
                 this.form.submit(this.requestType, this.endpoint)
                     .then(response => {
-                        this.savedPost = response.post
                         this.form.action = 'edit'
 
                         if (response.action === 'create') {
                             flash('Post successfully created!')
                             this.form.post_id = response.post.id
-                        } else if(response.action === 'edit') {
+                        } else if (response.action === 'edit') {
                             flash('Post successfully saved!')
                         } else if (response.action === 'publish') {
                             flash('Post successfully published!')
+                            this.form.post_id = response.post.id
                         } else if (response.action === 'unpublish') {
                             flash('Post successfully unpublished!')
                         }
 
-                        // this.updatePostFromServer(response.post)
+                        setTimeout(() => {
+                            this.savedPost = response.post
+                        }, this.timerDelay)
+
+                        this.turnOffSubmitting()
                     })
                     .catch(errors => {
-
                         if (this.form.action === 'save') {
                             flash('Failed to save post.', 'danger')
-                        } else if (action === 'publish') {
+                        } else if (this.form.action === 'publish') {
                             flash('Failed to publish post.', 'danger')
                         }
+
+                        this.turnOffSubmitting()
                     })
             }
         },

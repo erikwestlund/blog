@@ -1,5 +1,6 @@
 from app import db
 from posts.models.post import Post, PostRevision
+from main.models.tag import Tag
 from flask import render_template, flash, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
@@ -39,6 +40,9 @@ class CreatePost(MethodView):
                 post.published_at = func.now()
 
             # append tags!
+            # if form.tags.data:
+            # post.tags.extend(Tag.query.filter(Tag.id.in_(form.tags.data)).all())
+            post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             post.title = form.title.data
             post.body = form.body.data

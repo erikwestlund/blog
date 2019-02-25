@@ -7,18 +7,18 @@
 }
 
 .btn-blue {
-  @apply flex-no-shrink bg-blue-darker border-blue-darker  text-white;
+  @apply flex-no-shrink bg-blue-darker border-blue-darker text-white;
 }
 
 .btn-red {
-  @apply flex-no-shrink bg-red-darker border-red-darker  text-white;
+  @apply flex-no-shrink bg-red-darker border-red-darker text-white;
 }
 
 button:disabled,
 button[disabled],
 button:disabled:hover,
 button[disabled]:hover {
-  @apply bg-grey-darker border-grey-darker cursor-default;
+  @apply bg-grey-darker border-grey-darker cursor-default text-grey-light;
 }
 
 

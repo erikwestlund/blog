@@ -33,6 +33,7 @@ if (mix.inProduction()) {
         /^alert/,
         /^trx-/,
         /^component-*/,
+        /^fa-/,
     ];
 
     mix.webpackConfig({

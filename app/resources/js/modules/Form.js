@@ -8,6 +8,7 @@ export default class Form {
      */
     constructor(data, isUpdateForm = false) {
         this.originalData = _.cloneDeep(data)
+        this.dontReset = false
 
         for (const field in data) {
             this[field] = data[field]
@@ -90,7 +91,7 @@ export default class Form {
         return new Promise((resolve, reject) => {
             axios[requestType](url, this.data())
                 .then((response) => {
-                    if(!(this.data().hasOwnProperty('dontReset') && this.data().dontReset)){
+                    if(! this.data().dontReset){
                         this.onSuccess(response.data)
                     }
 

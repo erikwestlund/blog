@@ -1,28 +1,28 @@
-import fontawesome from '@fortawesome/fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
-import faAngleDoubleLeft from '@fortawesome/fontawesome-pro-regular/faAngleDoubleLeft'
-import faAngleDoubleRight from '@fortawesome/fontawesome-pro-regular/faAngleDoubleRight'
-import faEllipsisH from '@fortawesome/fontawesome-pro-regular/faEllipsisH'
-import faEdit from '@fortawesome/fontawesome-pro-regular/faEdit'
-import faExclamationCircle from '@fortawesome/fontawesome-pro-regular/faExclamationCircle'
-import faEye from '@fortawesome/fontawesome-pro-regular/faEye'
-import faEyeSlash from '@fortawesome/fontawesome-pro-regular/faEyeSlash'
-import faKey from '@fortawesome/fontawesome-pro-regular/faKey'
-import faLock from '@fortawesome/fontawesome-pro-regular/faLock'
-import faPencil from '@fortawesome/fontawesome-pro-regular/faPencil'
-import faPlusCircle from '@fortawesome/fontawesome-pro-regular/faPlusCircle'
-import faSave from '@fortawesome/fontawesome-pro-regular/faSave'
-import faSignIn from '@fortawesome/fontawesome-pro-regular/faSignIn'
-import faSignOut from '@fortawesome/fontawesome-pro-regular/faSignOut'
-import faTimes from '@fortawesome/fontawesome-pro-regular/faTimes'
-import faUser from '@fortawesome/fontawesome-pro-regular/faUser'
-import faUserPlus from '@fortawesome/fontawesome-pro-regular/faUserPlus'
+import { faAngleDoubleLeft } from '@fortawesome/pro-regular-svg-icons'
+import { faAngleDoubleRight } from '@fortawesome/pro-regular-svg-icons'
+import { faCircleNotch } from '@fortawesome/pro-regular-svg-icons'
+import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons'
+import { faEdit } from '@fortawesome/pro-regular-svg-icons'
+import { faExclamationCircle } from '@fortawesome/pro-regular-svg-icons'
+import { faEye } from '@fortawesome/pro-regular-svg-icons'
+import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons'
+import { faKey } from '@fortawesome/pro-regular-svg-icons'
+import { faLock } from '@fortawesome/pro-regular-svg-icons'
+import { faPencil } from '@fortawesome/pro-regular-svg-icons'
+import { faPlusCircle } from '@fortawesome/pro-regular-svg-icons'
+import { faSave } from '@fortawesome/pro-regular-svg-icons'
+import { faSignIn } from '@fortawesome/pro-regular-svg-icons'
+import { faSignOut } from '@fortawesome/pro-regular-svg-icons'
+import { faTimes } from '@fortawesome/pro-regular-svg-icons'
+import { faUser } from '@fortawesome/pro-regular-svg-icons'
+import { faUserPlus } from '@fortawesome/pro-regular-svg-icons'
 
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-
-fontawesome.library.add(
+library.add(
   faAngleDoubleLeft,
   faAngleDoubleRight,
+  faCircleNotch,
   faEllipsisH,
   faEdit,
   faExclamationCircle,
@@ -40,4 +40,6 @@ fontawesome.library.add(
   faUserPlus
 )
 
-Vue.component('fa-icon', FontAwesomeIcon)
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+Vue.component('fa-icon', FontAwesomeIcon);
