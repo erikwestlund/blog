@@ -15,6 +15,10 @@ class EditPost(MethodView):
     @login_required
     def get(self, post_id):
         post = Post.query.get(post_id)
+
+        if not current_user.has_role('administrator') or current_user.id != post.user_id:
+            abort(403)
+
         return render_template('posts/edit_post.html', post_id=post_id)
 
     @login_required
