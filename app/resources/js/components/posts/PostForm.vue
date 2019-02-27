@@ -14,9 +14,9 @@
                 />
                 <span class="capitalize">{{ action }}</span> Post
             </h1>
-            <div class="block lg:flex mt-6">
-                <div class="w-full lg:w-3/4 xl:w-2/3">
-                    <div class="w-full px-3">
+            <div class="block xl:flex mt-6">
+                <div class="w-full p-3 xl:w-2/3 ">
+                    <div class="w-full">
                         <label
                                 class="text-input-label"
                                 for="grid-body"
@@ -37,7 +37,28 @@
                                 v-text="form.errors.get('title')"
                         />
                     </div>
-                    <div class="w-full px-3 mt-5 ">
+                    <div class="w-full mt-5" v-if="hasSlug">
+                        <label
+                                class="text-input-label"
+                                for="grid-body"
+                        >
+                            Slug
+                        </label>
+                        <input
+                                id="grid-slug"
+                                v-model="form.slug"
+                                class="text-input focus:outline-none focus:border-grey"
+                                name="slug"
+                                :class="{'border border-red' : form.errors.has('slug')}"
+                                placeholder="Slug"
+                        >
+                        <p
+                                v-if="form.errors.has('slug')"
+                                class="text-red text-xs italic"
+                                v-text="form.errors.get('slug')"
+                        />
+                    </div>
+                    <div class="w-full mt-5">
                         <label
                                 class="text-input-label"
                                 for="grid-body"
@@ -57,7 +78,7 @@
                         />
                     </div>
                 </div>
-                <div class="w-full lg:w-1/3 xl:w-1/4 mt-5 lg:mt-0 px-0 lg:px-8">
+                <div class="w-full xl:w-1/3 mt-5 xl:mt-0 p-3">
                     <div class="w-full">
                         <label
                                 class="text-input-label"
@@ -280,7 +301,8 @@
                         tags: [],
                         title: '',
                         body: '',
-                        published_at: ''
+                        published_at: '',
+                        slug: '',
                     },
                     this.isUpdateForm,
                     true
@@ -299,6 +321,10 @@
                 return this.action === 'edit'
                     ? `/admin/posts/${this.postId}`
                     : '/admin/posts/create'
+            },
+
+            hasSlug() {
+                return this.form.slug
             },
 
             isPublished() {
@@ -366,6 +392,7 @@
                         this.form.published_at = this.savedPost.published_at ?
                             new Date(this.savedPost.published_at).toISOString() :
                             ''
+                        this.form.slug = this.savedPost.slug || ''
 
                         this.seedTags = this.savedPost.tags.map(tag => {
                             return {
@@ -430,6 +457,8 @@
                             flash('Post successfully published!')
                             this.postId = response.post.id
                         }
+
+                        this.form.slug = response.post.slug
 
                         setTimeout(() => {
                             this.savedPost = response.post

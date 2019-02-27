@@ -5,6 +5,7 @@ import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
 import Paginate from './components/ui/Paginate'
 import ConfirmEmailAlert from './components/users/ConfirmEmailAlert'
+import Posts from './components/posts/Posts'
 import PostForm from './components/posts/PostForm'
 import PostsAdminPanel from './components/posts/PostsAdminPanel'
 import EditUser from './components/users/EditUser'
@@ -36,6 +37,7 @@ const app = new Vue({
         'navigation-bar': NavigationBar,
         'paginate': Paginate,
         // posts
+        'posts': Posts,
         'post-form': PostForm,
         'posts-admin-panel': PostsAdminPanel,
         // users

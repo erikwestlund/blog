@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
@@ -24,7 +26,10 @@ class CreatePost(MethodView):
             )
 
             if form.published_at.data and not post.published_at:
-                post.published_at = func.now()
+                post.published_at = datetime.now()
+
+            if post.published_at:
+                post.slug = Post.generate_slug(form.title.data, str(post.published_at))
 
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 

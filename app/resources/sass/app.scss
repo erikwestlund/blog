@@ -16,13 +16,24 @@ body {
 }
 
 a {
-  color: $blue-dark;
+  color: $blue-darker;
   text-decoration: none;
 }
 
 a:hover {
-  color: $blue-darker;
+  color: $blue-dark;
   text-decoration: none;
+}
+
+p:first-child {
+  @apply mt-0;
+}
+p {
+  @apply mt-8;
+}
+
+blockquote {
+  @apply px-4 mt-8 border-l-2 border-grey-light text-grey-dark;
 }
 
 

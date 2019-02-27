@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 black = "*"
+dateutil = "*"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.7"

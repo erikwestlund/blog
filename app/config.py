@@ -29,4 +29,6 @@ class Config:
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+    SNIPPET_LENGTH = os.getenv("SNIPPET_LENGTH")
+    POSTS_PER_PAGE = os.getenv("POSTS_PER_PAGE")
     PAGINATE_DEFAULT = os.getenv("PAGINATE_DEFAULT")

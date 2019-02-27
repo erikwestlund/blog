@@ -4,7 +4,7 @@
             <span
                 href="/admin"
                 title="Admin Tools"
-                class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker cursor-pointer"
+                class="inline-block mt-4 lg:inline-block lg:mt-0 cursor-pointer text-blue-darker hover:text-blue-dark"
                 @click="open = !open"
             >
                 <fa-icon
@@ -25,7 +25,6 @@
                                 />
                                 <a
                                     href="/admin/posts"
-                                    class="text-blue-dark hover:text-blue-darker"
                                 >
                                     Posts
                                 </a>
@@ -37,7 +36,6 @@
                                 />
                                 <a
                                     href="/admin/users"
-                                    class="text-blue-dark hover:text-blue-darker"
                                 >
                                     Users
                                 </a>

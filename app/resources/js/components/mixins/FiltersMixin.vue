@@ -1,5 +1,7 @@
 <script>
 import { format, distanceInWordsToNow } from 'date-fns'
+import { markdown } from 'markdown'
+
 export default {
     filters: {
         number (value) {
@@ -13,6 +15,9 @@ export default {
         },
         truncate (string, length) {
             return string.length <= length ? string : string.substring(0, length) + '...'
+        },
+        markdown(string) {
+            return markdown.toHTML(string)
         }
     }
 }

@@ -945,13 +945,30 @@ body {
 }
 
 a {
-  color: #2779bd;
+  color: #1c3d5a;
   text-decoration: none;
 }
 
 a:hover {
-  color: #1c3d5a;
+  color: #2779bd;
   text-decoration: none;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin-top: 2rem;
+}
+
+blockquote {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 2rem;
+  border-left-width: 2px;
+  border-color: #dae1e7;
+  color: #8795a1;
 }
 
 .list-reset {

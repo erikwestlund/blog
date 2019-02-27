@@ -1,8 +1,12 @@
+from datetime import datetime
+from logging import log
+
 from flask import abort
 from flask import flash
 from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
+from slugify import slugify
 from sqlalchemy import func, null as sqlalchemy_null
 
 from app import db
@@ -18,7 +22,7 @@ class FetchPost(MethodView):
         post = Post.query.get(post_id)
 
         if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
+                current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -31,7 +35,7 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
+                current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -42,7 +46,7 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
+                current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -58,25 +62,30 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
+                current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
-        form = SavePostForm()
+        form = SavePostForm(post)
 
         if form.validate_on_submit():
             revision = PostRevision(post_id=post_id, revision=post.to_json())
             db.session.add(revision)
 
+            post.title = form.title.data
+            post.body = form.body.data
+
             if form.published_at.data and not post.published_at:
-                post.published_at = func.now()
+                post.published_at = datetime.now()
             elif form.published_at.data and post.published_at:
                 post.published_at = form.published_at.data
             elif not form.published_at.data and post.published_at:
                 post.published_at = None
 
-            post.title = form.title.data
-            post.body = form.body.data
+            if not form.slug.data and post.published_at:
+                post.slug = post.generate_slug(form.title.data, form.published_at.data)
+            elif form.slug.data:
+                post.slug = slugify(form.slug.data)
 
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 

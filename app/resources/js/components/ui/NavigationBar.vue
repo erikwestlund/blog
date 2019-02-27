@@ -2,12 +2,12 @@
     <nav class="flex items-center justify-between flex-wrap">
         <div class="flex items-center flex-no-shrink mr-12">
             <span class="text-4xl">
-                Erik Westlund
+                <a class="text-black" href="/">Erik Westlund</a>
             </span>
         </div>
         <div class="block lg:hidden">
             <button
-                class="flex items-center px-3 py-2 border rounded text-blue-dark border-blue-dark bg-white  hover:border-blue-darker hover:text-blue-darker"
+                class="flex items-center px-3 py-2 border rounded border-blue-dark bg-white hover:border-blue-darker"
                 @click="toggleMobileNav()"
             >
                 <svg
@@ -29,26 +29,26 @@
         >
             <div class="text-lg lg:flex-grow">
                 <a
-                    href="#"
-                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
+                    href="/"
+                    class="block mt-4 lg:inline-block lg:mt-0 mr-6"
                 >
                     Blog
                 </a>
+                <!--<a-->
+                    <!--href="#"-->
+                    <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
+                <!--&gt;-->
+                    <!--About-->
+                <!--</a>-->
+                <!--<a-->
+                    <!--href="#"-->
+                    <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
+                <!--&gt;-->
+                    <!--CV-->
+                <!--</a>-->
                 <a
-                    href="#"
-                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
-                >
-                    About
-                </a>
-                <a
-                    href="#"
-                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
-                >
-                    CV
-                </a>
-                <a
-                    href="#"
-                    class="block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker"
+                    href="mailto:edbwestlund@gmail.com"
+                    class="block mt-4 lg:inline-block lg:mt-0"
                 >
                     Contact Me
                 </a>
@@ -58,7 +58,7 @@
                     <a
                         href="/admin/posts/create"
                         title="Create Post"
-                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
+                        class="inline-block mt-4 lg:inline-block lg:mt-0 mr-6"
                     >
                         <fa-icon
                             class="mr-1"
@@ -68,7 +68,7 @@
                     <a
                         href="/account"
                         title="Your Account"
-                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
+                        class="inline-block mt-4 lg:inline-block lg:mt-0 mr-6"
                     >
                         <fa-icon
                             class="mr-1"
@@ -78,7 +78,7 @@
                     <a
                         href="/logout"
                         title="Log Out"
-                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
+                        class="inline-block mt-4 lg:inline-block lg:mt-0 mr-6"
                     >
                         <fa-icon
                             class="mr-1"
@@ -91,7 +91,7 @@
                     <a
                         href="/login"
                         title="Log In"
-                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker mr-6"
+                        class="inline-block mt-4 lg:inline-block lg:mt-0 mr-6"
                         @click.prevent
                         @click.exact="showLoginModal = true"
                     >
@@ -103,7 +103,7 @@
                     <a
                         href="/register"
                         title="Register"
-                        class="inline-block mt-4 lg:inline-block lg:mt-0 text-blue-dark hover:text-blue-darker "
+                        class="inline-block mt-4 lg:inline-block lg:mt-0"
                     >
                         <fa-icon
                             class="mr-1"
@@ -137,7 +137,7 @@
                     :icon="['far', 'key']"
                 />
                 <a
-                    class="text-blue-dark hover:text-blue-darker pt-4"
+                    class="text-blue-dark  pt-4"
                     href="/users/reset-password"
                 >
                     Reset
