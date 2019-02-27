@@ -30,14 +30,17 @@
     "glob-all": "^3.1.0",
     "laravel-mix": "^4.0.14",
     "lodash": "^4.17.11",
+    "luxon": "^1.11.3",
     "prettier": "1.15.3",
     "purgecss-webpack-plugin": "^1.4.0",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "tailwindcss": "^0.6.6",
     "vue": "^2.6.7",
+    "vue-datetime": "^1.0.0-beta.10",
     "vue-simplemde": "^0.4.9",
-    "vue-template-compiler": "^2.6.7"
+    "vue-template-compiler": "^2.6.7",
+    "weekstart": "^1.0.0"
   },
   "dependencies": {}
 }
