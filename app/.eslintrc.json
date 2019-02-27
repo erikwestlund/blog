@@ -3,6 +3,23 @@
     "standard",
     "plugin:vue/recommended"
   ],
+  "rules": {
+    "indent": [
+      "error",
+      4
+    ],
+    "vue/html-indent": [
+      "error",
+      4,
+      {
+        "attribute": 1,
+        "baseIndent": 1,
+        "closeBracket": 0,
+        "alignAttributesVertically": false,
+        "ignores": []
+      }
+    ]
+  },
   "globals": {
     "_": true,
     "app": true,

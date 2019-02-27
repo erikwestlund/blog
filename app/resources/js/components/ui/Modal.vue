@@ -2,14 +2,14 @@
     <div>
         <transition name="modal">
             <div
-                    class="modal-mask"
-                    @click="$emit('close')"
+                class="modal-mask"
+                @click="$emit('close')"
             >
                 <div class="modal-wrapper">
                     <div
-                            class="modal-container"
-                            :class="{'lg': large, 'sm':small}"
-                            @click.stop
+                        class="modal-container"
+                        :class="{'lg': large, 'sm':small}"
+                        @click.stop
                     >
                         <div class="modal-header">
                             <slot name="header">
@@ -23,18 +23,21 @@
                             </slot>
                         </div>
 
-                        <div v-show="! noFooter" class="modal-footer mt-10 flex content-end flex-wrap">
+                        <div
+                            v-show="! noFooter"
+                            class="modal-footer mt-10 flex content-end flex-wrap"
+                        >
                             <div class="w-3/4 m-auto text-sm">
-                                <slot name="footer"/>
+                                <slot name="footer" />
                             </div>
                             <div class="w-1/4 text-right">
                                 <button
-                                        class="btn btn-grey hover:bg-grey-darkest hover:border-grey-darkest"
-                                        @click="$emit('close')"
+                                    class="btn btn-grey hover:bg-grey-darkest hover:border-grey-darkest"
+                                    @click="$emit('close')"
                                 >
                                     <fa-icon
-                                            class="mr-2"
-                                            :icon="['far', 'times']"
+                                        class="mr-2"
+                                        :icon="['far', 'times']"
                                     />
                                     {{ doneText }}
                                 </button>
@@ -48,49 +51,49 @@
 </template>
 
 <script>
-    export default {
-        name: 'Modal',
-        props: {
-            doneText: {
-                type: String,
-                default: 'OK'
-            },
-            noFooter: {
-                type: Boolean,
-                default: false,
-            },
-            doneIcon: {
-                type: String,
-                default: 'times'
-            },
-            large: {
-                type: Boolean,
-                default: false
-            },
-            small: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    name: 'Modal',
+    props: {
+        doneText: {
+            type: String,
+            default: 'OK'
         },
-        data() {
-            return {
-                showModal: false
-            }
+        noFooter: {
+            type: Boolean,
+            default: false
         },
-        created() {
-            document.addEventListener('keyup', this.escapeKeyListener)
+        doneIcon: {
+            type: String,
+            default: 'times'
         },
-        destroyed() {
-            document.removeEventListener('keyup', this.escapeKeyListener)
+        large: {
+            type: Boolean,
+            default: false
         },
-        methods: {
-            escapeKeyListener(event) {
-                if (event.keyCode === 27) {
-                    this.$emit('close')
-                }
+        small: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data () {
+        return {
+            showModal: false
+        }
+    },
+    created () {
+        document.addEventListener('keyup', this.escapeKeyListener)
+    },
+    destroyed () {
+        document.removeEventListener('keyup', this.escapeKeyListener)
+    },
+    methods: {
+        escapeKeyListener (event) {
+            if (event.keyCode === 27) {
+                this.$emit('close')
             }
         }
     }
+}
 </script>
 
 <style scoped>

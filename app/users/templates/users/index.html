@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+{% block content %}
+    <h1>
+        <fa-icon class="mr-2 text-grey" :icon="['far', 'user']"></fa-icon>
+        Users
+    </h1>
+    <div class="mt-6 bg-white shadow p-6 rounded xl:w-4/5 w-full">
+        <users-admin-panel name="users"
+                           object="user"
+                           endpoint="/admin/users.json">
+        </users-admin-panel>
+    </div>
+{% endblock content %}

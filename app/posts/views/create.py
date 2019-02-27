@@ -10,19 +10,18 @@ from posts.models.post import Post
 
 
 class CreatePost(MethodView):
-
     @login_required
     def get(self):
-        return render_template('posts/create_post.html')
+        return render_template("posts/create.html")
 
     @login_required
     def post(self):
         form = SavePostForm()
 
         if form.validate_on_submit():
-            post = Post(user_id=current_user.id,
-                        title=form.title.data,
-                        body=form.body.data)
+            post = Post(
+                user_id=current_user.id, title=form.title.data, body=form.body.data
+            )
 
             if form.published_at.data and not post.published_at:
                 post.published_at = func.now()
@@ -32,11 +31,6 @@ class CreatePost(MethodView):
             db.session.add(post)
             db.session.commit()
 
-            return jsonify({
-                'action': 'create',
-                'success': True,
-                'post': post
-            })
+            return jsonify({"action": "create", "success": True, "post": post})
         else:
             return jsonify(errors=form.errors), 422
-

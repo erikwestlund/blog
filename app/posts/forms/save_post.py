@@ -6,13 +6,10 @@ from utils.forms.nonvalidatingmultiselectfield import NonValidatingMultiSelectFi
 
 
 class SavePostForm(FlaskForm):
-    title = StringField('Title',
-                        validators=[DataRequired()])
+    title = StringField("Title", validators=[DataRequired()])
 
-    body = StringField('Body',
-                       validators=[DataRequired()])
+    body = StringField("Body", validators=[DataRequired()])
 
-    tags = NonValidatingMultiSelectField('Tags', choices=[])
+    tags = NonValidatingMultiSelectField("Tags", choices=[])
 
-    published_at = StringField('Published At',
-                           validators=[Optional()])
+    published_at = StringField("Published At", validators=[Optional()])

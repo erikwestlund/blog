@@ -838,6 +838,13 @@ ul.pagination li:last-child {
   color: #fff;
 }
 
+.btn-orange {
+  flex-shrink: 0;
+  background-color: #de751f;
+  border-color: #de751f;
+  color: #fff;
+}
+
 button:disabled,
 button[disabled],
 button:disabled:hover,
@@ -924,7 +931,7 @@ button[disabled]:hover {
   color: #cc1f1a;
 }
 
-.component-tags .vue-tags-input .ti-input {
+.component-tags.vue-tags-input .ti-input {
   border-radius: .25rem;
 }
 

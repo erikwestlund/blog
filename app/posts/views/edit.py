@@ -1,43 +1,75 @@
+from flask import abort
+from flask import flash
 from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
-
 from sqlalchemy import func
 
 from app import db
 from main.models.tag import Tag
 from posts.forms.save_post import SavePostForm
 from posts.models.post import Post, PostRevision
-from flask import abort
+from utils.models.find_or_fail import find_or_fail
 
-class EditPost(MethodView):
 
+class FetchPost(MethodView):
     @login_required
     def get(self, post_id):
         post = Post.query.get(post_id)
 
-        if not current_user.has_role('administrator') or current_user.id != post.user_id:
+        if not (
+            current_user.has_role("administrator") or current_user.id != post.user_id
+        ):
             abort(403)
 
-        return render_template('posts/edit_post.html', post_id=post_id)
+        return jsonify({"data": post.to_dict()})
+
+
+class EditPost(MethodView):
+    @login_required
+    def get(self, post_id):
+        post = find_or_fail(Post, Post.id == post_id)
+
+        if not (
+            current_user.has_role("administrator") or current_user.id != post.user_id
+        ):
+            abort(403)
+
+        return render_template("posts/edit.html", post_id=post_id)
+
+    @login_required
+    def delete(self, post_id):
+        post = find_or_fail(Post, Post.id == post_id)
+
+        if not (
+            current_user.has_role("administrator") or current_user.id != post.user_id
+        ):
+            abort(403)
+
+        db.session.delete(post)
+        db.session.commit()
+
+        flash("Post successfully deleted.")
+
+        return jsonify({"action": "delete", "success": True, "post": post})
 
     @login_required
     def patch(self, post_id):
-        post = Post.query.get(post_id)
+        post = find_or_fail(Post, Post.id == post_id)
 
-        if not current_user.has_role('administrator') or current_user.id != post.user_id:
+        if not (
+            current_user.has_role("administrator") or current_user.id != post.user_id
+        ):
             abort(403)
 
         form = SavePostForm()
 
         if form.validate_on_submit():
-            revision = PostRevision(post_id=post_id,
-                                    revision=post.to_json())
+            revision = PostRevision(post_id=post_id, revision=post.to_json())
             db.session.add(revision)
 
             if form.published_at.data and not post.published_at:
                 post.published_at = func.now()
-
 
             post.title = form.title.data
             post.body = form.body.data
@@ -45,11 +77,6 @@ class EditPost(MethodView):
 
             db.session.commit()
 
-            return jsonify({
-                'action': 'edit',
-                'success': True,
-                'post': post
-            })
+            return jsonify({"action": "edit", "success": True, "post": post})
         else:
             return jsonify(errors=form.errors), 422
-

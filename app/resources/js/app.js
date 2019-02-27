@@ -5,7 +5,8 @@ import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
 import Paginate from './components/ui/Paginate'
 import ConfirmEmailAlert from './components/users/ConfirmEmailAlert'
-import Post from './components/posts/Post'
+import PostForm from './components/posts/PostForm'
+import PostsAdminPanel from './components/posts/PostsAdminPanel'
 import EditUser from './components/users/EditUser'
 import LoginUser from './components/users/LoginUser'
 import RegisterUser from './components/users/RegisterUser'
@@ -22,27 +23,28 @@ require('./font-awesome')
 window.Event = new Event()
 
 window.flash = function (message, level = 'success', timeout = 3) {
-  window.Event.fire('flash', { message, level, timeout })
+    window.Event.fire('flash', { message, level, timeout })
 }
 
 /* eslint no-unused-vars: "off" */
 const app = new Vue({
-  el: '#app',
-  components: {
+    el: '#app',
+    components: {
     // ui
-    alert: Alert,
-    flash: Flash,
-    'navigation-bar': NavigationBar,
-    paginate: Paginate,
-    // posts
-    post: Post,
-    // users
-    'confirm-email-alert': ConfirmEmailAlert,
-    'edit-user': EditUser,
-    'login-user': LoginUser,
-    'register-user': RegisterUser,
-    'reset-password': ResetPassword,
-    'reset-password-request': ResetPasswordRequest,
-    'users-admin-panel': UsersAdminPanel
-  }
+        'alert': Alert,
+        'flash': Flash,
+        'navigation-bar': NavigationBar,
+        'paginate': Paginate,
+        // posts
+        'post-form': PostForm,
+        'posts-admin-panel': PostsAdminPanel,
+        // users
+        'confirm-email-alert': ConfirmEmailAlert,
+        'edit-user': EditUser,
+        'login-user': LoginUser,
+        'register-user': RegisterUser,
+        'reset-password': ResetPassword,
+        'reset-password-request': ResetPasswordRequest,
+        'users-admin-panel': UsersAdminPanel
+    }
 })

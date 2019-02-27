@@ -16,26 +16,26 @@ class BaseModel(Model):
     _changes = {}
 
     def __init__(self, **kwargs):
-        kwargs['_force'] = True
+        kwargs["_force"] = True
         self._set_columns(**kwargs)
 
     def _set_columns(self, **kwargs):
-        force = kwargs.get('_force')
+        force = kwargs.get("_force")
 
         readonly = []
-        if hasattr(self, 'readonly_fields'):
+        if hasattr(self, "readonly_fields"):
             readonly = self.readonly_fields
-        if hasattr(self, 'hidden_fields'):
+        if hasattr(self, "hidden_fields"):
             readonly += self.hidden_fields
 
         readonly += [
-            'id',
-            'created',
-            'updated',
-            'modified',
-            'created_at',
-            'updated_at',
-            'modified_at',
+            "id",
+            "created",
+            "updated",
+            "modified",
+            "created_at",
+            "updated_at",
+            "modified_at",
         ]
 
         changes = {}
@@ -49,7 +49,7 @@ class BaseModel(Model):
             if allowed and exists:
                 val = getattr(self, key)
                 if val != kwargs[key]:
-                    changes[key] = {'old': val, 'new': kwargs[key]}
+                    changes[key] = {"old": val, "new": kwargs[key]}
                     setattr(self, key, kwargs[key])
 
         for rel in relationships:
@@ -62,23 +62,26 @@ class BaseModel(Model):
                     query = getattr(self, rel)
                     cls = self.__mapper__.relationships[rel].argument()
                     for item in kwargs[rel]:
-                        if 'id' in item and query.filter_by(id=item['id']).limit(1).count() == 1:
-                            obj = cls.query.filter_by(id=item['id']).first()
+                        if (
+                            "id" in item
+                            and query.filter_by(id=item["id"]).limit(1).count() == 1
+                        ):
+                            obj = cls.query.filter_by(id=item["id"]).first()
                             col_changes = obj.set_columns(**item)
                             if col_changes:
-                                col_changes['id'] = str(item['id'])
+                                col_changes["id"] = str(item["id"])
                                 if rel in changes:
                                     changes[rel].append(col_changes)
                                 else:
                                     changes.update({rel: [col_changes]})
-                            valid_ids.append(str(item['id']))
+                            valid_ids.append(str(item["id"]))
                         else:
                             col = cls()
                             col_changes = col.set_columns(**item)
                             query.append(col)
                             db.session.flush()
                             if col_changes:
-                                col_changes['id'] = str(col.id)
+                                col_changes["id"] = str(col.id)
                                 if rel in changes:
                                     changes[rel].append(col_changes)
                                 else:
@@ -87,10 +90,7 @@ class BaseModel(Model):
 
                     # delete related rows that were not in kwargs[rel]
                     for item in query.filter(not_(cls.id.in_(valid_ids))).all():
-                        col_changes = {
-                            'id': str(item.id),
-                            'deleted': True,
-                        }
+                        col_changes = {"id": str(item.id), "deleted": True}
                         if rel in changes:
                             changes[rel].append(col_changes)
                         else:
@@ -107,19 +107,19 @@ class BaseModel(Model):
                     else:
                         if val != kwargs[rel]:
                             setattr(self, rel, kwargs[rel])
-                            changes[rel] = {'old': val, 'new': kwargs[rel]}
+                            changes[rel] = {"old": val, "new": kwargs[rel]}
 
         return changes
 
     def set_columns(self, **kwargs):
         self._changes = self._set_columns(**kwargs)
-        if 'modified' in self.__table__.columns:
+        if "modified" in self.__table__.columns:
             self.modified = datetime.utcnow()
-        if 'updated' in self.__table__.columns:
+        if "updated" in self.__table__.columns:
             self.updated = datetime.utcnow()
-        if 'modified_at' in self.__table__.columns:
+        if "modified_at" in self.__table__.columns:
             self.modified_at = datetime.utcnow()
-        if 'updated_at' in self.__table__.columns:
+        if "updated_at" in self.__table__.columns:
             self.updated_at = datetime.utcnow()
         return self._changes
 
@@ -139,10 +139,10 @@ class BaseModel(Model):
         if not hide:
             hide = []
         hidden = []
-        if hasattr(self, 'hidden_fields'):
+        if hasattr(self, "hidden_fields"):
             hidden = self.hidden_fields
         default = []
-        if hasattr(self, 'visible'):
+        if hasattr(self, "visible"):
             default = self.visible
 
         ret_data = {}
@@ -152,13 +152,13 @@ class BaseModel(Model):
 
             def prepend_path(item):
                 item = item.lower()
-                if item.split('.', 1)[0] == path:
+                if item.split(".", 1)[0] == path:
                     return item
                 if len(item) == 0:
                     return item
-                if item[0] != '.':
-                    item = '.%s' % item
-                item = '%s%s' % (path, item)
+                if item[0] != ".":
+                    item = ".%s" % item
+                item = "%s%s" % (path, item)
                 return item
 
             show[:] = [prepend_path(x) for x in show]
@@ -169,14 +169,14 @@ class BaseModel(Model):
         properties = dir(self)
 
         for key in columns:
-            check = '%s.%s' % (path, key)
+            check = "%s.%s" % (path, key)
             if check in hide or key in hidden:
                 continue
-            if show_all or key is 'id' or check in show or key in default:
+            if show_all or key is "id" or check in show or key in default:
                 ret_data[key] = getattr(self, key)
 
         for key in relationships:
-            check = '%s.%s' % (path, key)
+            check = "%s.%s" % (path, key)
             if check in hide or key in hidden:
                 continue
             if show_all or check in show or key in default:
@@ -185,27 +185,29 @@ class BaseModel(Model):
                 if is_list:
                     ret_data[key] = []
                     for item in getattr(self, key):
-                        ret_data[key].append(item.to_dict(
-                            show=show,
-                            hide=hide,
-                            path=('%s.%s' % (path, key.lower())),
-                            show_all=show_all,
-                        ))
+                        ret_data[key].append(
+                            item.to_dict(
+                                show=show,
+                                hide=hide,
+                                path=("%s.%s" % (path, key.lower())),
+                                show_all=show_all,
+                            )
+                        )
                 else:
                     if self.__mapper__.relationships[key].query_class is not None:
                         ret_data[key] = getattr(self, key).to_dict(
                             show=show,
                             hide=hide,
-                            path=('%s.%s' % (path, key.lower())),
+                            path=("%s.%s" % (path, key.lower())),
                             show_all=show_all,
                         )
                     else:
                         ret_data[key] = getattr(self, key)
 
         for key in list(set(properties) - set(columns) - set(relationships)):
-            if key.startswith('_'):
+            if key.startswith("_"):
                 continue
-            check = '%s.%s' % (path, key)
+            check = "%s.%s" % (path, key)
             if check in hide or key in hidden:
                 continue
             if show_all or check in show or key in default:
@@ -220,7 +222,7 @@ class BaseModel(Model):
     @declared_attr
     def id(cls):
         for base in cls.__mro__[1:-1]:
-            if getattr(base, '__table__', None) is not None:
+            if getattr(base, "__table__", None) is not None:
                 type = sa.ForeignKey(base.id)
                 break
         else:
@@ -228,14 +230,13 @@ class BaseModel(Model):
 
         return sa.Column(type, primary_key=True)
 
-
     def pluck(self, key, collection=None):
         if not collection:
             collection = self.query.all()
         return lpluck_attr(key, collection)
 
     def to_json(self):
-        if hasattr(self, 'visible'):
+        if hasattr(self, "visible"):
             safe = {keep: self.to_dict()[keep] for keep in self.visible}
             return json.dumps(safe, cls=AlchemyEncoder)
         else:
@@ -252,4 +253,3 @@ class BaseModel(Model):
     def jsonify(collection):
         listified = [i.to_dict() for i in collection]
         return json.dumps(listified, cls=AlchemyEncoder)
-

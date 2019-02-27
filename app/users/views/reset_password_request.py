@@ -7,9 +7,8 @@ from users.forms.reset_password_request import ResetPasswordRequestForm
 
 
 class ResetPasswordRequest(MethodView):
-
     def get(self):
-        return render_template('users/reset_password_request.html')
+        return render_template("users/reset_password_request.html")
 
     def post(self):
         form = ResetPasswordRequestForm()
@@ -18,7 +17,9 @@ class ResetPasswordRequest(MethodView):
 
             email_reset_password_link.delay(user.id)
 
-            flash('We have sent you an email with directions on how to reset your password.')
-            return jsonify({'success': True})
+            flash(
+                "We have sent you an email with directions on how to reset your password."
+            )
+            return jsonify({"success": True})
         else:
             return jsonify(errors=form.errors), 422

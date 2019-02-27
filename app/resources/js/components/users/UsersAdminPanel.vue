@@ -1,38 +1,49 @@
 <template>
-  <div>
-    <table class="table">
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th />
-      </tr>
-      <tr
-        v-for="user in data.data"
-        :key="user.id"
-      >
-        <td v-text="user.username" />
-        <td v-text="user.email" />
-        <td>
-          <a :href="`/users/${user.id}/edit`">
-            <fa-icon :icon="['far', 'edit']" />
-          </a>
-        </td>
-      </tr>
-    </table>
-    <paginate
-      class="mt-8"
-      name="users"
-      :data="paginationMeta"
-    />
-  </div>
+    <div>
+        <table class="table w-full overflow-scroll">
+            <tr>
+                <th>Username</th>
+                <th class="hidden md:table-cell">
+                    Email
+                </th>
+                <th class="hidden md:table-cell">
+                    Registered
+                </th>
+                <th />
+            </tr>
+            <tr
+                v-for="user in data.data"
+                :key="user.id"
+            >
+                <td v-text="user.username" />
+                <td
+                    class="hidden md:table-cell"
+                    v-text="user.email"
+                />
+                <td class="hidden md:table-cell">
+                    {{ user.created_at | ago }} ago
+                </td>
+                <td>
+                    <a :href="`/users/${user.id}`">
+                        <fa-icon :icon="['far', 'edit']" />
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <paginate
+            class="mt-8"
+            name="users"
+            :data="paginationMeta"
+        />
+    </div>
 </template>
 
 <script>
 import AdminPanel from '../ui/AdminPanel'
 
 export default {
-  name: 'UsersAdminPanel',
-  extends: AdminPanel
+    name: 'UsersAdminPanel',
+    extends: AdminPanel
 }
 </script>
 

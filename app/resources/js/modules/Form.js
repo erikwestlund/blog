@@ -6,7 +6,7 @@ export default class Form {
      *
      * @param {object} data
      */
-    constructor(data, isUpdateForm = false, dontReset = false) {
+    constructor (data, isUpdateForm = false, dontReset = false) {
         this.originalData = _.cloneDeep(data)
         this.dontReset = dontReset
 
@@ -21,7 +21,7 @@ export default class Form {
     /**
      * Fetch all relevant data for the form.
      */
-    data() {
+    data () {
         const data = {}
 
         for (const property in this.originalData) {
@@ -34,7 +34,7 @@ export default class Form {
     /**
      * Reset the form fields.
      */
-    reset(force_reset = false) {
+    reset (force_reset = false) {
         if (this.formType === 'create') {
             for (const field in this.originalData) {
                 this[field] = this.originalData[field]
@@ -49,7 +49,7 @@ export default class Form {
      * .
      * @param {string} url
      */
-    post(url) {
+    post (url) {
         return this.submit('post', url)
     }
 
@@ -58,7 +58,7 @@ export default class Form {
      * .
      * @param {string} url
      */
-    put(url) {
+    put (url) {
         return this.submit('put', url)
     }
 
@@ -67,7 +67,7 @@ export default class Form {
      * .
      * @param {string} url
      */
-    patch(url) {
+    patch (url) {
         return this.submit('patch', url)
     }
 
@@ -76,7 +76,7 @@ export default class Form {
      * .
      * @param {string} url
      */
-    delete(url) {
+    delete (url) {
         return this.submit('delete', url)
     }
 
@@ -86,12 +86,11 @@ export default class Form {
      * @param {string} requestType
      * @param {string} url
      */
-    submit(requestType, url) {
-
+    submit (requestType, url) {
         return new Promise((resolve, reject) => {
             axios[requestType](url, this.data())
                 .then((response) => {
-                    if(! this.dontReset){
+                    if (!this.dontReset) {
                         this.onSuccess(response.data)
                     }
 
@@ -109,7 +108,7 @@ export default class Form {
      *
      * @param {object} data
      */
-    onSuccess(data) {
+    onSuccess (data) {
         this.reset()
     }
 
@@ -121,10 +120,9 @@ export default class Form {
      *
      * @param {object} errors
      */
-    onFail(errors) {
+    onFail (errors) {
         if (errors.hasOwnProperty('errors')) {
             this.errors.record(errors.errors)
         }
     }
-
 }

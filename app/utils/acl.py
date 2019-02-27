@@ -15,5 +15,7 @@ def user_has_role(role):
                 abort(403)
 
             return f(*args, **kwargs)
+
         return decorated_function
+
     return decorator

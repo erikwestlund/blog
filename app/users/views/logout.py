@@ -4,8 +4,7 @@ from flask_login import logout_user
 
 
 class Logout(MethodView):
-
     def get(self):
         logout_user()
-        flash('You have been logged out.')
-        return redirect(url_for('main.index'))
+        flash("You have been logged out.")
+        return redirect(url_for("main.index"))

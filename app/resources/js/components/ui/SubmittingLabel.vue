@@ -1,34 +1,39 @@
 <template>
     <span>
-        <fa-icon class="mr-2 fa-spin" :icon="['far', 'circle-notch']"/>
+        <fa-icon
+            class="mr-2 fa-spin"
+            :icon="['far', 'circle-notch']"
+        />
         {{ submittingText }}
     </span>
 </template>
 
 <script>
-    export default {
-        computed: {
-            submittingText() {
-                if (this.type == 'saving') {
-                    return 'Saving...'
-                } else if (this.type == 'publishing') {
-                    return 'Publishing...'
-                } else if (this.type == 'unpublishing') {
-                    return 'Unpublishing...'
-                } else {
-                    return 'Submitting...'
-                }
-            }
+export default {
+    props: {
+        submitting: {
+            type: Boolean,
+            default: false
         },
-        props: {
-            submitting: {
-                type: Boolean,
-                default: false
-            },
-            type: {
-                type: String,
-                default: 'submitting'
+        type: {
+            type: String,
+            default: 'submitting'
+        }
+    },
+    computed: {
+        submittingText () {
+            if (this.type === 'saving') {
+                return 'Saving...'
+            } else if (this.type === 'deleting') {
+                return 'Deleting...'
+            } else if (this.type === 'publishing') {
+                return 'Publishing...'
+            } else if (this.type === 'unpublishing') {
+                return 'Unpublishing...'
+            } else {
+                return 'Submitting...'
             }
         }
     }
+}
 </script>

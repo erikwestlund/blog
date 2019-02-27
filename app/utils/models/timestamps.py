@@ -11,4 +11,4 @@ class TimestampMixin(object):
 
     @declared_attr
     def updated_at(cls):
-        return db.Column(db.DateTime, onupdate=func.now())
+        return db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())

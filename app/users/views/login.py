@@ -7,13 +7,12 @@ from flask_login import current_user, login_user
 
 
 class Login(MethodView):
-
     def get(self):
         if current_user.is_authenticated:
-            return redirect(url_for('main.index'))
+            return redirect(url_for("main.index"))
         else:
-            next = request.args.get('next') or None
-            return render_template('users/login.html', title='Log In', next=next)
+            next = request.args.get("next") or None
+            return render_template("users/login.html", title="Log In", next=next)
 
     def post(self):
         form = LoginForm()
@@ -21,14 +20,13 @@ class Login(MethodView):
             user = User.query.filter_by(email=form.email.data).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
-                return jsonify({
-                    'success': True,
-                    'next': form.next.data or url_for('main.index')
-                })
+                return jsonify(
+                    {"success": True, "next": form.next.data or url_for("main.index")}
+                )
             else:
-                return jsonify(errors={
-                    'password': ['Incorrect email and password.']
-                }), 422
+                return (
+                    jsonify(errors={"password": ["Incorrect email and password."]}),
+                    422,
+                )
         else:
             return jsonify(errors=form.errors), 422
-

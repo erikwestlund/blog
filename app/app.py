@@ -25,10 +25,10 @@ bcrypt = Bcrypt()
 csrf = CSRFProtect()
 
 login_manager = LoginManager()
-login_manager.login_view = 'users.login'
-login_manager.login_message_category = 'warning'
-login_manager.refresh_view = 'users.login'
-login_manager.needs_refresh_message_category = 'warning'
+login_manager.login_view = "users.login"
+login_manager.login_message_category = "warning"
+login_manager.refresh_view = "users.login"
+login_manager.needs_refresh_message_category = "warning"
 
 
 def init_flask_config(app):
@@ -47,7 +47,7 @@ def init_extensions(app):
 
 
 def init_session(app):
-    prefix = app.config['REDIS_SESSION_PREFIX']
+    prefix = app.config["REDIS_SESSION_PREFIX"]
     app.session_interface = RedisSessionInterface(redis=redis, prefix=prefix)
 
 

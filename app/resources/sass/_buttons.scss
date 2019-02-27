@@ -1,5 +1,5 @@
 .btn {
-  @apply py-1 px-2 rounded  text-sm border-4;
+  @apply py-1 px-2 rounded text-sm border-4;
 }
 
 .btn-white {
@@ -12,6 +12,10 @@
 
 .btn-red {
   @apply flex-no-shrink bg-red-darker border-red-darker text-white;
+}
+
+.btn-orange {
+  @apply flex-no-shrink bg-orange-dark border-orange-dark text-white;
 }
 
 button:disabled,

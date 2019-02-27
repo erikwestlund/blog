@@ -7,10 +7,10 @@ from flask.sessions import SessionInterface, SessionMixin
 
 
 class RedisSession(CallbackDict, SessionMixin):
-
     def __init__(self, initial=None, sid=None, new=False):
         def on_update(self):
             self.modified = True
+
         CallbackDict.__init__(self, initial, on_update)
         self.sid = sid
         self.new = new
@@ -21,7 +21,7 @@ class RedisSessionInterface(SessionInterface):
     serializer = pickle
     session_class = RedisSession
 
-    def __init__(self, redis=None, prefix='session:'):
+    def __init__(self, redis=None, prefix="session:"):
         if redis is None:
             redis = Redis()
         self.redis = redis
@@ -51,8 +51,7 @@ class RedisSessionInterface(SessionInterface):
         if not session:
             self.redis.delete(self.prefix + session.sid)
             if session.modified:
-                response.delete_cookie(app.session_cookie_name,
-                                       domain=domain)
+                response.delete_cookie(app.session_cookie_name, domain=domain)
             return
         redis_exp = self.get_redis_expiration_time(app, session)
         cookie_exp = self.get_expiration_time(app, session)
@@ -60,12 +59,17 @@ class RedisSessionInterface(SessionInterface):
 
         # take a StrictRedis
         if isinstance(self.redis, Redis):
-            self.redis.setex(self.prefix + session.sid, val,
-                             int(redis_exp.total_seconds()))
+            self.redis.setex(
+                self.prefix + session.sid, val, int(redis_exp.total_seconds())
+            )
         else:
-            self.redis.setex(self.prefix + session.sid,
-                             int(redis_exp.total_seconds()),
-                             val)
-        response.set_cookie(app.session_cookie_name, session.sid,
-                            expires=cookie_exp, httponly=True,
-                            domain=domain)
+            self.redis.setex(
+                self.prefix + session.sid, int(redis_exp.total_seconds()), val
+            )
+        response.set_cookie(
+            app.session_cookie_name,
+            session.sid,
+            expires=cookie_exp,
+            httponly=True,
+            domain=domain,
+        )

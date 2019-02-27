@@ -11,8 +11,12 @@ def email_reset_password_link(user_id):
     user = User.query.get(user_id)
     token = user.generate_password_reset_token()
 
-    msg = Message((current_app.config['BLOG_TITLE'] or 'Blog') + ': Password Reset Request',
-                  recipients=[user.email])
-    msg.html = render_template('users/reset_password_email.html',
-                               reset_password_url=url_for('users.reset_password', token=token))
+    msg = Message(
+        (current_app.config["BLOG_TITLE"] or "Blog") + ": Password Reset Request",
+        recipients=[user.email],
+    )
+    msg.html = render_template(
+        "users/reset_password_email.html",
+        reset_password_url=url_for("users.reset_password", token=token),
+    )
     mail.send(msg)

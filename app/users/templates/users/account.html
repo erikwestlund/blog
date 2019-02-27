@@ -10,8 +10,9 @@
         <confirm-email-alert v-if="{{ 'true' if own_account else 'false' }}"
                 class="mt-6"></confirm-email-alert>
     {% endif %}
-    <div class="mt-6">
-        <edit-user :init-user="{{ user.to_json() }}"
+    <div class="mt-6 bg-white shadow p-6 rounded lg:w-4/5 xl:w-3/5 md:w-full">
+        <edit-user
+                :init-user="{{ user.to_json() }}"
                    :own-account="{{ 'true' if own_account else 'false' }}"
                    :init-user-roles="{{ user_roles }}"
                    :possible-roles="{{ possible_user_roles }}"></edit-user>

@@ -3,14 +3,13 @@ from celery import Celery
 
 
 class FlaskCelery(Celery):
-
     def __init__(self, *args, **kwargs):
 
         super(FlaskCelery, self).__init__(*args, **kwargs)
         self.patch_task()
 
-        if 'app' in kwargs:
-            self.init_app(kwargs['app'])
+        if "app" in kwargs:
+            self.init_app(kwargs["app"])
 
     def patch_task(self):
         TaskBase = self.Task
@@ -31,4 +30,3 @@ class FlaskCelery(Celery):
     def init_app(self, app):
         self.app = app
         self.config_from_object(app.config)
-

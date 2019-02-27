@@ -6,8 +6,8 @@ from commands.initial_seed import InitialSeed
 
 manager = Manager(create_app)
 
-manager.add_command('db', MigrateCommand)
-manager.add_command('initial_seed', InitialSeed)
+manager.add_command("db", MigrateCommand)
+manager.add_command("initial_seed", InitialSeed)
 
 
 manager.run()
