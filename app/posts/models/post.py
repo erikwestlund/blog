@@ -94,6 +94,10 @@ class Post(db.Model, TimestampMixin):
 
         return Post.get_posts_query_by_slug_within_month(slug, year, month).count() > 0
 
+    @hybrid_property
+    def snippet(self):
+        return self.body_md[:self.snippet_length]
+
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):
         num_days = calendar.monthrange(year, month)[1]
