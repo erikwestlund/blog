@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="table w-full overflow-scroll">
+        <table class="table w-full overflow-scroll" v-if="hasObjects">
             <tr>
                 <th>Username</th>
                 <th class="hidden md:table-cell">
@@ -30,6 +30,9 @@
                 </td>
             </tr>
         </table>
+        <div v-else>
+            No users have been registered! <a href="/register">Register</a>.
+        </div>
         <paginate
             class="mt-8"
             name="users"

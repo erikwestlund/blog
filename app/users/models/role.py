@@ -8,7 +8,7 @@ role_user = db.Table(
 
 
 class Role(db.Model):
-    visible = ['id', 'name', 'display_name', 'description']
+    visible = ["id", "name", "display_name", "description"]
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)

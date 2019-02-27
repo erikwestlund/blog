@@ -3,7 +3,7 @@ from flask import flash
 from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required, current_user
-from sqlalchemy import func
+from sqlalchemy import func, null as sqlalchemy_null
 
 from app import db
 from main.models.tag import Tag
@@ -70,9 +70,14 @@ class EditPost(MethodView):
 
             if form.published_at.data and not post.published_at:
                 post.published_at = func.now()
+            elif form.published_at.data and post.published_at:
+                post.published_at = form.published_at.data
+            elif not form.published_at.data and post.published_at:
+                post.published_at = None
 
             post.title = form.title.data
             post.body = form.body.data
+
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.commit()

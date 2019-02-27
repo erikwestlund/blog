@@ -17,7 +17,7 @@
                             </slot>
                         </div>
 
-                        <div class="modal-body mt-10">
+                        <div class="modal-body mt-6">
                             <slot name="body">
                                 default body
                             </slot>

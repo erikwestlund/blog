@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="table w-full">
+        <table class="table w-full" v-if="hasObjects">
             <tr>
                 <th>Title</th>
                 <th>Author</th>
@@ -21,6 +21,9 @@
                 </td>
             </tr>
         </table>
+        <div v-else>
+            No posts have been yet! <a href="/admin/posts/create">Make One</a>.
+        </div>
         <paginate
             class="mt-8"
             name="posts"

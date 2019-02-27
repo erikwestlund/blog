@@ -14,6 +14,7 @@ class Post(db.Model, TimestampMixin):
         "id",
         "user_id",
         "title",
+        "slug",
         "body",
         "created_at",
         "updated_at",

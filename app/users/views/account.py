@@ -36,7 +36,7 @@ class Account(MethodView):
 
     @login_required
     def patch(self, user_id):
-        user = find_or_fail(User, user_id==User.id)
+        user = find_or_fail(User, user_id == User.id)
 
         if not self.has_permission(user):
             abort(403)
