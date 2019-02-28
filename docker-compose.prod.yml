@@ -3,6 +3,8 @@ services:
   web:
     build: ./
     restart: always
+    ports:
+      - "80:80"
   celery-worker:
     build: ./
     restart: always
