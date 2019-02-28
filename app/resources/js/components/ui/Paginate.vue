@@ -1,4 +1,4 @@
-<template>
+    <template>
     <ul
         v-if="shouldPaginate"
         class="pagination list-reset flex"
@@ -54,7 +54,9 @@ export default {
     props: {
         data: {
             type: Object,
-            default: () => {}
+            default: () => {
+                current_page: 1
+            }
         },
         name: {
             type: String,

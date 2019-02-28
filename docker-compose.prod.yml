@@ -1,0 +1,8 @@
+version: '3.0'
+services:
+  web:
+    build: ./
+    restart: always
+  celery-worker:
+    build: ./
+    restart: always

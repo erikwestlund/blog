@@ -9,7 +9,7 @@
             <a :href="post.url"><h2>{{ post.title }}</h2></a>
 
             <div class="mt-2" v-html="post.body_md"/>
-            <div class="mt-10  text-grey-darker">
+            <div class="mt-6  text-grey-darker">
                 <fa-icon class="mr-2 text-grey" :icon="['fas', 'user-circle']"/>
                 <span class="mr-2 text-lg font-bold">{{ post.user.display_name }}</span>
                 <span class="text-grey">{{ post.published_at | ago }} ago</span>
@@ -39,7 +39,6 @@
         mixins: [Filters, Pagination],
         created() {
             Event.listen('newPageSelected', (page) => this.setActivePage(page))
-
         },
         props: {
             page: {

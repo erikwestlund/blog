@@ -9,7 +9,7 @@
             paginationMeta() {
                 return this.ready
                     ? this.data.meta.pagination
-                    : {}
+                    : { current_page: 1 }
             },
             paginatedEndpoint() {
                 return `${this.endpoint}?page=${this.activePage}`
