@@ -10,7 +10,7 @@
         </div>
         <div class="block lg:hidden">
             <button
-                class="flex items-center px-3 py-2 border rounded border-blue-dark bg-white hover:border-blue-darker"
+                class="flex items-center px-3 py-2 rounded shadow bg-white hover:border-blue-dark"
                 @click="toggleMobileNav()"
             >
                 <svg
@@ -24,7 +24,7 @@
             </button>
         </div>
         <div
-            class="w-full block flex-grow lg:flex lg:items-center lg:w-auto lg:block"
+            class="w-full block flex-grow bg-white shadow mt-3 rounded-lg p-5 lg:p-0 lg:rounded-none lg:shadow-none lg:bg-grey-lightest lg:mt-0 lg:flex lg:items-center lg:w-auto lg:block"
             :class="{
                 'hidden sm:hidden md:hidden' : ! showMobileNav,
                 'sm:block md:block' : showMobileNav,
@@ -56,7 +56,7 @@
                     Contact Me
                 </a>
             </div>
-            <div class="font-lighter">
+            <div class="font-lighter mt-3 lg:mt-0">
                 <div v-if="loggedIn">
                     <a
                         href="/admin/posts/create"

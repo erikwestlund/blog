@@ -4,27 +4,29 @@ from utils.models.json_encoder import AlchemyEncoder
 
 
 def paginated_json_response(
-    model,
-    url="",
-    page=1,
-    per_page=20,
-    order_by=None,
-    order_by_direction="asc",
-    left_edge=2,
-    left_current=2,
-    right_current=3,
-    right_edge=2,
-    user_id=None,
+        model="",
+        url="",
+        page=1,
+        per_page=20,
+        order_by=None,
+        order_by_direction="asc",
+        left_edge=2,
+        left_current=2,
+        right_current=3,
+        right_edge=2,
+        user_id=None,
+        query=None
 ):
-    query = model.query
+    if not query:
+        query = model.query
 
-    if order_by and order_by_direction == "asc":
-        query = query.order_by(order_by)
-    elif order_by and order_by_direction == "desc":
-        query = query.order_by(desc(order_by))
+        if order_by and order_by_direction == "asc":
+            query = query.order_by(order_by)
+        elif order_by and order_by_direction == "desc":
+            query = query.order_by(desc(order_by))
 
-    if user_id:
-        query = query.filter_by(user_id=user_id)
+        if user_id:
+            query = query.filter_by(user_id=user_id)
 
     paginated = query.paginate(page=page, per_page=per_page)
 
