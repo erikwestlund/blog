@@ -2,9 +2,14 @@ version: '3.0'
 services:
   web:
     build: ./
+    volumes:
+      - ./app:/app
     restart: always
     ports:
       - "80:80"
   celery-worker:
     build: ./
+    volumes:
+      - ./app:/app
     restart: always
+    command: ["celery", "-A", "celery_worker.celery", "worker"]
