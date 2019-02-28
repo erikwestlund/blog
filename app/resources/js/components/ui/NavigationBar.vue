@@ -2,7 +2,10 @@
     <nav class="flex items-center justify-between flex-wrap">
         <div class="flex items-center flex-no-shrink mr-12">
             <span class="text-4xl">
-                <a class="text-black" href="/">Erik Westlund</a>
+                <a
+                    class="text-black"
+                    href="/"
+                >Erik Westlund</a>
             </span>
         </div>
         <div class="block lg:hidden">
@@ -35,16 +38,16 @@
                     Blog
                 </a>
                 <!--<a-->
-                    <!--href="#"-->
-                    <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
+                <!--href="#"-->
+                <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
                 <!--&gt;-->
-                    <!--About-->
+                <!--About-->
                 <!--</a>-->
                 <!--<a-->
-                    <!--href="#"-->
-                    <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
+                <!--href="#"-->
+                <!--class="block mt-4 lg:inline-block lg:mt-0 mr-6"-->
                 <!--&gt;-->
-                    <!--CV-->
+                <!--CV-->
                 <!--</a>-->
                 <a
                     href="mailto:edbwestlund@gmail.com"

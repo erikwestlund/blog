@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Optional, ValidationError
 from utils.forms.nonvalidatingmultiselectfield import NonValidatingMultiSelectField
 from posts.models.post import Post
 
+
 class SavePostForm(FlaskForm):
     def __init__(self, post_being_edited=None):
         super(SavePostForm, self).__init__()

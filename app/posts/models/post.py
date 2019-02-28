@@ -32,7 +32,7 @@ class Post(db.Model, TimestampMixin):
         "published_at",
         "tags",
         "user",
-        "url"
+        "url",
     ]
 
     snippet_length = 500
@@ -59,7 +59,11 @@ class Post(db.Model, TimestampMixin):
 
     @hybrid_property
     def published_at_display(self):
-        return self.published_at.strftime('%B %-d, %Y at %I:%M %p') if self.published_at else None
+        return (
+            self.published_at.strftime("%B %-d, %Y at %I:%M %p")
+            if self.published_at
+            else None
+        )
 
     @hybrid_property
     def url(self):
@@ -96,7 +100,7 @@ class Post(db.Model, TimestampMixin):
 
     @hybrid_property
     def snippet(self):
-        return self.body_md[:self.snippet_length]
+        return self.body_md[: self.snippet_length]
 
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):
@@ -104,12 +108,9 @@ class Post(db.Model, TimestampMixin):
         start_date = datetime.date(year, month, 1)
         end_date = datetime.date(year, month, num_days)
 
-        return (
-            Post.query.filter(
-                and_(Post.published_at >= start_date, Post.published_at <= end_date)
-            )
-                .filter_by(slug=slug)
-        )
+        return Post.query.filter(
+            and_(Post.published_at >= start_date, Post.published_at <= end_date)
+        ).filter_by(slug=slug)
 
     def __repr__(self):
         return f"Post('{self.title}, {self.body}, {self.slug}')"

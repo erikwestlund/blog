@@ -1,6 +1,9 @@
 <template>
     <div>
-        <table class="table w-full" v-if="hasObjects">
+        <table
+            v-if="hasObjects"
+            class="table w-full"
+        >
             <tr>
                 <th>Title</th>
                 <th>Author</th>

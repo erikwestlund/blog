@@ -1,4 +1,4 @@
-    <template>
+<template>
     <ul
         v-if="shouldPaginate"
         class="pagination list-reset flex"

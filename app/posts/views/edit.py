@@ -22,7 +22,7 @@ class FetchPost(MethodView):
         post = Post.query.get(post_id)
 
         if not (
-                current_user.has_role("administrator") or current_user.id != post.user_id
+            current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -35,7 +35,7 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-                current_user.has_role("administrator") or current_user.id != post.user_id
+            current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -46,7 +46,7 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-                current_user.has_role("administrator") or current_user.id != post.user_id
+            current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 
@@ -62,7 +62,7 @@ class EditPost(MethodView):
         post = find_or_fail(Post, Post.id == post_id)
 
         if not (
-                current_user.has_role("administrator") or current_user.id != post.user_id
+            current_user.has_role("administrator") or current_user.id != post.user_id
         ):
             abort(403)
 

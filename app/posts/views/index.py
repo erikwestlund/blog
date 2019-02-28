@@ -7,7 +7,6 @@ from utils.models.paginated_json_response import paginated_json_response
 
 
 class FetchPosts(MethodView):
-
     def get(self):
         per_page = int(current_app.config["POSTS_PER_PAGE"])
 

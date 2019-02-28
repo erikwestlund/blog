@@ -26,12 +26,11 @@ import {
     faUserPlus
 } from '@fortawesome/pro-regular-svg-icons'
 
-
 import { faUserCircle as fasUserCircle, faEnvelope as fasEnvelope, faUniversity as fasUniversity } from '@fortawesome/pro-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import {faGithub,faTwitter} from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
     faAngleDoubleLeft,
@@ -61,7 +60,7 @@ library.add(
     fasUserCircle,
     faUserPlus,
     faUniversity,
-    fasUniversity,
+    fasUniversity
 )
 
 Vue.component('fa-icon', FontAwesomeIcon)

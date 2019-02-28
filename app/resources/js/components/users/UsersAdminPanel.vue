@@ -1,6 +1,9 @@
 <template>
     <div>
-        <table class="table w-full overflow-scroll" v-if="hasObjects">
+        <table
+            v-if="hasObjects"
+            class="table w-full overflow-scroll"
+        >
             <tr>
                 <th>Username</th>
                 <th class="hidden md:table-cell">
