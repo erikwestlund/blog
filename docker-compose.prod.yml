@@ -6,7 +6,7 @@ services:
       - ./app:/app
     restart: always
     ports:
-      - "80:80"
+      - "8081:80"
   celery-worker:
     build: ./
     volumes:
