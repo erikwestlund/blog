@@ -1,41 +1,30 @@
 <template>
     <div>
-        <div v-if="ready && hasObjects">
-
-            <div
-                    v-for="(post, index) in data.data"
-                    :key="post.id"
-                    class="rounded-lg p-5 shadow bg-white"
-                    :class="index==0 ? '' : 'mt-5'"
-            >
-                <a :href="post.url"><h2>{{ post.title }}</h2></a>
+        <transition name="trx-slide-fade">
+            <div v-if="ready && hasObjects">
 
                 <div
-                        class="mt-2"
-                        v-html="post.body_md"
-                />
-                <div class="mt-6  text-grey-darker">
-                    <fa-icon
-                            class="mr-2 text-grey"
-                            :icon="['fas', 'user-circle']"
+                        v-for="(post, index) in data.data"
+                        :key="post.id"
+                        class="rounded-lg p-5 shadow bg-white"
+                        :class="index==0 ? '' : 'mt-5'"
+                >
+                    <a :href="post.url"><h2>{{ post.title }}</h2></a>
+
+                    <div
+                            class="mt-2"
+                            v-html="post.body_md"
                     />
-                    <span class="mr-2 text-lg font-bold">{{ post.user.display_name }}</span>
-                    <span class="text-grey">{{ post.published_at | ago }} ago</span>
+                    <div class="mt-6  text-grey-darker">
+                        <span class="mr-2 text-lg font-bold">{{ post.user.display_name }}</span>
+                        <span class="text-grey">{{ post.published_at | ago }} ago</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div v-else-if="! hasObjects" class="text-lg">
-            Nothing to see here. Yet.
-        </div>
-        <div
-                v-else
-                class="text-grey"
-        >
-            <fa-icon
-                    class="fa-2x fa-spin"
-                    :icon="['far', 'circle-notch']"
-            />
-        </div>
+            <div v-else-if="ready">
+                No posts have been published yet! <a href="/admin/posts/create">Make One</a>.
+            </div>
+        </transition>
         <div class="flex justify-center" v-if="hasObjects">
             <paginate
                     class="mt-8"

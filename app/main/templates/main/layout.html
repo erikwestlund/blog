@@ -41,7 +41,9 @@
             {% endwith %}
 
             <div class="mt-8">
-                {% block content %}{% endblock %}
+                {% block main %}
+                    {% block content %}{% endblock %}
+                {% endblock %}
             </div>
         </div>
     </main>

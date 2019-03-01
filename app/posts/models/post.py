@@ -71,9 +71,9 @@ class Post(db.Model, TimestampMixin):
             return None
 
         year = self.published_at.year
-        month = self.published_at.month
+        month = str(self.published_at.month).zfill(2)
 
-        return "%d/%d/%s" % (year, month, self.slug)
+        return "%d/%s/%s" % (year, month, self.slug)
 
     @hybrid_property
     def body_md(self):
@@ -105,8 +105,8 @@ class Post(db.Model, TimestampMixin):
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):
         num_days = calendar.monthrange(year, month)[1]
-        start_date = datetime.date(year, month, 1)
-        end_date = datetime.date(year, month, num_days)
+        start_date = datetime.datetime(year, month, 1, 0, 0, 0)
+        end_date = datetime.datetime(year, month, num_days, 23, 59, 59)
 
         return Post.query.filter(
             and_(Post.published_at >= start_date, Post.published_at <= end_date)
