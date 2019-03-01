@@ -51,7 +51,7 @@ class Post(db.Model, TimestampMixin):
         "Tag",
         secondary=tag_post,
         lazy="dynamic",
-        cascade="save-update",
+        cascade="save-update, merge, delete",
         backref=db.backref("posts", lazy="dynamic"),
     )
 

@@ -1,3 +1,5 @@
+
+/* purgecss start ignore */
 .component-tags.vue-tags-input .ti-input {
   @apply rounded;
 }
@@ -5,4 +7,4 @@
 .ti-autocomplete .ti-item.ti-valid.ti-selected-item {
   @apply bg-blue;
 }
-
+/* purgecss end ignore */
