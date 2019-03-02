@@ -2,8 +2,8 @@
     <div>
         <transition name="trx-slide-fade">
             <table
-                    v-if="hasObjects"
-                    class="table w-full overflow-scroll"
+                v-if="hasObjects"
+                class="table w-full overflow-scroll"
             >
                 <tr>
                     <th>Username</th>
@@ -13,23 +13,23 @@
                     <th class="hidden md:table-cell">
                         Registered
                     </th>
-                    <th/>
+                    <th />
                 </tr>
                 <tr
-                        v-for="user in data.data"
-                        :key="user.id"
+                    v-for="user in data.data"
+                    :key="user.id"
                 >
-                    <td v-text="user.username"/>
+                    <td v-text="user.username" />
                     <td
-                            class="hidden md:table-cell"
-                            v-text="user.email"
+                        class="hidden md:table-cell"
+                        v-text="user.email"
                     />
                     <td class="hidden md:table-cell">
                         {{ user.created_at | ago }} ago
                     </td>
                     <td>
                         <a :href="`/users/${user.id}`">
-                            <fa-icon :icon="['far', 'edit']"/>
+                            <fa-icon :icon="['far', 'edit']" />
                         </a>
                     </td>
                 </tr>
@@ -38,21 +38,21 @@
                 No users have been registered! <a href="/register">Register</a>.
             </div>
             <paginate
-                    class="mt-8"
-                    name="users"
-                    :data="paginationMeta"
+                class="mt-8"
+                name="users"
+                :data="paginationMeta"
             />
         </transition>
     </div>
 </template>
 
 <script>
-    import AdminPanel from '../ui/AdminPanel'
+import AdminPanel from '../ui/AdminPanel'
 
-    export default {
-        name: 'UsersAdminPanel',
-        extends: AdminPanel
-    }
+export default {
+    name: 'UsersAdminPanel',
+    extends: AdminPanel
+}
 </script>
 
 <style scoped>

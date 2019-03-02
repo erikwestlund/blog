@@ -393,7 +393,9 @@ export default {
     },
 
     created () {
-        setInterval(() => this.now = new Date().toISOString(), 100)
+        setInterval(() => {
+            this.now = new Date().toISOString()
+        }, 100)
 
         Event.listen('tagsUpdated', (payload) => this.updateTags(payload))
 

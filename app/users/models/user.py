@@ -17,7 +17,15 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin, TimestampMixin):
 
-    visible = ["id", "username", "email", "display_name", "first_name", "last_name", "created_at"]
+    visible = [
+        "id",
+        "username",
+        "email",
+        "display_name",
+        "first_name",
+        "last_name",
+        "created_at",
+    ]
 
     id = db.Column(db.Integer, primary_key=True)
 

@@ -51,9 +51,7 @@ class Post(db.Model, TimestampMixin):
     user = db.relationship("User", lazy="joined", innerjoin=True)
 
     tags = db.relationship(
-        "Tag",
-        secondary=tag_post,
-        cascade="save-update, merge, delete"
+        "Tag", secondary=tag_post, cascade="save-update, merge, delete"
     )
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
@@ -64,7 +62,17 @@ class Post(db.Model, TimestampMixin):
 
     @hybrid_property
     def editable(self):
-        return self.owner.has_role("administrator") or self.user_id == current_user.id
+        if not current_user.is_authenticated:
+            return False
+        else:
+            return (
+                True
+                if (
+                    current_user.has_role("administrator")
+                    or self.user_id == current_user.id
+                )
+                else False
+            )
 
     @hybrid_property
     def published_at_display(self):
@@ -86,7 +94,7 @@ class Post(db.Model, TimestampMixin):
 
     @hybrid_property
     def edit_uri(self):
-        return '/admin/posts/%s' % self.id if self.editable else None
+        return "/admin/posts/%s" % self.id if self.editable else None
 
     @hybrid_property
     def body_md(self):

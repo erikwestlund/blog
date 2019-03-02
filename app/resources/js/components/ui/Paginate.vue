@@ -55,8 +55,11 @@ export default {
         data: {
             type: Object,
             default: () => {
-                current_page: 1
+                return {
+                    current_page: 1
+                }
             }
+
         },
         name: {
             type: String,

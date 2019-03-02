@@ -14,12 +14,8 @@ class FetchPosts(MethodView):
 
         page = int(request.args.get("page")) if request.args.get("page") else 1
 
-        query = Post.query.filter(
-            Post.published_at <= now()
-        ).order_by(desc('published_at'))
-
-        return paginated_json_response(
-            query=query,
-            per_page=per_page,
-            page=page,
+        query = Post.query.filter(Post.published_at <= now()).order_by(
+            desc("published_at")
         )
+
+        return paginated_json_response(query=query, per_page=per_page, page=page)

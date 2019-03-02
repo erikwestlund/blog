@@ -4,18 +4,18 @@ from utils.models.json_encoder import AlchemyEncoder
 
 
 def paginated_json_response(
-        model="",
-        url="",
-        page=1,
-        per_page=20,
-        order_by=None,
-        order_by_direction="asc",
-        left_edge=2,
-        left_current=2,
-        right_current=3,
-        right_edge=2,
-        user_id=None,
-        query=None
+    model="",
+    url="",
+    page=1,
+    per_page=20,
+    order_by=None,
+    order_by_direction="asc",
+    left_edge=2,
+    left_current=2,
+    right_current=3,
+    right_edge=2,
+    user_id=None,
+    query=None,
 ):
     if not query:
         query = model.query
