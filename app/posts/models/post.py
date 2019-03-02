@@ -1,3 +1,4 @@
+from flask_login import current_user
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
@@ -32,7 +33,9 @@ class Post(db.Model, TimestampMixin):
         "published_at",
         "tags",
         "user",
-        "url",
+        "uri",
+        "edit_uri",
+        "editable",
     ]
 
     snippet_length = 500
@@ -45,17 +48,23 @@ class Post(db.Model, TimestampMixin):
     slug = db.Column(db.Text())
 
     # Relationships
-    user = db.relationship("User")
+    user = db.relationship("User", lazy="joined", innerjoin=True)
 
     tags = db.relationship(
         "Tag",
         secondary=tag_post,
-        lazy="dynamic",
-        cascade="save-update, merge, delete",
-        backref=db.backref("posts", lazy="dynamic"),
+        cascade="save-update, merge, delete"
     )
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
+
+    @hybrid_property
+    def owner(self):
+        return self.user
+
+    @hybrid_property
+    def editable(self):
+        return self.owner.has_role("administrator") or self.user_id == current_user.id
 
     @hybrid_property
     def published_at_display(self):
@@ -66,14 +75,18 @@ class Post(db.Model, TimestampMixin):
         )
 
     @hybrid_property
-    def url(self):
+    def uri(self):
         if not self.published_at:
             return None
 
         year = self.published_at.year
         month = str(self.published_at.month).zfill(2)
 
-        return "%d/%s/%s" % (year, month, self.slug)
+        return "/%d/%s/%s" % (year, month, self.slug)
+
+    @hybrid_property
+    def edit_uri(self):
+        return '/admin/posts/%s' % self.id if self.editable else None
 
     @hybrid_property
     def body_md(self):

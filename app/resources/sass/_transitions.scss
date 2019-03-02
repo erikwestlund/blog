@@ -1,4 +1,5 @@
 /* purgecss start ignore */
+/* fade */
 .trx-fade-leave-active {
   transition: all .4s ease;
 }
@@ -6,6 +7,16 @@
   opacity: 0;
 }
 
+/* fade in */
+.trx-fade-in-enter-active, .trx-fade-in-leave-active {
+  transition: opacity 0.25s ease-out;
+}
+
+.trx-fade-in-enter, .trx-fade-in-leave-to {
+  opacity: 0;
+}
+
+/* slide fade */
 .trx-slide-fade-enter-active {
   transition: all .4s ease;
 }

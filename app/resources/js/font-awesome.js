@@ -23,6 +23,7 @@ import {
     faUniversity,
     faUser,
     faUserCircle,
+    faUserEdit,
     faUserPlus
 } from '@fortawesome/pro-regular-svg-icons'
 
@@ -58,6 +59,7 @@ library.add(
     faUser,
     faUserCircle,
     fasUserCircle,
+    faUserEdit,
     faUserPlus,
     faUniversity,
     fasUniversity

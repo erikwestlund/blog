@@ -21,9 +21,7 @@ class FetchPost(MethodView):
     def get(self, post_id):
         post = Post.query.get(post_id)
 
-        if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
-        ):
+        if not post.editable:
             abort(403)
 
         return jsonify({"data": post.to_dict()})
@@ -34,9 +32,7 @@ class EditPost(MethodView):
     def get(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 
-        if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
-        ):
+        if not post.editable:
             abort(403)
 
         return render_template("posts/edit.html", post_id=post_id)
@@ -45,9 +41,7 @@ class EditPost(MethodView):
     def delete(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 
-        if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
-        ):
+        if not post.editable:
             abort(403)
 
         db.session.delete(post)
@@ -61,9 +55,7 @@ class EditPost(MethodView):
     def patch(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 
-        if not (
-            current_user.has_role("administrator") or current_user.id != post.user_id
-        ):
+        if not post.editable:
             abort(403)
 
         form = SavePostForm(post)

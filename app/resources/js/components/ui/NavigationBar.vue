@@ -75,7 +75,7 @@
                     >
                         <fa-icon
                             class="mr-1"
-                            :icon="['far', 'user']"
+                            :icon="['far', 'user-edit']"
                         />
                     </a>
                     <a
