@@ -30,7 +30,7 @@
                                     v-for="tag, index in post.tags" :key="tag.id"
                                     :class="{'mr-2' : post.tags.length - 1 != index }"
                                 >
-                                    {{ tag.name }} {{index}} {{post.tags.length - 1}}
+                                    {{ tag.name }}
                                 </li>
                             </ul>
                         </div>
