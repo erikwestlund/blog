@@ -6,8 +6,9 @@ from slugify import slugify
 from sqlalchemy import ForeignKey
 from sqlalchemy import and_
 from markdown2 import Markdown
-from utils.striphtmltags import MLStripper
+from utils.striphtmltags import MLStripper, strip_tags
 
+from utils.striphtmltags import MLStripper
 from utils.models.timestamps import TimestampMixin
 from dateutil.parser import parse as parse_date
 import datetime
@@ -27,7 +28,8 @@ class Post(db.Model, TimestampMixin):
         "title",
         "slug",
         "body",
-        "body_md",
+        "body_html",
+        "body_snippet",
         "created_at",
         "updated_at",
         "published_at",
@@ -38,7 +40,7 @@ class Post(db.Model, TimestampMixin):
         "editable",
     ]
 
-    snippet_length = 500
+    snippet_length = 50
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
@@ -97,7 +99,7 @@ class Post(db.Model, TimestampMixin):
         return "/admin/posts/%s" % self.id if self.editable else None
 
     @hybrid_property
-    def body_md(self):
+    def body_html(self):
         return Markdown().convert(self.body)
 
     @staticmethod
@@ -120,8 +122,10 @@ class Post(db.Model, TimestampMixin):
         return Post.get_posts_query_by_slug_within_month(slug, year, month).count() > 0
 
     @hybrid_property
-    def snippet(self):
-        return self.body_md[: self.snippet_length]
+    def body_snippet(self):
+        stripped_html = strip_tags(self.body_html)
+
+        return stripped_html if len(stripped_html) <= self.snippet_length else stripped_html[: self.snippet_length] + '...'
 
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):

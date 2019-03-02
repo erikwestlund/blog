@@ -8,42 +8,7 @@
                     class="rounded-lg p-5 shadow bg-white"
                     :class="index==0 ? '' : 'mt-5'"
                 >
-                    <a
-                        v-if="post.editable"
-                        class="text-grey float-right hover:text-grey-dark"
-                        :href="post.edit_uri"
-                    >
-                        <fa-icon
-                            class="mr-2"
-                            :icon="['far', 'pencil']"
-                        />
-                        edit
-                    </a>
-
-                    <a :href="post.uri"><h2>{{ post.title }}</h2></a>
-
-                    <div
-                        class="mt-2"
-                        v-html="post.body_md"
-                    />
-                    <div class="md:flex mt-6">
-                        <div class="text-grey-darker">
-                            <span class="mr-2 text-lg font-bold">{{ post.user.display_name }}</span>
-                            <span class="text-grey">{{ post.published_at | ago }} ago</span>
-                        </div>
-                        <div class="md:ml-auto">
-                            <ul class="list-reset flex">
-                                <li
-                                    v-for="(tag, tag_index) in post.tags"
-                                    :key="tag.id"
-                                    class="inline rounded bg-grey-lightest text-grey-darker px-1 py-0 text-sm border border-grey-lighter"
-                                    :class="{'mr-2' : post.tags.length - 1 != tag_index }"
-                                >
-                                    {{ tag.name }}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <post :post="post" />
                 </div>
             </div>
             <div v-else-if="ready">
@@ -64,16 +29,17 @@
 </template>
 
 <script>
-import Filters from '../mixins/FiltersMixin'
 import Pagination from '../mixins/PaginatedContentMixin'
-
+import Post from './Post'
 export default {
-    mixins: [Filters, Pagination],
+    mixins: [Pagination],
+    components: { Post },
     props: {
         page: {
             type: Number,
             default: 1
-        }
+        },
+
     },
     data () {
         return {

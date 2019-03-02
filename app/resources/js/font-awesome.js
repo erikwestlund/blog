@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faAngleDoubleLeft,
     faAngleDoubleRight,
+    faAsterisk,
     faCircleNotch,
     faEdit,
     faEllipsisH,
@@ -18,6 +19,8 @@ import {
     faSave,
     faSignIn,
     faSignOut,
+    faTag,
+    faTags,
     faTimes,
     faTrash,
     faUniversity,
@@ -36,6 +39,7 @@ import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons'
 library.add(
     faAngleDoubleLeft,
     faAngleDoubleRight,
+    faAsterisk,
     faCircleNotch,
     faEdit,
     faEllipsisH,
@@ -53,6 +57,8 @@ library.add(
     faSave,
     faSignIn,
     faSignOut,
+    faTag,
+    faTags,
     faTimes,
     faTrash,
     faTwitter,
