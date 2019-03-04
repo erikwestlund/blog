@@ -1,0 +1,36 @@
+.v-note-wrapper {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.v-note-wrapper .v-note-op {
+  @apply rounded-t;
+}
+
+.v-note-wrapper .v-note-panel {
+  @apply rounded-b;
+}
+
+.v-note-wrapper .op-btn {
+  border-radius: 0.25em !important;
+}
+
+.v-note-wrapper div[type="button"].dropdown {
+  -webkit-appearance: none;
+}
+
+.v-note-wrapper .op-icon.selected {
+  @apply rounded;
+}
+
+.v-note-wrapper .dropdown .dropdown-item {
+  @apply text-left pl-3;
+}
+
+.add-image-link-wrapper .add-image-link {
+  border-radius: 0.5rem !important;
+}
+
+.auto-textarea-wrapper .auto-textarea-input,
+.markdown-body pre {
+  font-family: Roboto Mono, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace !important;
+}

@@ -30,6 +30,10 @@ export default {
                 return 'Publishing...'
             } else if (this.type === 'unpublishing') {
                 return 'Unpublishing...'
+            } else if (this.type === 'uploading') {
+                return 'Uploading...'
+            } else if (this.type === 'uploading_image') {
+                return 'Uploading Image...'
             } else {
                 return 'Submitting...'
             }

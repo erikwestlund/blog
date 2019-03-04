@@ -8,6 +8,7 @@ export default {
             deleting: false,
             publishing: false,
             saving: false,
+            uploading: false,
             unpublishing: false,
             submittingType: 'saving',
             timerDelay: 250

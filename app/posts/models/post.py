@@ -1,18 +1,18 @@
-from flask_login import current_user
-from sqlalchemy.ext.hybrid import hybrid_property
+import calendar
+import datetime
 
-from app import db
+from dateutil.parser import parse as parse_date
+from flask import current_app
+from flask_login import current_user
+from markdown2 import Markdown
 from slugify import slugify
 from sqlalchemy import ForeignKey
 from sqlalchemy import and_
-from markdown2 import Markdown
-from utils.striphtmltags import MLStripper, strip_tags
+from sqlalchemy.ext.hybrid import hybrid_property
 
-from utils.striphtmltags import MLStripper
+from app import db
 from utils.models.timestamps import TimestampMixin
-from dateutil.parser import parse as parse_date
-import datetime
-import calendar
+from utils.striphtmltags import strip_tags
 
 tag_post = db.Table(
     "tag_post",
@@ -39,8 +39,6 @@ class Post(db.Model, TimestampMixin):
         "edit_uri",
         "editable",
     ]
-
-    snippet_length = 50
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
@@ -123,9 +121,14 @@ class Post(db.Model, TimestampMixin):
 
     @hybrid_property
     def body_snippet(self):
+        snippet_length = int(current_app.config["POST_SNIPPET_LENGTH"])
         stripped_html = strip_tags(self.body_html)
 
-        return stripped_html if len(stripped_html) <= self.snippet_length else stripped_html[: self.snippet_length] + '...'
+        return (
+            stripped_html
+            if len(stripped_html) <= snippet_length
+            else stripped_html[: snippet_length] + "..."
+        )
 
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):

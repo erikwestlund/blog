@@ -597,6 +597,7 @@ module.exports = {
     */
 
     maxWidth: {
+        'thumbnail': '100px',
         'xs': '20rem',
         'sm': '30rem',
         'md': '40rem',
@@ -625,6 +626,7 @@ module.exports = {
     */
 
     maxHeight: {
+        'thumbnail': '100px',
         'full': '100%',
         'screen': '100vh',
     },

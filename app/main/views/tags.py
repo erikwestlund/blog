@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask.views import MethodView
+from slugify import slugify
 
 from app import db
 from main.forms.tag import TagForm
@@ -18,6 +19,8 @@ class Tags(MethodView):
     @user_has_role("writer")
     def post(self):
         form = TagForm()
-        tag = first_or_create(db.session, Tag, name=form.tag.data)
+        tag = first_or_create(
+            db.session, Tag, name=form.tag.data, slug=slugify(form.tag.data)
+        )
 
         return jsonify(tag)

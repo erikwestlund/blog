@@ -1,11 +1,13 @@
 alembic==1.0.2
 amqp==2.3.2
+b2blaze==0.2.1
 bcrypt==3.1.4
 billiard==3.5.0.4
 blinker==1.4
 celery==4.2.1
 cffi==1.11.5
 Click==7.0
+cloudinary==1.15.0
 Flask==1.0.2
 Flask==1.0.2
 Flask-Bcrypt==0.7.1

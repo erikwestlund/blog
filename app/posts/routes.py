@@ -2,6 +2,7 @@ from flask import Blueprint
 from posts.models.post import Post
 from posts.views.create import CreatePost
 from posts.views.edit import EditPost, FetchPost
+from posts.views.tagged_posts import FetchTaggedPosts, ShowTaggedPosts
 from posts.views.unpublish import UnpublishPost
 from posts.views.admin import Index, FetchAdminPosts
 from posts.views.index import FetchPosts
@@ -29,4 +30,12 @@ posts.add_url_rule("/admin/posts", view_func=Index.as_view("post_index"))
 posts.add_url_rule("/posts.json", view_func=FetchPosts.as_view("get_posts"))
 posts.add_url_rule(
     "/<int:year>/<int:month>/<string:slug>", view_func=ShowPost.as_view("show_post")
+)
+
+posts.add_url_rule(
+    "/posts/tags/<string:slug>", view_func=ShowTaggedPosts.as_view("show_tagged_posts")
+)
+posts.add_url_rule(
+    "/posts/tags/<string:slug>/posts.json",
+    view_func=FetchTaggedPosts.as_view("fetch_tagged_posts"),
 )

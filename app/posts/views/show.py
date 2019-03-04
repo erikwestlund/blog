@@ -5,7 +5,6 @@ from posts.models.post import Post
 
 
 class ShowPost(MethodView):
-    @login_required
     def get(self, year, month, slug):
         post = Post.get_posts_query_by_slug_within_month(slug, year, month).first()
 

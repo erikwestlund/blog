@@ -13,13 +13,15 @@ class TailwindExtractor {
     }
 }
 
-mix.setPublicPath('./')
-    .sass('resources/sass/app.scss', 'static')
+
+mix.setPublicPath('static')
+    .setResourceRoot('/static')
+    .sass('resources/sass/app.scss', './')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.js')],
     })
-    .js('resources/js/app.js', 'static')
+    .js('resources/js/app.js', './')
     .extract([
         'vue',
         'axios',
