@@ -4,6 +4,7 @@ b2blaze
 bcrypt
 billiard==3.5.0.5
 blinker
+boto3
 celery
 cffi
 Click

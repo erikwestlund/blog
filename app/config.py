@@ -20,6 +20,16 @@ class Config:
     CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
     CLOUDINARY_WIDTHS = os.getenv("CLOUDINARY_WIDTHS")
 
+    B2_KEY_ID = os.getenv("B2_KEY_ID")
+    B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
+    B2_BUCKET = os.getenv("B2_BUCKET")
+
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION = os.getenv("AWS_REGION")
+    AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
+    AWS_S3_BUCKET_URL = 'https://s3.amazonaws.com/%s' % AWS_S3_BUCKET
+
     UPLOAD_DIR = os.getenv("UPLOAD_DIR")
     UPLOAD_ALLOWED_EXTENSIONS = set(os.getenv("UPLOAD_ALLOWED_EXTENSIONS").split(","))
 
@@ -28,10 +38,6 @@ class Config:
 
     CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
-
-    B2_KEY_ID = os.getenv("B2_KEY_ID")
-    B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
-    B2_BUCKET = os.getenv("B2_BUCKET")
 
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     MAIL_SERVER = os.getenv("MAIL_SERVER")
