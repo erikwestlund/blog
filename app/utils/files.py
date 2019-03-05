@@ -30,10 +30,12 @@ def delete_file(filename):
 
     return {"status": "error", "message": "File could not be deleted."}
 
+
 def get_s3_url_from_file(path):
     bucket_url = current_app.config["AWS_S3_BUCKET_URL"]
 
     return "%s/%s" % (bucket_url, path)
+
 
 def get_b2_url_from_file(file):
     bucket = current_app.config["B2_BUCKET"]

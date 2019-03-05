@@ -442,6 +442,7 @@
             }, 100)
 
             Event.listen('tagsUpdated', (payload) => this.tagsUpdate(payload))
+            Event.listen('imageDeletedFromUploads', (refreshUploadedImages) => this.refreshUploadedImages(refreshUploadedImages))
 
             if (this.initPostId && this.initAction === 'edit') {
                 this.postFetch(this.initPostId)
@@ -480,7 +481,7 @@
             addNewImageToUploads(newImageUploaded) {
                 this.uploadedImages.push(newImageUploaded)
 
-                if (newImageUploaded.markdownEditorPosition) {
+                if (Number.isInteger(newImageUploaded.markdownEditorPosition)) {
                     this.$refs.markdownEditor.$img2Url(newImageUploaded.markdownEditorPosition, newImageUploaded.url)
                 }
             },
@@ -490,17 +491,21 @@
             },
 
             editorUploadImage(pos, $formData) {
-                console.log('upload', pos)
+                console.log(pos)
                 this.markdownEditorPosition = pos
                 this.imageToUpload = $formData
                 this.uploadImage(pos)
             },
 
             editorDeleteImage(pos) {
-                console.log(pos)
-                let markdownEditorPosition = pos[1];
 
-                Event.fire('uploadedImageDeleted', markdownEditorPosition)
+                const identifier = pos ?
+                    pos[1] :
+                    pos;
+
+                console.log(pos)
+
+                Event.fire('uploadedImageTrashed', identifier)
             },
 
             postDelete() {
@@ -599,6 +604,10 @@
                         flash('Could not unpublish post.', 'danger')
                         this.turnOffSubmitting()
                     })
+            },
+
+            refreshUploadedImages(uploadedImages) {
+                this.uploadedImages = uploadedImages
             },
 
             tagsUpdate(payload) {

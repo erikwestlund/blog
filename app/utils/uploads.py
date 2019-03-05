@@ -39,7 +39,11 @@ def upload_file():
         return {"status": "error", "message": "File empty."}
 
     if file and allowed_file(file.filename):
-        filename = "%s-%s-%s" % (int(time.time()), str(uuid.uuid4())[:4], secure_filename(file.filename))
+        filename = "%s-%s-%s" % (
+            int(time.time()),
+            str(uuid.uuid4())[:4],
+            secure_filename(file.filename),
+        )
 
         if cloud_provider == "b2":
             path = os.path.join(upload_dir, filename)
@@ -90,13 +94,15 @@ def upload_to_b2(path, file):
 
 
 def upload_to_s3(path, file):
-    s3 = boto3.client('s3')
+    s3 = boto3.client("s3")
     bucket_name = current_app.config["AWS_S3_BUCKET"]
 
-    s3.upload_fileobj(file, bucket_name, path, ExtraArgs={
-        "ACL": 'public-read',
-        "ContentType": file.content_type
-    })
+    s3.upload_fileobj(
+        file,
+        bucket_name,
+        path,
+        ExtraArgs={"ACL": "public-read", "ContentType": file.content_type},
+    )
 
     return path
 

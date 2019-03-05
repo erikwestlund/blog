@@ -107,7 +107,7 @@
             Modal
         },
         created() {
-            Event.listen('uploadedImageDeleted', (identifier) => this.deleteImageFromUploads(identifier))
+            Event.listen('uploadedImageTrashed', (identifier) => this.deleteImageFromUploads(identifier))
         },
         mixins: [FileUploadImageMixin, SubmittingMixin],
         props: {
@@ -135,7 +135,7 @@
         methods: {
             setImage() {
                 this.imageToUpload = this.$refs.imageUpload.files[0]
-            }
+            },
         }
     }
 </script>

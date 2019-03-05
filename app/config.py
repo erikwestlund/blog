@@ -28,7 +28,7 @@ class Config:
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_REGION = os.getenv("AWS_REGION")
     AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
-    AWS_S3_BUCKET_URL = 'https://s3.amazonaws.com/%s' % AWS_S3_BUCKET
+    AWS_S3_BUCKET_URL = "https://s3.amazonaws.com/%s" % AWS_S3_BUCKET
 
     UPLOAD_DIR = os.getenv("UPLOAD_DIR")
     UPLOAD_ALLOWED_EXTENSIONS = set(os.getenv("UPLOAD_ALLOWED_EXTENSIONS").split(","))
