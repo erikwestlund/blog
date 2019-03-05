@@ -17,6 +17,17 @@
                     }
                 })
             },
+            imageFileUpload($formData) {
+                let formdata = new FormData();
+                formdata.append('file', $formData);
+
+
+                return axios.post('/admin/uploads/image', formdata, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+            },
         }
     }
 </script>

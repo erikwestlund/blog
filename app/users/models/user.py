@@ -1,7 +1,6 @@
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import func
 
 from app import db
@@ -57,15 +56,15 @@ class User(db.Model, UserMixin, TimestampMixin):
         return True if self.roles.filter_by(name=role).count() > 0 else False
 
     # Is confirmed
-    @hybrid_property
+    @property
     def email_confirmed(self):
         return True if self.email_confirmed_at else False
 
-    @hybrid_property
+    @property
     def name(self):
         return (self.first_name + " " + self.last_name).strip()
 
-    @hybrid_property
+    @property
     def display_name(self):
         if self.first_name:
             return self.first_name.strip()

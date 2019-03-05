@@ -5,7 +5,7 @@
                 <fa-icon class="fax-2x text-grey mr-2" :icon="['far', 'cloud-upload']"/>
                 Uploaded Images
             </h2>
-            <button class="ml-auto btn btn-blue" @click.prevent="showUploadImagePrompt = true">
+            <button class="ml-auto btn btn-white hover:bg-grey-lightest hover:border-grey p-2" @click.prevent="showUploadImagePrompt = true">
                 <fa-icon
                         class="mr-2"
                         :icon="['far', 'upload']"
@@ -73,9 +73,6 @@
         components: {
             Modal
         },
-        created() {
-            Event.listen('uploadedImagesChanged', (changedImages) => this.updateUploadedImages(changedImages))
-        },
         computed: {
             hasUploads() {
                 return !_.isEmpty(this.uploadedImages)
@@ -87,10 +84,6 @@
             }
         },
         methods: {
-            updateUploadedImages(changedImages) {
-                Vue.set(this, 'uploadedImages', changedImages)
-            },
-
             setImage() {
                 this.imageToUpload = this.$refs.imageUpload.files[0]
             },

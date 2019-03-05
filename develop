@@ -16,6 +16,14 @@ if [ $# -gt 0 ];then
         $COMPOSE up "$@"
     elif [ "$1" == "down" ]; then
         $COMPOSE down
+    elif [ "$1" == "pip-upgrade" ]; then
+        $COMPOSE exec \
+			$APP_CONTAINER \
+			pip install -r /app/requirements-to-freeze.txt --upgrade
+    elif [ "$1" == "pip-freeze" ]; then
+        $COMPOSE exec \
+			$APP_CONTAINER \
+			pip freeze > app/requirements.txt
     elif [ "$1" == "celery" ]; then
         shift 1
 		$COMPOSE exec \
@@ -25,7 +33,7 @@ if [ $# -gt 0 ];then
         shift 1
         $COMPOSE exec \
         $APP_CONTAINER \
-        /bin/sh
+        /bin/bash
     elif [ "$1" == "python" ]; then
         shift 1
          $COMPOSE \

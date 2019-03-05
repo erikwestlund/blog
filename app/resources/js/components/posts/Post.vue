@@ -3,7 +3,7 @@
         <a
                 v-if="post.editable"
                 class="text-grey float-right hover:text-grey-dark"
-                :href="post.edit_uri"
+                :href="post.edit_url"
         >
             <fa-icon
                     class="mr-2"
@@ -12,7 +12,7 @@
             edit
         </a>
 
-        <a :href="post.uri"><h2 class="text-3xl">{{ post.title }}</h2></a>
+        <a :href="post.urlpost"><h2 class="text-3xl">{{ post.title }}</h2></a>
 
         <div class="text-grey-darker mt-2">
             <span class="mr-2 text-md font-bold">{{ post.user.display_name }}</span>

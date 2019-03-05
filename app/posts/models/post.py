@@ -2,13 +2,13 @@ import calendar
 import datetime
 
 from dateutil.parser import parse as parse_date
-from flask import current_app
+from flask import current_app, url_for
 from flask_login import current_user
 from markdown2 import Markdown
 from slugify import slugify
 from sqlalchemy import ForeignKey
 from sqlalchemy import and_
-from sqlalchemy.ext.hybrid import hybrid_property
+from main.models.image import Image
 
 from app import db
 from utils.models.timestamps import TimestampMixin
@@ -17,6 +17,12 @@ from utils.striphtmltags import strip_tags
 tag_post = db.Table(
     "tag_post",
     db.Column("tag_id", db.Integer(), db.ForeignKey("tag.id")),
+    db.Column("post_id", db.Integer(), db.ForeignKey("post.id")),
+)
+
+image_post = db.Table(
+    "image_post",
+    db.Column("image_id", db.Integer(), db.ForeignKey("image.id")),
     db.Column("post_id", db.Integer(), db.ForeignKey("post.id")),
 )
 
@@ -35,8 +41,8 @@ class Post(db.Model, TimestampMixin):
         "published_at",
         "tags",
         "user",
-        "uri",
-        "edit_uri",
+        "url",
+        "edit_url",
         "editable",
     ]
 
@@ -56,11 +62,11 @@ class Post(db.Model, TimestampMixin):
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
 
-    @hybrid_property
+    @property
     def owner(self):
         return self.user
 
-    @hybrid_property
+    @property
     def editable(self):
         if not current_user.is_authenticated:
             return False
@@ -74,7 +80,7 @@ class Post(db.Model, TimestampMixin):
                 else False
             )
 
-    @hybrid_property
+    @property
     def published_at_display(self):
         return (
             self.published_at.strftime("%B %-d, %Y at %I:%M %p")
@@ -82,7 +88,7 @@ class Post(db.Model, TimestampMixin):
             else None
         )
 
-    @hybrid_property
+    @property
     def uri(self):
         if not self.published_at:
             return None
@@ -90,13 +96,21 @@ class Post(db.Model, TimestampMixin):
         year = self.published_at.year
         month = str(self.published_at.month).zfill(2)
 
-        return "/%d/%s/%s" % (year, month, self.slug)
+        return "%d/%s/%s" % (year, month, self.slug)
 
-    @hybrid_property
+    @property
+    def url(self):
+        return url_for("main.index") + self.uri
+
+    @property
     def edit_uri(self):
-        return "/admin/posts/%s" % self.id if self.editable else None
+        return "admin/posts/%s" % self.id if self.editable else None
 
-    @hybrid_property
+    @property
+    def edit_url(self):
+        return url_for("main.index") + self.edit_uri
+
+    @property
     def body_html(self):
         return Markdown().convert(self.body)
 
@@ -119,7 +133,7 @@ class Post(db.Model, TimestampMixin):
 
         return Post.get_posts_query_by_slug_within_month(slug, year, month).count() > 0
 
-    @hybrid_property
+    @property
     def body_snippet(self):
         snippet_length = int(current_app.config["POST_SNIPPET_LENGTH"])
         stripped_html = strip_tags(self.body_html)

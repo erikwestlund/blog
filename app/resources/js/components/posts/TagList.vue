@@ -6,7 +6,7 @@
                 class="inline py-0 text-sm"
                 :class="{'mr-3' : tags.length - 1 != tag_index }"
         >
-            <a :href="tag.post_uri">{{ tag.name }}</a>
+            <a :href="tag.post_url">{{ tag.name }}</a>
         </li>
     </ul>
 </template>

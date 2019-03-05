@@ -78,8 +78,8 @@
                                       :subfield="false"
                                       :toolbars="mavonToolbarSettings"
                                       :class="{'border border-red' : form.errors.has('body')}"
-                                      @imgAdd="markdownUploadImage"
-                                      @imgDel="markdownDeleteImage"
+                                      @imgAdd="editorUploadImage"
+                                      @imgDel="editorDeleteImage"
                         />
 
                         <p
@@ -439,7 +439,6 @@
             }, 100)
 
             Event.listen('tagsUpdated', (payload) => this.tagsUpdate(payload))
-            Event.listen('uploadedImagesChanged', (changedImages) => this.updateUploadedImages(changedImages))
 
             if (this.initPostId && this.initAction === 'edit') {
                 this.postFetch(this.initPostId)
@@ -475,16 +474,22 @@
         },
 
         methods: {
+            addNewImageToUploads(newImageUploaded) {
+                this.uploadedImages.push(newImageUploaded)
+                this.$refs.markdownEditor.$img2Url(newImageUploaded.markdownEditorPosition, newImageUploaded.url);
+            },
+
             clearPublishedAt() {
                 this.form.published_at = ''
             },
 
-            markdownUploadImage(pos, $formData) {
+            editorUploadImage(pos, $formData) {
+                this.markdownEditorPosition = pos
                 this.imageToUpload = $formData
                 this.uploadImage()
             },
 
-            markdownDeleteImage() {
+            editorDeleteImage() {
 
             },
 
@@ -592,12 +597,12 @@
                 }
             },
 
-            updateUploadedImages() {
+            updateFormUploadedImages() {
                 Vue.set(this.form, 'uploaded_images', this.uploadedImages)
             }
         },
         watch: {
-            'uploadedImages': 'updateUploadedImages'
+            'uploadedImages': 'updateFormUploadedImages'
         }
     }
 </script>

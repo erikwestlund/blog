@@ -3,6 +3,3 @@ services:
   web:
     build: ./
     restart: always
-  celery:
-    build: ./
-    restart: always

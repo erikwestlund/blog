@@ -10,25 +10,38 @@
                 submittingType: 'uploading_image',
                 imageToUpload: null,
                 showUploadImagePrompt: false,
+                markdownEditorPosition: null,
             }
+        },
+        created() {
+            Event.listen('newImageUploaded', (newImageUpload) => this.addNewImageToUploads(newImageUpload))
         },
         methods: {
             uploadImage() {
                 this.uploading_image = true;
-                this.fileUpload(this.imageToUpload)
+                this.imageFileUpload(this.imageToUpload)
                     .then(response => {
-                        this.uploadedImages.push(response.data.data)
+                        let newImageUploaded = response.data.data.image
+
+                        newImageUploaded.markdownEditorPosition = this.markdownEditorPosition
+
+                        Event.fire('newImageUploaded', newImageUploaded)
 
                         this.imageToUpload = null
-                        this.uploading_image
+                        this.markdownEditorPosition = null
                         this.showUploadImagePrompt = false
+                        this.uploading_image = false
                     })
 
+            },
+            addNewImageToUploads(newImageUploaded) {
+                this.uploadedImages.push(newImageUploaded)
             },
 
             cloudinaryUpload(url, public_name) {
 
             },
         },
+
     }
 </script>
