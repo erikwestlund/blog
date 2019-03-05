@@ -1,10 +1,48 @@
-
 /* purgecss start ignore */
 .component-tags.vue-tags-input .ti-input {
-  @apply rounded;
+  @apply rounded border-grey-light text-input mb-0;
 }
+
+.component-tags.vue-tags-input.ti-focus .ti-input{
+  @apply border-grey;
+}
+
+.component-tags.vue-tags-input input.ti-new-tag-input::placeholder {
+  color: $grey-darker !important;
+}
+
+.component-tags .ti-autocomplete {
+  @apply rounded-b border-grey;
+  position: relative !important;
+  border-color: $grey !important;
+  bottom: 2px;
+}
+
+.component-tags .ti-tag {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+.component-tags .ti-autocomplete li,
+.component-tags .ti-autocomplete.ti-selected-item li {
+  @apply ml-0 mr-0 mb-0 mt-0 pl-2 pr-2 pt-2 pb-2;
+}
+
+.component-tags .ti-new-tag-input-wrapper {
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 1rem !important
+}
+
 .ti-tag.ti-valid.component-tagBox,
 .ti-autocomplete .ti-item.ti-valid.ti-selected-item {
   @apply bg-blue;
 }
+
 /* purgecss end ignore */

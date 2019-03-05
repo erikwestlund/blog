@@ -108,7 +108,7 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def edit_url(self):
-        return url_for("main.index") + self.edit_uri
+        return url_for("main.index") + self.edit_uri if self.editable else None
 
     @property
     def body_html(self):
