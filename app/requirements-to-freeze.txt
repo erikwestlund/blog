@@ -2,7 +2,7 @@ alembic
 amqp
 b2blaze
 bcrypt
-billiard==3.5.0.4
+billiard==3.5.0.5
 blinker
 celery
 cffi
@@ -34,9 +34,10 @@ python-editor
 python-slugify
 pytz
 redis
+requests
 six
 SQLAlchemy
-urllib3==1.23
+urllib3
 uWSGI
 vine
 Werkzeug
