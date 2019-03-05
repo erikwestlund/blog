@@ -7,7 +7,7 @@ from flask import current_app
 def allowed_file(filename):
     allowed_extensions = current_app.config["UPLOAD_ALLOWED_EXTENSIONS"]
 
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
 
 def upload_to_b2(path, file):
@@ -22,23 +22,16 @@ def upload_to_b2(path, file):
 
     return new_file
 
+
 def upload_to_cloudinary(path):
     response = upload(path)
 
     url, options = cloudinary_url(
-        response['public_id'],
-        format=response['format'],
+        response["public_id"],
+        format=response["format"],
         width=200,
         height=150,
-        crop="fill"
+        crop="fill",
     )
 
-    return {
-        "url": url,
-        "options": options
-    }
-
-
-
-
-
+    return {"url": url, "options": options}

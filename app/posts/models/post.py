@@ -141,7 +141,7 @@ class Post(db.Model, TimestampMixin):
         return (
             stripped_html
             if len(stripped_html) <= snippet_length
-            else stripped_html[: snippet_length] + "..."
+            else stripped_html[:snippet_length] + "..."
         )
 
     @staticmethod

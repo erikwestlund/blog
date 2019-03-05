@@ -13,5 +13,6 @@ main.add_url_rule("/admin", view_func=Admin.as_view("admin"))
 main.add_url_rule("/tags", view_func=Tags.as_view("tags"))
 
 main.add_url_rule("/admin/uploads", view_func=UploadFile.as_view("upload_file"))
-main.add_url_rule("/admin/uploads/image", view_func=UploadImageFile.as_view("upload_image_file"))
-
+main.add_url_rule(
+    "/admin/uploads/image", view_func=UploadImageFile.as_view("upload_image_file")
+)

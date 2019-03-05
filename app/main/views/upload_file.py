@@ -22,10 +22,9 @@ class UploadImageFile(MethodView):
         db.session.add(image)
         db.session.commit()
 
-        return jsonify({"data": {
-            "filename": upload["data"]["original_filename"],
-            "image": image
-        }})
+        return jsonify(
+            {"data": {"filename": upload["data"]["original_filename"], "image": image}}
+        )
 
 
 class UploadFile(MethodView):
@@ -37,23 +36,21 @@ class UploadFile(MethodView):
 
         return jsonify({"data": upload})
 
+
 def upload_file():
     cloud_provider = current_app.config["CLOUD_FILE_PROVIDER"]
-    upload_dir = "%s/%s" % (current_app.config["UPLOAD_DIR"], datetime.now().strftime("%Y/%m"))
+    upload_dir = "%s/%s" % (
+        current_app.config["UPLOAD_DIR"],
+        datetime.now().strftime("%Y/%m"),
+    )
 
-    if 'file' not in request.files:
-        return {
-            "status": "error",
-            "message": "No file sent."
-        }
+    if "file" not in request.files:
+        return {"status": "error", "message": "No file sent."}
 
-    file = request.files['file']
+    file = request.files["file"]
 
-    if file.filename == '':
-        return {
-            "status": "error",
-            "message": "File empty."
-        }
+    if file.filename == "":
+        return {"status": "error", "message": "File empty."}
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -82,13 +79,19 @@ def upload_file():
                 "original_filename": file.filename,
                 "secure_filename": filename,
                 "path": path,
-                "url": url
-            }
+                "url": url,
+            },
         }
+
 
 def get_b2_url_from_file(file):
     bucket = current_app.config["B2_BUCKET"]
     parsed_url = urlparse(file.connector.download_url)
-    url = "%s://%s/file/%s/%s" % (parsed_url.scheme, parsed_url.netloc, bucket, file.file_name)
+    url = "%s://%s/file/%s/%s" % (
+        parsed_url.scheme,
+        parsed_url.netloc,
+        bucket,
+        file.file_name,
+    )
 
     return url

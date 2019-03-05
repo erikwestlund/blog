@@ -32,13 +32,13 @@
 import Pagination from '../mixins/PaginatedContentMixin'
 import Post from './Post'
 export default {
-    mixins: [Pagination],
     components: { Post },
+    mixins: [Pagination],
     props: {
         page: {
             type: Number,
             default: 1
-        },
+        }
 
     },
     data () {
