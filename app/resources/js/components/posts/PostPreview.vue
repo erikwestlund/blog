@@ -8,11 +8,14 @@
                 @close="show = false"
         >
             <h3 slot="header">
-                {{ title }}
+                {{ renderedTitle }}
             </h3>
 
             <div slot="body">
-                <div v-if="loaded" class="post" v-html="renderedHtml">
+                <div v-if="loaded && ! body">
+                   Write something!
+                </div>
+                <div v-else-if="loaded && body" class="post" v-html="renderedHtml">
                 </div>
                 <div v-else="! loaded">
                     <fa-icon
@@ -34,6 +37,11 @@
         components: {Modal},
         created() {
             Event.listen('showPostPreview', () => this.show = true)
+        },
+        computed: {
+          renderedTitle() {
+              return this.title || 'Preview Post'
+          }
         },
         data() {
             return {
