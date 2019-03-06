@@ -478,34 +478,17 @@
         },
 
         methods: {
-            addNewImageToUploads(newImageUploaded) {
-                this.uploadedImages.push(newImageUploaded)
-
-                if (Number.isInteger(newImageUploaded.markdownEditorPosition)) {
-                    this.$refs.markdownEditor.$img2Url(newImageUploaded.markdownEditorPosition, newImageUploaded.url)
-                }
-            },
 
             clearPublishedAt() {
                 this.form.published_at = ''
             },
 
             editorUploadImage(pos, $formData) {
-                console.log(pos)
-                this.markdownEditorPosition = pos
-                this.imageToUpload = $formData
-                this.uploadImage(pos)
+                this.uploadImage($formData, pos)
             },
 
-            editorDeleteImage(pos) {
-
-                const identifier = pos ?
-                    pos[1] :
-                    pos;
-
-                console.log(pos)
-
-                Event.fire('uploadedImageTrashed', identifier)
+            editorDeleteImage(image) {
+                Event.fire('uploadedImageTrashed', image)
             },
 
             postDelete() {
@@ -607,7 +590,7 @@
             },
 
             refreshUploadedImages(uploadedImages) {
-                this.uploadedImages = uploadedImages
+                this.uploadedImages = _.clone(uploadedImages)
             },
 
             tagsUpdate(payload) {

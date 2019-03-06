@@ -7,9 +7,9 @@
             >
                 <fa-icon
                         class="fax-2x text-grey mr-2"
-                        :icon="['far', 'cloud-upload']"
+                        :icon="['far', 'images']"
                 />
-                Uploaded Images
+                Images
             </h2>
             <button
                     class="ml-auto btn btn-white hover:bg-grey-lightest hover:border-grey p-2"
@@ -70,28 +70,15 @@
                             id="file"
                             ref="imageUpload"
                             type="file"
-                            @change="setImage()"
+                            v-show="! uploading_image"
+                            @change="triggerImageUpload()"
                     >
                 </div>
-
-                <button
-                        :disabled="uploading_image"
-                        v-if="imageToUpload"
-                        class="btn btn-blue"
-                        @click.prevent="uploadImage()"
-                >
-                    <submitting-label
-                            v-if="uploading_image"
-                            type="uploading_image"
-                    />
-                    <span v-else>
-                        <fa-icon
-                                class="mr-2"
-                                :icon="['far', 'upload']"
-                        />
-                        Upload
-                    </span>
-                </button>
+                <submitting-label
+                        class="text-grey mb-10"
+                        v-if="uploading_image"
+                        type="uploading_image"
+                />
             </div>
         </modal>
     </div>
@@ -107,7 +94,7 @@
             Modal
         },
         created() {
-            Event.listen('uploadedImageTrashed', (identifier) => this.deleteImageFromUploads(identifier))
+            Event.listen('uploadedImageTrashed', (image) => this.deleteImageFromUploads(image))
         },
         mixins: [FileUploadImageMixin, SubmittingMixin],
         props: {
@@ -133,8 +120,14 @@
             }
         },
         methods: {
-            setImage() {
-                this.imageToUpload = this.$refs.imageUpload.files[0]
+            triggerImageUpload() {
+                this.uploadImage(this.$refs.imageUpload.files[0])
+                    .then(response => {
+                        flash('Image uploaded successfully.')
+                    })
+                    .catch(errors => {
+                        flash('Image upload failed.', 'danger')
+                    })
             },
         }
     }

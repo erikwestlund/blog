@@ -8,7 +8,6 @@
                 uploadedImages: [],
                 uploading_image: false,
                 submittingType: 'uploading_image',
-                imageToUpload: null,
                 showUploadImagePrompt: false,
                 markdownEditorPosition: null
             }
@@ -17,33 +16,35 @@
             Event.listen('newImageUploaded', (newImageUpload) => this.addNewImageToUploads(newImageUpload))
         },
         methods: {
-            uploadImage(markdownEditorPosition = null) {
+            uploadImage(imageToUpload, uploadPosition = null) {
                 this.uploading_image = true
-                this.imageFileUpload(this.imageToUpload)
+
+                return this.imageFileUpload(imageToUpload)
                     .then(response => {
                         let newImageUploaded = response.data.data.image
+                        newImageUploaded.originalImage = imageToUpload
+                        newImageUploaded.uploadPosition = uploadPosition
 
-                        console.log('m', markdownEditorPosition)
+                        const reg_str = "/(!\\[\[^\\[\]*?\\]\(?=\\(\)\)\\(\\s*\(" + newImageUploaded.uploadPosition + "\)\\s*\\)/g"
+                        const reg = eval(reg_str);
+                        this.form.body = this.form.body.replace(reg, "$1(" + newImageUploaded.url + ")")
 
-                        if (Number.isInteger(markdownEditorPosition)) {
-                            newImageUploaded.markdownEditorPosition = markdownEditorPosition
-                        }
-
+                        // this.$refs.markdownEditor.$img2Url(newImageUploaded.uploadPosition, newImageUploaded.url)
                         Event.fire('newImageUploaded', newImageUploaded)
 
-                        this.imageToUpload = null
                         this.showUploadImagePrompt = false
                         this.uploading_image = false
+
+                        flash('Image uploaded successfully.')
                     })
                     .catch(errors => {
-                        this.imageToUpload = null
                         this.showUploadImagePrompt = false
                         this.uploading_image = false
-                        flash('Could not upload image', 'danger')
+                        flash('Image upload failed.', 'danger')
                     })
             },
+
             addNewImageToUploads(newImageUploaded) {
-                console.log('here')
                 this.uploadedImages.push(newImageUploaded)
             },
 
@@ -65,19 +66,10 @@
                 Event.fire('imageDeletedFromUploads', this.uploadedImages)
             },
 
-            deleteImageFromUploads(identifier) {
-console.log('searching', identifier)
-                if (Number.isInteger(identifier)) {
-                    var matchingUpload = _.find(this.uploadedImages, (upload) => {
-                        return upload.markdownEditorPosition === identifier
-                    })
-                } else if (typeof identifier === 'string' || identifier instanceof String) {
-                    var matchingUpload = _.find(this.uploadedImages, (upload) => {
-                        return upload.url === identifier
-                    })
-                }
-
-                console.log('found', matchingUpload)
+            deleteImageFromUploads(image) {
+                let matchingUpload = _.find(this.uploadedImages, (uploadedImage) => {
+                    return uploadedImage.uploadPosition === image[1]
+                })
 
                 if (matchingUpload) {
                     this.deleteUploadRecord(matchingUpload)
