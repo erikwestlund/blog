@@ -1,7 +1,8 @@
+import sys
 from datetime import datetime
-from logging import log
 
-from flask import abort
+
+from flask import abort, current_app
 from flask import flash
 from flask import render_template, jsonify
 from flask.views import MethodView
@@ -10,6 +11,7 @@ from slugify import slugify
 from sqlalchemy import func, null as sqlalchemy_null
 
 from app import db
+from main.models.image import Image
 from main.models.tag import Tag
 from posts.forms.save_post import SavePostForm
 from posts.models.post import Post, PostRevision
@@ -79,10 +81,11 @@ class EditPost(MethodView):
             elif form.slug.data:
                 post.slug = slugify(form.slug.data)
 
+            post.images = Image.query.filter(Image.id.in_(form.uploaded_images.data)).all()
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.commit()
 
-            return jsonify({"action": "edit", "success": True, "post": post})
+            return jsonify({"action": "edit", "success": True, "post": post, "images": form.uploaded_images.data})
         else:
             return jsonify(errors=form.errors), 422

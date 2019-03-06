@@ -29,10 +29,11 @@
         >
             <li
                     v-for="upload in uploadedImages"
+                    :key="upload.id"
                     class="flex mt-5"
             >
                 <img
-                        class="mr-2 rounded-lg border border-grey-light max-w-full md:max-w-thumbnail max-h-full md:max-h-thumbnail"
+                        class="mr-2 rounded-lg border border-grey-light max-w-thumbnail max-h-thumbnail"
                         :src="upload.url"
                 >
                 <div class="flex-auto">
@@ -67,16 +68,17 @@
             >
                 <div class="mb-5">
                     <input
+                            v-show="! uploading_image"
                             id="file"
                             ref="imageUpload"
                             type="file"
-                            v-show="! uploading_image"
                             @change="triggerImageUpload()"
+                            accept=".gif,.jpg,.jpeg,.png"
                     >
                 </div>
                 <submitting-label
-                        class="text-grey mb-10"
                         v-if="uploading_image"
+                        class="text-grey mb-20"
                         type="uploading_image"
                 />
             </div>
@@ -92,9 +94,6 @@
     export default {
         components: {
             Modal
-        },
-        created() {
-            Event.listen('uploadedImageTrashed', (image) => this.deleteImageFromUploads(image))
         },
         mixins: [FileUploadImageMixin, SubmittingMixin],
         props: {
@@ -119,16 +118,35 @@
                 return !_.isEmpty(this.uploadedImages)
             }
         },
+        created() {
+            Event.listen('uploadedImageTrashed', (image) => this.deleteImageFromUploads(image))
+        },
         methods: {
             triggerImageUpload() {
-                this.uploadImage(this.$refs.imageUpload.files[0])
+                this.uploading_image = true
+                this.imageFileUpload(this.$refs.imageUpload.files[0])
                     .then(response => {
+                        this.showUploadImagePrompt = false
+                        this.uploading_image = false
+                        this.$refs.imageUpload.value = ''
+
+                        let newImageUploaded = response.data.data.image
+                        Event.fire('newImageUploaded', newImageUploaded)
+
                         flash('Image uploaded successfully.')
                     })
-                    .catch(errors => {
-                        flash('Image upload failed.', 'danger')
+                    .catch(error => {
+                        this.$refs.imageUpload.value = ''
+                        this.showUploadImagePrompt = false
+                        flash(error.response.data.hasOwnProperty('data') && error.response.data.data.message || 'Image upload failed.', 'danger')
                     })
             },
+            loadInitialImages() {
+                this.uploadedImages = _.clone(this.initImageUploads)
+            }
+        },
+        watch: {
+            'initImageUploads': 'loadInitialImages'
         }
     }
 </script>

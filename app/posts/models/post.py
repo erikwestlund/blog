@@ -40,6 +40,7 @@ class Post(db.Model, TimestampMixin):
         "updated_at",
         "published_at",
         "tags",
+        "images",
         "user",
         "url",
         "edit_url",
@@ -58,6 +59,10 @@ class Post(db.Model, TimestampMixin):
 
     tags = db.relationship(
         "Tag", secondary=tag_post, cascade="save-update, merge, delete"
+    )
+
+    images = db.relationship(
+        "Image", secondary=image_post, cascade="save-update, merge, delete"
     )
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
@@ -100,7 +105,7 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def url(self):
-        return url_for("main.index") + self.uri
+        return url_for("main.index") + self.uri if self.published_at else None
 
     @property
     def edit_uri(self):

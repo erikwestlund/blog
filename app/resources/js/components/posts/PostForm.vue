@@ -81,6 +81,7 @@
                                 :class="{'border border-red' : form.errors.has('body')}"
                                 @imgAdd="editorUploadImage"
                                 @imgDel="editorDeleteImage"
+                                @save="postSave"
                         />
 
                         <p
@@ -99,7 +100,7 @@
                         </div>
                     </div>
                     <div class="w-full mt-4">
-                        <image-uploads :init-uploaded-images="form.uploaded_images"/>
+                        <image-uploads :init-image-uploads="uploadedImages"/>
                     </div>
                 </div>
                 <div class="w-full xl:w-1/3 mt-5 xl:mt-0 p-3">
@@ -455,6 +456,10 @@
                             ? new Date(this.savedPost.published_at).toISOString()
                             : ''
                         this.form.slug = this.savedPost.slug || ''
+                        this.uploadedImages = this.savedPost.images
+                        this.form.uploaded_images = this.savedPost.images.map(image => {
+                            return image.id
+                        })
 
                         this.seedTags = this.savedPost.tags.map(tag => {
                             return {
@@ -600,7 +605,9 @@
             },
 
             updateFormUploadedImages() {
-                Vue.set(this.form, 'uploaded_images', this.uploadedImages)
+                Vue.set(this.form, 'uploaded_images', this.uploadedImages.map(image => {
+                    return image.id
+                }))
             }
         }
     }

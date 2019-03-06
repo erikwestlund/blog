@@ -15,6 +15,8 @@ class SavePostForm(FlaskForm):
 
     body = StringField("Body", validators=[DataRequired()])
 
+    uploaded_images = NonValidatingMultiSelectField("Images", choices=[])
+
     tags = NonValidatingMultiSelectField("Tags", choices=[])
 
     published_at = StringField("Published At", validators=[Optional()])

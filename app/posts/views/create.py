@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 from sqlalchemy import func
 
 from app import db
+from main.models.image import Image
 from main.models.tag import Tag
 from posts.forms.save_post import SavePostForm
 from posts.models.post import Post
@@ -31,6 +32,7 @@ class CreatePost(MethodView):
             if post.published_at:
                 post.slug = Post.generate_slug(form.title.data, str(post.published_at))
 
+            post.images = Image.query.filter(Image.id.in_(form.uploaded_images.data)).all()
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.add(post)

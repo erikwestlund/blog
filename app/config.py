@@ -15,7 +15,8 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
-    CLOUD_FILE_PROVIDER = os.getenv("CLOUD_FILE_PROVIDER")
+    FILE_STORAGE_PROVIDER = os.getenv("FILE_STORAGE_PROVIDER")
+
     CLOUDINARY_ON = os.getenv("CLOUDINARY_ON")
     CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
     CLOUDINARY_WIDTHS = os.getenv("CLOUDINARY_WIDTHS")
@@ -23,12 +24,14 @@ class Config:
     B2_KEY_ID = os.getenv("B2_KEY_ID")
     B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
     B2_BUCKET = os.getenv("B2_BUCKET")
+    B2_URL_BASE = os.getenv("B2_URL_BASE")
 
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_REGION = os.getenv("AWS_REGION")
     AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
-    AWS_S3_BUCKET_URL = "https://s3.amazonaws.com/%s" % AWS_S3_BUCKET
+    AWS_S3_URL_BASE = os.getenv("AWS_S3_URL_BASE")
+
 
     UPLOAD_DIR = os.getenv("UPLOAD_DIR")
     UPLOAD_ALLOWED_EXTENSIONS = set(os.getenv("UPLOAD_ALLOWED_EXTENSIONS").split(","))

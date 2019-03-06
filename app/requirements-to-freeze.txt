@@ -27,6 +27,7 @@ kombu
 Mako
 MarkupSafe
 markdown2
+Pillow
 psycopg2-binary
 pycparser
 python-dateutil
