@@ -186,7 +186,7 @@
                         </button>
                         <button
                                 v-show="! isPublished"
-                                class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest mr-2"
+                                class="btn btn-green hover:bg-green-dark hover:border-green-dark mr-2"
                                 :disabled="form.errors.any() || publishing"
                                 @click="postPublish()"
                         >
@@ -197,7 +197,7 @@
                             <span v-else>
                                 <fa-icon
                                         class="mr-2"
-                                        :icon="['far', 'search']"
+                                        :icon="['far', 'eye']"
                                 />
                                 Publish
                             </span>
@@ -221,7 +221,7 @@
                             </span>
                         </button>
                         <button class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2" @click.prevent="showPreview()">
-                            <fa-icon class="mr-2" :icon="['far', 'eye']" /> Preview
+                            <fa-icon class="mr-2" :icon="['far', 'search']" /> Preview
                         </button>
                     </div>
                     <div
