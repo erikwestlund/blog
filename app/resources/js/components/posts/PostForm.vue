@@ -350,10 +350,7 @@
                     italic: true,
                     header: true,
                     underline: true,
-                    strikethrough: true,
                     mark: true,
-                    superscript: true,
-                    subscript: true,
                     quote: true,
                     ol: true,
                     ul: true,
@@ -361,7 +358,9 @@
                     imagelink: true,
                     code: true,
                     table: true,
-
+                    alignleft: true,
+                    aligncenter: true,
+                    alignright: true,
                     preview: true
                 }
             }
