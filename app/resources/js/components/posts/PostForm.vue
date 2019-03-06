@@ -168,7 +168,7 @@
                     </div>
                     <div class="mt-6">
                         <button
-                                class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2"
+                                class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest mr-2"
                                 :disabled="form.errors.any() || saving"
                                 @click="postSave()"
                         >
@@ -186,7 +186,7 @@
                         </button>
                         <button
                                 v-show="! isPublished"
-                                class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
+                                class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest mr-2"
                                 :disabled="form.errors.any() || publishing"
                                 @click="postPublish()"
                         >
@@ -197,14 +197,14 @@
                             <span v-else>
                                 <fa-icon
                                         class="mr-2"
-                                        :icon="['far', 'eye']"
+                                        :icon="['far', 'search']"
                                 />
                                 Publish
                             </span>
                         </button>
                         <button
                                 v-show="isPublished"
-                                class="btn btn-orange hover:bg-orange-darker hover:border-orange-darker"
+                                class="btn btn-orange hover:bg-orange-darker hover:border-orange-darker mr-2"
                                 :disabled="form.errors.any() || unpublishing"
                                 @click.prevent="postUnpublish()"
                         >
@@ -219,6 +219,9 @@
                                 />
                                 Unpublish
                             </span>
+                        </button>
+                        <button class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2" @click.prevent="showPreview()">
+                            <fa-icon class="mr-2" :icon="['far', 'eye']" /> Preview
                         </button>
                     </div>
                     <div
@@ -284,6 +287,8 @@
                     </div>
                 </div>
             </modal>
+
+            <post-preview :body="form.body" :title="form.title"></post-preview>
         </form>
     </div>
 </template>
@@ -297,6 +302,7 @@
     import {Datetime} from 'vue-datetime'
     import {mavonEditor} from 'mavon-editor'
     import FileUploadImageMixin from '../mixins/FileUploadImageMixin'
+    import PostPreview from './PostPreview'
 
     export default {
         name: 'Post',
@@ -306,7 +312,8 @@
             Modal,
             Tags,
             ImageUploads,
-            mavonEditor
+            mavonEditor,
+            PostPreview
         },
         mixins: [FileUploadImageMixin, SubmittingMixin],
 
@@ -333,6 +340,7 @@
                 seedTags: [],
                 setPublishTimeManually: false,
                 showDeletePost: false,
+                showPreviewPost: false,
                 form: new Form(
                     {
                         tags: [],
@@ -595,6 +603,10 @@
 
             refreshUploadedImages(uploadedImages) {
                 this.uploadedImages = _.clone(uploadedImages)
+            },
+
+            showPreview() {
+              Event.fire('showPostPreview')
             },
 
             tagsUpdate(payload) {

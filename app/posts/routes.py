@@ -2,6 +2,7 @@ from flask import Blueprint
 from posts.models.post import Post
 from posts.views.create import CreatePost
 from posts.views.edit import EditPost, FetchPost
+from posts.views.render_preview import RenderPreview
 from posts.views.tagged_posts import FetchTaggedPosts, ShowTaggedPosts
 from posts.views.unpublish import UnpublishPost
 from posts.views.admin import Index, FetchAdminPosts
@@ -18,6 +19,9 @@ posts.add_url_rule(
     "/admin/posts/<int:post_id>/unpublish",
     view_func=UnpublishPost.as_view("unpublish_post"),
 )
+
+posts.add_url_rule("/admin/posts/render-preview", view_func=RenderPreview.as_view("render_preview"))
+
 posts.add_url_rule(
     "/admin/posts/<int:post_id>", view_func=EditPost.as_view("edit_post")
 )
@@ -39,3 +43,5 @@ posts.add_url_rule(
     "/posts/tags/<string:slug>/posts.json",
     view_func=FetchTaggedPosts.as_view("fetch_tagged_posts"),
 )
+
+

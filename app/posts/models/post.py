@@ -117,7 +117,11 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def body_html(self):
-        return Markdown(extras=["markdown-in-html"]).convert(self.body)
+        return Post.convert_markdown_to_html(self.body)
+
+    @staticmethod
+    def convert_markdown_to_html(markdown):
+        return Markdown(extras=["markdown-in-html"]).convert(markdown)
 
     @staticmethod
     def generate_slug(title, published_at):
