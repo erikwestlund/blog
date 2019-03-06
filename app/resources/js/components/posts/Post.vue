@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="post">
         <a
             v-if="post.editable"
             class="text-grey float-right hover:text-grey-dark"
@@ -12,7 +12,7 @@
             edit
         </a>
 
-        <a :href="post.urlpost"><h2 class="text-3xl">{{ post.title }}</h2></a>
+        <a :href="post.url"><h2 class="text-3xl">{{ post.title }}</h2></a>
 
         <div class="text-grey-darker mt-2">
             <span class="mr-2 text-md font-bold">{{ post.user.display_name }}</span>
@@ -21,12 +21,12 @@
 
         <div
             v-if="snip"
-            class="mt-6"
+            class="mt-4"
             v-html="post.body_snippet"
         />
         <div
             v-else
-            class="mt-6"
+            class="mt-4"
             v-html="post.body_html"
         />
 
