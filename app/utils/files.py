@@ -2,7 +2,6 @@ import os, shutil, tempfile
 
 
 class temporary_file_copy(object):
-
     def __init__(self, original_path):
         self.original_path = original_path
 

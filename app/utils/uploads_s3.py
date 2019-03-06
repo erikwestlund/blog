@@ -4,6 +4,7 @@ from tempfile import SpooledTemporaryFile, NamedTemporaryFile
 import boto3
 from flask import current_app
 
+
 def delete_from_s3(path, bucket_name=None):
     s3 = get_boto_client()
     s3.delete_object(Bucket=bucket_name, Key=path)

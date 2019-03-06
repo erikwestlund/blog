@@ -8,6 +8,7 @@ from main.models.image import Image
 from utils.uploads import upload_file
 from PIL import Image as PillowImage
 
+
 class UploadImageFile(MethodView):
     def post(self):
         upload = upload_file(upload_type="image")
@@ -22,7 +23,7 @@ class UploadImageFile(MethodView):
             bucket=upload["data"]["bucket"],
             path=upload["data"]["path"],
             width=uploaded_image.size[0],
-            height=uploaded_image.size[1]
+            height=uploaded_image.size[1],
         )
         db.session.add(image)
         db.session.commit()

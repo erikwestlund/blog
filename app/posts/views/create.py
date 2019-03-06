@@ -32,7 +32,9 @@ class CreatePost(MethodView):
             if post.published_at:
                 post.slug = Post.generate_slug(form.title.data, str(post.published_at))
 
-            post.images = Image.query.filter(Image.id.in_(form.uploaded_images.data)).all()
+            post.images = Image.query.filter(
+                Image.id.in_(form.uploaded_images.data)
+            ).all()
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.add(post)

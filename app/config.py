@@ -32,7 +32,6 @@ class Config:
     AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
     AWS_S3_URL_BASE = os.getenv("AWS_S3_URL_BASE")
 
-
     UPLOAD_DIR = os.getenv("UPLOAD_DIR")
     UPLOAD_ALLOWED_EXTENSIONS = set(os.getenv("UPLOAD_ALLOWED_EXTENSIONS").split(","))
 

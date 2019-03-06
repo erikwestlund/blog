@@ -1,5 +1,6 @@
 import os
 
+
 def delete_from_local(path, bucket_name=None):
     bucket_name = bucket_name or "static"
     os.remove(os.path.join(bucket_name, path))

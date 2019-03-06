@@ -42,7 +42,7 @@ export default {
 
                     flash('Image uploaded successfully.')
                 })
-                .catch(error => {
+                .catch(errors => {
                     this.showUploadImagePrompt = false
                     this.uploading_image = false
                     flash('Image upload failed.', 'danger')

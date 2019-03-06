@@ -1,11 +1,10 @@
 <template>
     <div class="post-preview">
-
         <modal
-                medium
-                :show="show"
-                no-footer
-                @close="show = false"
+            medium
+            :show="show"
+            no-footer
+            @close="show = false"
         >
             <h3 slot="header">
                 {{ renderedTitle }}
@@ -13,72 +12,75 @@
 
             <div slot="body">
                 <div v-if="loaded && ! body">
-                   Write something!
+                    Write something!
                 </div>
-                <div v-else-if="loaded && body" class="post" v-html="renderedHtml">
-                </div>
-                <div v-else="! loaded">
+                <div
+                    v-else-if="loaded && body"
+                    class="post"
+                    v-html="renderedHtml"
+                />
+                <div v-else>
                     <fa-icon
-                            class="mr-2 fa-spin"
-                            :icon="['far', 'circle-notch']"
+                        class="mr-2 fa-spin"
+                        :icon="['far', 'circle-notch']"
                     />
                     Loading...
                 </div>
             </div>
-
         </modal>
     </div>
 </template>
 
 <script>
-    import Modal from '../ui/Modal'
+import Modal from '../ui/Modal'
 
-    export default {
-        components: {Modal},
-        created() {
-            Event.listen('showPostPreview', () => this.show = true)
+export default {
+    components: { Modal },
+    props: {
+        title: {
+            type: String,
+            default: 'Preview Post'
         },
-        computed: {
-          renderedTitle() {
-              return this.title || 'Preview Post'
-          }
-        },
-        data() {
-            return {
-                loaded: false,
-                show: false,
-                renderedHtml: ''
-            }
-        },
-        props: {
-            title: {
-              type: String,
-              default: 'Preview Post',
-            },
-            body: {
-                type: String,
-                required: true,
-            }
-        },
-        methods: {
-            fetch() {
-                this.loaded = false;
-                axios.post("/admin/posts/render-preview", {
-                    body: this.body
+        body: {
+            type: String,
+            required: true
+        }
+    },
+    data () {
+        return {
+            loaded: false,
+            show: false,
+            renderedHtml: ''
+        }
+    },
+    computed: {
+        renderedTitle () {
+            return this.title || 'Preview Post'
+        }
+    },
+    created () {
+        Event.listen('showPostPreview', () => this.showPreview())
+    },
+    methods: {
+        fetch () {
+            this.loaded = false
+            axios.post('/admin/posts/render-preview', {
+                body: this.body
+            })
+                .then(response => {
+                    this.renderedHtml = response.data.html
+                    this.show = true
+                    this.loaded = true
                 })
-                    .then(response => {
-                        this.renderedHtml = response.data.html
-                        this.loaded = true;
-                    })
-                    .catch(error => {
-                        flash('Could not lost preview', 'danger')
-                    })
-            }
+                .catch(errors => {
+                    flash('Could not lost preview', 'danger')
+                })
         },
-        watch: {
-            'show': 'fetch'
+        showPreview () {
+            this.fetch()
         }
     }
+}
 </script>
 
 <style>

@@ -20,8 +20,3 @@ def delete_from_b2(path, bucket_name=None):
     file = bucket.files.get(file_name=path)
 
     file.delete()
-
-
-
-
-

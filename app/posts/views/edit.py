@@ -81,11 +81,20 @@ class EditPost(MethodView):
             elif form.slug.data:
                 post.slug = slugify(form.slug.data)
 
-            post.images = Image.query.filter(Image.id.in_(form.uploaded_images.data)).all()
+            post.images = Image.query.filter(
+                Image.id.in_(form.uploaded_images.data)
+            ).all()
             post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.commit()
 
-            return jsonify({"action": "edit", "success": True, "post": post, "images": form.uploaded_images.data})
+            return jsonify(
+                {
+                    "action": "edit",
+                    "success": True,
+                    "post": post,
+                    "images": form.uploaded_images.data,
+                }
+            )
         else:
             return jsonify(errors=form.errors), 422

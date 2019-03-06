@@ -9,6 +9,4 @@ class RenderPreview(MethodView):
     def post(self):
         preview = PreviewForm()
 
-        return jsonify({
-            "html": Post.convert_markdown_to_html(preview.body.data)
-        })
+        return jsonify({"html": Post.convert_markdown_to_html(preview.body.data)})
