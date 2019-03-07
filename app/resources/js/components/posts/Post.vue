@@ -21,24 +21,24 @@
 
         <div
             v-if="snip"
-            class="mt-4"
+            class="mt-4 post-content"
             v-html="post.body_snippet"
         />
         <div
             v-else
-            class="mt-4"
+            class="mt-4 post-content"
             v-html="post.body_html"
         />
 
         <div class="flex items-center mt-6">
             <fa-icon
                 v-if="tagCount == 1"
-                class="text-grey mr-2"
+                class="text-grey mr-3"
                 :icon="['far', 'tag']"
             />
             <fa-icon
                 v-else-if="tagCount > 1"
-                class="text-grey mr-2"
+                class="text-grey mr-3"
                 :icon="['far', 'tags']"
             />
             <tag-list :tags="post.tags" />

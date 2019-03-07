@@ -6,6 +6,10 @@
   @apply flex-no-shrink border bg-white border-grey-light text-grey-darkest;
 }
 
+.btn-grey {
+  @apply flex-no-shrink border bg-grey-light border-grey-light text-black;
+}
+
 .btn-blue {
   @apply flex-no-shrink bg-blue-darker border-blue-darker text-white;
 }
@@ -27,9 +31,4 @@ button[disabled],
 button:disabled:hover,
 button[disabled]:hover {
   @apply bg-grey-darker border-grey-darker cursor-default text-grey-light;
-}
-
-
-.btn-grey {
-  @apply flex-no-shrink bg-grey-darker border-grey-darker text-white;
 }

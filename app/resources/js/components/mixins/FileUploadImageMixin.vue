@@ -50,6 +50,8 @@ export default {
         },
 
         addNewImageToUploads (newImageUploaded) {
+            this.uploadedImages = _.clone(this.uploadedImages)
+
             this.uploadedImages.push(newImageUploaded)
         },
 

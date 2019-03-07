@@ -6,8 +6,12 @@
             no-footer
             @close="show = false"
         >
-            <h3 slot="header">
+            <h3 slot="header" class="flex">
                 {{ renderedTitle }}
+                <fa-icon class="ml-auto cursor-pointer"
+                         :icon="['far', 'times']"
+                         @click="show = false"
+                />
             </h3>
 
             <div slot="body">
@@ -85,7 +89,7 @@ export default {
 
 <style>
     .post-preview .modal-container {
-        width: 100% !important;
+        width: 90% !important;
         max-width: 800px;
     }
 </style>

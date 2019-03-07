@@ -220,15 +220,18 @@
                                 Unpublish
                             </span>
                         </button>
-                        <button
-                            class="btn btn-white hover:bg-grey-lightest hover:border-grey p-2 mr-2"
-                            @click.prevent="showPreview()"
-                        >
-                            <fa-icon
-                                class="mr-2"
-                                :icon="['far', 'search']"
-                            /> Preview
-                        </button>
+                        <transition name="trx-fade-in">
+                            <button
+                                class="btn btn-grey hover:bg-grey hover:border-grey p-2 mr-2"
+                                v-show="form.body"
+                                @click.prevent="showPreview()"
+                            >
+                                <fa-icon
+                                    class="mr-2"
+                                    :icon="['far', 'search']"
+                                /> Preview
+                            </button>
+                        </transition>
                     </div>
                     <div
                         v-if="isSaved"
