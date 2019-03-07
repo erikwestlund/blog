@@ -13,7 +13,7 @@ users = Blueprint("users", __name__, template_folder="templates")
 
 users.add_url_rule("/account", view_func=Account.as_view("account"), methods=["GET"])
 users.add_url_rule(
-    "/users/<int:user_id>",
+    "/admin/users/<int:user_id>",
     view_func=Account.as_view("edit_user"),
     methods=["GET", "PATCH"],
 )

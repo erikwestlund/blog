@@ -15,6 +15,7 @@ import RegisterUser from './components/users/RegisterUser'
 import ResetPassword from './components/users/ResetPassword'
 import ResetPasswordRequest from './components/users/ResetPasswordRequest'
 import UsersAdminPanel from './components/users/UsersAdminPanel'
+import VueClipboard from 'vue-clipboard2'
 
 require('./bootstrap')
 
@@ -22,6 +23,7 @@ window.Vue = require('vue')
 
 require('./font-awesome')
 
+Vue.use(VueClipboard)
 window.Event = new Event()
 
 window.flash = function (message, level = 'success', timeout = 3) {

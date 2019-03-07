@@ -1,4 +1,6 @@
 import os
+from distutils.util import strtobool
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -29,6 +31,7 @@ class Config:
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_REGION = os.getenv("AWS_REGION")
+    AWS_S3_USING_CDN = strtobool(os.getenv("AWS_S3_USING_CDN"))
     AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
     AWS_S3_URL_BASE = os.getenv("AWS_S3_URL_BASE")
 
@@ -49,6 +52,6 @@ class Config:
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-    POST_SNIPPET_LENGTH = os.getenv("POST_SNIPPET_LENGTH")
-    POSTS_PER_PAGE = os.getenv("POSTS_PER_PAGE")
-    PAGINATE_DEFAULT = os.getenv("PAGINATE_DEFAULT")
+    POST_SNIPPET_LENGTH = int(os.getenv("POST_SNIPPET_LENGTH"))
+    POSTS_PER_PAGE = int(os.getenv("POSTS_PER_PAGE"))
+    PAGINATE_DEFAULT = int(os.getenv("PAGINATE_DEFAULT"))

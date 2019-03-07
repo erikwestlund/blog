@@ -32,7 +32,7 @@
                         </div>
                         <div class="w-1/4 text-right">
                             <button
-                                class="btn btn-grey hover:bg-grey-darkest hover:border-grey-darkest"
+                                class="btn btn-grey hover:bg-grey hover:border-grey"
                                 @click="$emit('close')"
                             >
                                 <fa-icon

@@ -198,7 +198,7 @@ export default {
     },
     computed: {
         endpoint () {
-            return `/users/${this.user_id}`
+            return `/admin/users/${this.user_id}`
         },
         isAdmin () {
             return this.state.user.is_admin

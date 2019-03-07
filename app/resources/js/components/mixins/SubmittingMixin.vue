@@ -8,6 +8,7 @@ export default {
             deleting: false,
             publishing: false,
             saving: false,
+            logging_in: false,
             uploading: false,
             unpublishing: false,
             submittingType: 'saving',

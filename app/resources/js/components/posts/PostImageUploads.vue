@@ -25,27 +25,14 @@
 
         <ul
             v-if="hasUploads"
-            class="list-unstyled pl-0"
+            class="list-reset pl-0"
         >
             <li
                 v-for="upload in uploadedImages"
                 :key="upload.id"
-                class="flex mt-5"
+                class="mt-5"
             >
-                <img
-                    class="mr-2 rounded-lg border border-grey-light max-w-thumbnail max-h-thumbnail"
-                    :src="upload.url"
-                >
-                <div class="flex-auto">
-                    <input
-                        readonly
-                        class="text-grey-dark w-100 text-input self-start p-1"
-                        :value="upload.url"
-                    >
-                    <button class="btn btn-sm btn-white">
-                        Cloudinary
-                    </button>
-                </div>
+                <post-image-upload class="flex" :upload="upload" />
             </li>
         </ul>
         <div
@@ -88,12 +75,13 @@
 
 <script>
 import Modal from '../ui/Modal'
+import PostImageUpload from './PostImageUpload'
 import FileUploadImageMixin from '../mixins/FileUploadImageMixin'
 import SubmittingMixin from '../mixins/SubmittingMixin'
 
 export default {
     components: {
-        Modal
+        Modal, PostImageUpload
     },
     mixins: [FileUploadImageMixin, SubmittingMixin],
     props: {

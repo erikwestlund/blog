@@ -23,10 +23,13 @@ class Image(db.Model, TimestampMixin):
 
     @property
     def url(self):
-        if self.provider == "b2":
-            url_base = current_app.config["B2_URL_BASE"]
-        elif self.provider == "s3":
+        if self.provider == "s3" and current_app.config["AWS_S3_USING_CDN"]:
+            # When using a CDN, we don't need to append a bucket name, so we can just return early
+            return os.path.join(current_app.config["AWS_S3_URL_BASE"], self.path)
+        elif self.provider == "s3" and not current_app.config["AWS_S3_USING_CDN"]:
             url_base = current_app.config["AWS_S3_URL_BASE"]
+        elif self.provider == "b2":
+            url_base = current_app.config["B2_URL_BASE"]
         else:
             url_base = url_for("main.index", _external=True)
 

@@ -28,7 +28,7 @@
                         {{ user.created_at | ago }} ago
                     </td>
                     <td>
-                        <a :href="`/users/${user.id}`">
+                        <a :href="`/admin/users/${user.id}`">
                             <fa-icon :icon="['far', 'edit']" />
                         </a>
                     </td>

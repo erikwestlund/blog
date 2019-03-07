@@ -166,7 +166,7 @@
                             />
                         </div>
                     </div>
-                    <div class="mt-6">
+                    <div class="mt-6 md:flex">
                         <button
                             class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest mr-2"
                             :disabled="form.errors.any() || saving"
@@ -222,7 +222,7 @@
                         </button>
                         <transition name="trx-fade-in">
                             <button
-                                class="btn btn-grey hover:bg-grey hover:border-grey p-2 mr-2"
+                                class="btn btn-grey hover:bg-grey hover:border-grey p-2 ml-auto"
                                 v-show="form.body"
                                 @click.prevent="showPreview()"
                             >
