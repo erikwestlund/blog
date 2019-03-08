@@ -20,7 +20,7 @@ class Tags(MethodView):
     def post(self):
         form = TagForm()
         tag = first_or_create(
-            db.session, Tag, name=form.tag.data, slug=slugify(form.tag.data)
+            db.session, Tag, name=form.tag.data.strip(" "), slug=slugify(form.tag.data)
         )
 
         return jsonify(tag)

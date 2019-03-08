@@ -8,7 +8,7 @@
                     class="rounded-lg p-5 shadow bg-white"
                     :class="index==0 ? '' : 'mt-5'"
                 >
-                    <post :post="post" />
+                    <post-snippet :post="post" />
                 </div>
             </div>
             <div v-else-if="ready">
@@ -30,9 +30,10 @@
 
 <script>
 import Pagination from '../mixins/PaginatedContentMixin'
-import Post from './Post'
+import PostSnippet from './PostSnippet'
+
 export default {
-    components: { Post },
+    components: { PostSnippet },
     mixins: [Pagination],
     props: {
         page: {

@@ -37,7 +37,7 @@ class EditPost(MethodView):
         if not post.editable:
             abort(403)
 
-        return render_template("posts/edit.html", post_id=post_id)
+        return render_template("posts/edit.html", post_id=post_id, title="Edit Post")
 
     @login_required
     def delete(self, post_id):

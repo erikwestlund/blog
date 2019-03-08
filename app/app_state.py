@@ -1,9 +1,15 @@
-from flask import current_app
+import os
+
+from flask import current_app, request, url_for
 from flask_login import current_user
 
 
 def env():
-    return {"env":current_app.config["ENV"]}
+    return dict({"env": current_app.config["ENV"]})
+
+
+def current_url():
+    return dict({"current_url": "%s%s" % (url_for("main.index", _external=True).strip("/"), request.path)})
 
 
 def app_state():
@@ -32,6 +38,7 @@ def app_state():
         else None
     )
 
+    site_default = current_app.config["BLOG_DEFAULT_IMAGE"]
     image_widths = current_app.config["IMAGE_WIDTHS"].split(",")
     tiny_thumbnail_width = current_app.config["TINY_THUMBNAIL_WIDTH"]
     small_thumbnail_width = current_app.config["SMALL_THUMBNAIL_WIDTH"]
@@ -41,6 +48,7 @@ def app_state():
 
     settings = {
         "images": {
+            "site_default": site_default,
             "widths": image_widths,
             "thumbnail_widths": {
                 "tiny": tiny_thumbnail_width,

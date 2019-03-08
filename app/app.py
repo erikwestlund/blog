@@ -8,7 +8,7 @@ from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-from app_state import app_state, env
+from app_state import app_state, env, current_url
 from celery_context import FlaskCelery
 from config import Config
 from utils.models.json_encoder import AlchemyEncoder
@@ -71,6 +71,10 @@ def init_state(app):
     @app.context_processor
     def context_app_env():
         return env()
+
+    @app.context_processor
+    def context_current_url():
+        return current_url()
 
     @app.context_processor
     def context_app_state():

@@ -13,6 +13,7 @@ class Config:
 
     BLOG_TITLE = os.getenv("BLOG_TITLE")
     BLOG_ADMIN_EMAIL = os.getenv("BLOG_ADMIN_EMAIL")
+    BLOG_DEFAULT_IMAGE = os.getenv("BLOG_DEFAULT_IMAGE")
 
     ADMIN_INIT_USERNAME = os.getenv("ADMIN_INIT_USERNAME")
     ADMIN_INIT_PASSWORD = os.getenv("ADMIN_INIT_PASSWORD")

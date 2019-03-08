@@ -1,6 +1,6 @@
 {% extends "main/sidebar.html" %}
 {% block content %}
 
-<post class="bg-white rounded-lg shadow p-5" :post='{{ post | tojson | safe }}' snip></post>
+<post :post='{{ post | tojson | safe }}' snip></post>
 
 {% endblock content %}

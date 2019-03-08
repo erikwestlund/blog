@@ -10,7 +10,7 @@ from utils.striphtmltags import strip_tags
 class Contact(MethodView):
     def get(self):
         admin_email = current_app.config["BLOG_ADMIN_EMAIL"]
-        return render_template("main/contact.html", admin_email=admin_email)
+        return render_template("main/contact.html", admin_email=admin_email, title="Contact Me")
 
     def post(self):
         form = ContactForm()
