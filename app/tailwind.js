@@ -478,10 +478,12 @@ module.exports = {
         '4': '1rem',
         '5': '1.25rem',
         '6': '1.5rem',
+        '7': '1.75',
         '8': '2rem',
         '10': '2.5rem',
         '12': '3rem',
         '16': '4rem',
+        '20': '5rem',
         '24': '6rem',
         '32': '8rem',
         '48': '12rem',
@@ -597,7 +599,9 @@ module.exports = {
     */
 
     maxWidth: {
-        'thumbnail': '100px',
+        'tiny-thumbnail': '75px',
+        'small-thumbnail': '150px',
+        'large-thumbnail': '300px',
         'xs': '20rem',
         'sm': '30rem',
         'md': '40rem',

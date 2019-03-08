@@ -344,6 +344,7 @@ export default {
 
     data () {
         return {
+            state: window.State,
             now: new Date().toISOString(),
             savedPost: {},
             loaded: false,

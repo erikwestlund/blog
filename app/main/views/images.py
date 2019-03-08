@@ -13,14 +13,17 @@ class Images(MethodView):
     def delete(self, image_id):
         image = find_or_fail(Image, Image.id == image_id)
 
-        if image.provider == "b2":
-            delete_from_b2(image.path, image.bucket)
-        elif image.provider == "s3":
-            delete_from_s3(image.path, image.bucket)
-        else:
-            delete_from_local(image.path, image.bucket)
-
         db.session.delete(image)
         db.session.commit()
+
+        try:
+            if image.provider == "b2":
+                delete_from_b2(image.path, image.bucket)
+            elif image.provider == "s3":
+                delete_from_s3(image.path, image.bucket)
+            else:
+                delete_from_local(image.path, image.bucket)
+        except:
+            pass
 
         return jsonify({"data": {"image": image}})

@@ -19,9 +19,9 @@ class Config:
 
     FILE_STORAGE_PROVIDER = os.getenv("FILE_STORAGE_PROVIDER")
 
-    CLOUDINARY_ON = os.getenv("CLOUDINARY_ON")
+    CLOUDINARY_ON = strtobool(os.getenv("CLOUDINARY_ON"))
     CLOUDINARY_URL = os.getenv("CLOUDINARY_URL")
-    CLOUDINARY_WIDTHS = os.getenv("CLOUDINARY_WIDTHS")
+    CLOUDINARY_ACCOUNT = os.getenv("CLOUDINARY_ACCOUNT")
 
     B2_KEY_ID = os.getenv("B2_KEY_ID")
     B2_APPLICATION_KEY = os.getenv("B2_APPLICATION_KEY")
@@ -55,3 +55,7 @@ class Config:
     POST_SNIPPET_LENGTH = int(os.getenv("POST_SNIPPET_LENGTH"))
     POSTS_PER_PAGE = int(os.getenv("POSTS_PER_PAGE"))
     PAGINATE_DEFAULT = int(os.getenv("PAGINATE_DEFAULT"))
+    IMAGE_WIDTHS = os.getenv("IMAGE_WIDTHS")
+    TINY_THUMBNAIL_WIDTH = int(os.getenv("TINY_THUMBNAIL_WIDTH"))
+    SMALL_THUMBNAIL_WIDTH = int(os.getenv("SMALL_THUMBNAIL_WIDTH"))
+    LARGE_THUMBNAIL_WIDTH = int(os.getenv("LARGE_THUMBNAIL_WIDTH"))

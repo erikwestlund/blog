@@ -1,3 +1,4 @@
+from flask import current_app
 from flask_login import current_user
 
 
@@ -27,6 +28,29 @@ def app_state():
         else None
     )
 
+    image_widths = current_app.config["IMAGE_WIDTHS"].split(",")
+    tiny_thumbnail_width = current_app.config["TINY_THUMBNAIL_WIDTH"]
+    small_thumbnail_width = current_app.config["SMALL_THUMBNAIL_WIDTH"]
+    large_thumbnail_width = current_app.config["LARGE_THUMBNAIL_WIDTH"]
+    cloudinary_on = current_app.config["CLOUDINARY_ON"]
+    cloudinary_account = current_app.config["CLOUDINARY_ACCOUNT"]
+
+    settings = {
+        "images": {
+            "widths": image_widths,
+            "thumbnail_widths": {
+                "tiny": tiny_thumbnail_width,
+                "small": small_thumbnail_width,
+                "large": large_thumbnail_width,
+            },
+            "cloudinary": {
+                "on": cloudinary_on,
+                "account": cloudinary_account,
+            },
+        },
+
+    }
+
     return dict(
         state={
             "user": {
@@ -38,6 +62,7 @@ def app_state():
                     "first_name": first_name,
                     "last_name": last_name,
                 },
-            }
+            },
+            "settings": settings
         }
     )

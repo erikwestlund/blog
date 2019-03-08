@@ -1,8 +1,9 @@
 <script>
 import FileUploadMixin from './FileUploadMixin'
+import Image from './ImageMixin'
 
 export default {
-    mixins: [FileUploadMixin],
+    mixins: [FileUploadMixin, Image],
     data () {
         return {
             uploadedImages: [],
@@ -55,37 +56,6 @@ export default {
             this.uploadedImages.push(newImageUploaded)
         },
 
-        deleteImageFromServer (imageId) {
-            axios.delete('/admin/images/' + imageId)
-                .then(response => {
-                    flash('Image deleted from server.')
-                })
-                .catch(errors => {
-                    flash('Failed to delete image from server.', 'danger')
-                })
-        },
-
-        deleteUploadRecord (matchingUpload) {
-            this.uploadedImages = _.reject(this.uploadedImages, (upload) => {
-                return upload === matchingUpload
-            })
-
-            Event.fire('imageDeletedFromUploads', this.uploadedImages)
-        },
-
-        deleteImageFromUploads (image) {
-            let matchingUpload = _.find(this.uploadedImages, (uploadedImage) => {
-                return uploadedImage.uploadPosition === image[1]
-            })
-
-            if (matchingUpload) {
-                this.deleteUploadRecord(matchingUpload)
-            }
-
-            if (matchingUpload && matchingUpload.hasOwnProperty('id')) {
-                this.deleteImageFromServer(matchingUpload.id)
-            }
-        }
     }
 }
 </script>
