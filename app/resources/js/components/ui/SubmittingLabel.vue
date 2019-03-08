@@ -30,6 +30,8 @@ export default {
                 return 'Logging in...'
             } else if (this.type === 'publishing') {
                 return 'Publishing...'
+            } else if (this.type === 'sending') {
+                return 'Sending...'
             } else if (this.type === 'unpublishing') {
                 return 'Unpublishing...'
             } else if (this.type === 'uploading') {

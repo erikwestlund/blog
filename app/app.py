@@ -8,7 +8,7 @@ from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-from app_state import app_state
+from app_state import app_state, env
 from celery_context import FlaskCelery
 from config import Config
 from utils.models.json_encoder import AlchemyEncoder
@@ -69,7 +69,11 @@ def init_blueprints(app):
 
 def init_state(app):
     @app.context_processor
-    def context_processor():
+    def context_app_env():
+        return env()
+
+    @app.context_processor
+    def context_app_state():
         return app_state()
 
 

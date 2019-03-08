@@ -50,7 +50,7 @@
                 <!--CV-->
                 <!--</a>-->
                 <a
-                    href="mailto:edbwestlund@gmail.com"
+                    href="/contact"
                     class="block mt-4 lg:inline-block lg:mt-0"
                 >
                     Contact Me

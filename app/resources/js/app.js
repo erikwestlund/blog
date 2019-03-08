@@ -1,6 +1,7 @@
 import Event from './modules/Event'
 
 import Alert from './components/ui/Alert'
+import ContactForm from './components/ui/ContactForm'
 import Flash from './components/ui/Flash'
 import NavigationBar from './components/ui/NavigationBar'
 import Paginate from './components/ui/Paginate'
@@ -27,7 +28,7 @@ Vue.use(VueClipboard)
 window.Event = new Event()
 
 window.flash = function (message, level = 'success', timeout = 3) {
-    window.Event.fire('flash', { message, level, timeout })
+    window.Event.fire('flash', {message, level, timeout})
 }
 
 /* eslint no-unused-vars: "off" */
@@ -36,6 +37,7 @@ const app = new Vue({
     components: {
         // ui
         Alert,
+        ContactForm,
         Flash,
         NavigationBar,
         Paginate,

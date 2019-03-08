@@ -2,6 +2,10 @@ from flask import current_app
 from flask_login import current_user
 
 
+def env():
+    return {"env":current_app.config["ENV"]}
+
+
 def app_state():
     logged_in = current_user.is_authenticated if current_user else 0
     is_admin = (

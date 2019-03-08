@@ -8,8 +8,11 @@ load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
-    BLOG_TITLE = os.getenv("BLOG_TITLE")
     SERVER_NAME = os.getenv("SERVER_NAME")
+    ENV = os.getenv("ENV")
+
+    BLOG_TITLE = os.getenv("BLOG_TITLE")
+    BLOG_ADMIN_EMAIL = os.getenv("BLOG_ADMIN_EMAIL")
 
     ADMIN_INIT_USERNAME = os.getenv("ADMIN_INIT_USERNAME")
     ADMIN_INIT_PASSWORD = os.getenv("ADMIN_INIT_PASSWORD")
@@ -46,6 +49,7 @@ class Config:
 
     MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS")
     MAIL_PORT = os.getenv("MAIL_PORT")
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")

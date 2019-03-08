@@ -9,6 +9,7 @@ export default {
             publishing: false,
             saving: false,
             logging_in: false,
+            sending: false,
             uploading: false,
             unpublishing: false,
             submittingType: 'saving',

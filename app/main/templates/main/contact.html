@@ -1,0 +1,11 @@
+{% extends "main/sidebar.html" %}
+{% block content %}
+
+    <h1>Contact Me</h1>
+
+    <div class="mt-5">
+        Email me at <a href="mailto:{{ admin_email }}">{{ admin_email }}</a>, or send a quick message using the form below.
+    </div>
+    <contact-form></contact-form>
+
+{% endblock content %}
