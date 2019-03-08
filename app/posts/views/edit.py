@@ -68,6 +68,7 @@ class EditPost(MethodView):
 
             post.title = form.title.data
             post.body = form.body.data
+            post.primary_image_id = form.primary_image_id.data
 
             if form.published_at.data and not post.published_at:
                 post.published_at = datetime.now()

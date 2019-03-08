@@ -65,8 +65,20 @@
                     >
                         <fa-icon
                             class="mr-1"
-                            :icon="['far', 'pencil']"
+                            :icon="['far', 'plus-square']"
                         />
+                    </a>
+                    <a
+                        href="/admin/posts"
+                        title="All Post"
+                        class="inline-block mt-4 lg:inline-block lg:mt-0 mr-6"
+                    >
+
+                            <fa-icon
+                                class="mr-1"
+                                :icon="['far', 'edit']"
+                            />
+
                     </a>
                     <a
                         href="/account"

@@ -41,6 +41,7 @@ class Post(db.Model, TimestampMixin):
         "published_at",
         "tags",
         "images",
+        "primary_image",
         "user",
         "url",
         "edit_url",
@@ -53,6 +54,7 @@ class Post(db.Model, TimestampMixin):
     body = db.Column(db.Text(), nullable=False, server_default="")
     published_at = db.Column(db.DateTime())
     slug = db.Column(db.Text())
+    primary_image_id = db.Column(db.Integer, ForeignKey("image.id"), nullable=True)
 
     # Relationships
     user = db.relationship("User", lazy="joined", innerjoin=True)
@@ -62,8 +64,9 @@ class Post(db.Model, TimestampMixin):
     )
 
     images = db.relationship(
-        "Image", secondary=image_post, cascade="save-update, merge, delete"
+        "Image", secondary=image_post, cascade="save-update"
     )
+    primary_image = db.relationship("Image")
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
 
@@ -105,7 +108,7 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def url(self):
-        return url_for("main.index") + self.uri if self.published_at else None
+        return url_for("main.index", _external=True) + self.uri if self.published_at else None
 
     @property
     def edit_uri(self):

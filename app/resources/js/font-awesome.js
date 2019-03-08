@@ -6,6 +6,7 @@ import {
     faAsterisk,
     faCircleNotch,
     faCloudUpload,
+    faCopy,
     faCut,
     faEdit,
     faEllipsisH,
@@ -16,9 +17,12 @@ import {
     faFileEdit,
     faImages,
     faKey,
+    faLink,
+    faList,
     faLock,
     faPencil,
     faPlusCircle,
+    faPlusSquare,
     faSave,
     faSearch,
     faSignIn,
@@ -37,7 +41,7 @@ import {
 
 import { faUserCircle as fasUserCircle, faEnvelope as fasEnvelope, faUniversity as fasUniversity } from '@fortawesome/pro-solid-svg-icons'
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {FontAwesomeIcon, FontAwesomeLayers} from '@fortawesome/vue-fontawesome'
 
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
@@ -48,6 +52,7 @@ library.add(
     faCircleNotch,
     faCloudUpload,
     faCut,
+    faCopy,
     faEdit,
     faEllipsisH,
     faEnvelope,
@@ -59,9 +64,12 @@ library.add(
     faFileEdit,
     faImages,
     faKey,
+    faLink,
+    faList,
     faLock,
     faPencil,
     faPlusCircle,
+    faPlusSquare,
     faSave,
     faSearch,
     faSignIn,
@@ -82,3 +90,4 @@ library.add(
 )
 
 Vue.component('fa-icon', FontAwesomeIcon)
+Vue.component('fa-layers', FontAwesomeLayers)

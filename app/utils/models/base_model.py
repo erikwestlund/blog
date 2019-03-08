@@ -194,7 +194,10 @@ class BaseModel(Model):
                             )
                         )
                 else:
-                    if self.__mapper__.relationships[key].query_class is not None:
+                    if getattr(self, key) and self.__mapper__.relationships[key].query_class is not None:
+                        print(self.__mapper__.relationships[key])
+                        print(ret_data
+                              )
                         ret_data[key] = getattr(self, key).to_dict(
                             show=show,
                             hide=hide,

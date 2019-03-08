@@ -23,7 +23,8 @@ class CreatePost(MethodView):
 
         if form.validate_on_submit():
             post = Post(
-                user_id=current_user.id, title=form.title.data, body=form.body.data
+                user_id=current_user.id, title=form.title.data, body=form.body.data,
+                primary_image_id=form.primary_image_id.data
             )
 
             if form.published_at.data and not post.published_at:

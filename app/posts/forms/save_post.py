@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateTimeField
+from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Optional, ValidationError
 
 from utils.forms.nonvalidatingmultiselectfield import NonValidatingMultiSelectField
@@ -16,6 +16,8 @@ class SavePostForm(FlaskForm):
     body = StringField("Body", validators=[DataRequired()])
 
     uploaded_images = NonValidatingMultiSelectField("Images", choices=[])
+
+    primary_image_id = StringField("Primary Image Id", validators=[Optional()])
 
     tags = NonValidatingMultiSelectField("Tags", choices=[])
 
