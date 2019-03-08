@@ -22,6 +22,7 @@ class Contact(MethodView):
         else:
             return jsonify(errors=form.errors), 422
 
+
 @celery.task()
 def email_admin(form, email):
 
@@ -29,6 +30,7 @@ def email_admin(form, email):
         (current_app.config["BLOG_TITLE"] or "Blog")
         + ": Message For You From "  + form.name.data,
         recipients=[email],
+        reply_to=form.email.data
     )
     msg.html = render_template(
         "main/contact_email.html",
