@@ -23,7 +23,7 @@ class ResetPassword(MethodView):
             return redirect(url_for("users.reset_password_request"))
         else:
             new_token = user.generate_password_reset_token()
-            return render_template("users/reset_password.html", token=new_token)
+            return render_template("users/reset_password.html", token=new_token, title="Reset Password")
 
     def post(self, token):
         if current_user.is_authenticated:

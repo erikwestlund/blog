@@ -1,45 +1,38 @@
-from datetime import datetime
-
 from flask import render_template, jsonify
 from flask.views import MethodView
-from flask_login import login_required, current_user
+from flask_login import login_required
 
 from app import db
 from main.models.image import Image
-from main.models.tag import Tag
-from posts.forms.save_post import SavePostForm
-from posts.models.post import Post
+from pages.forms.save_page import SavePageForm
+from pages.models.page import Page
+from utils.acl import user_has_role
 
 
 class CreatePage(MethodView):
-    @login_required
+    @user_has_role("administrator")
     def get(self):
-        return render_template("pages/create.html")
+        return render_template("pages/create.html", title="Create Page")
 
-    @login_required
+    @user_has_role("administrator")
     def post(self):
-        form = SavePostForm()
+        form = SavePageForm()
 
         if form.validate_on_submit():
-            post = Post(
-                user_id=current_user.id, title=form.title.data, body=form.body.data,
-                primary_image_id=form.primary_image_id.data
+            page = Page(
+                title=form.title.data,
+                slug=form.slug.data,
+                body=form.body.data,
+                primary_image_id=form.primary_image_id.data or None
             )
 
-            if form.published_at.data and not post.published_at:
-                post.published_at = datetime.now()
-
-            if post.published_at:
-                post.slug = Post.generate_slug(form.title.data, str(post.published_at))
-
-            post.images = Image.query.filter(
+            page.images = Image.query.filter(
                 Image.id.in_(form.uploaded_images.data)
             ).all()
-            post.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
-            db.session.add(post)
+            db.session.add(page)
             db.session.commit()
 
-            return jsonify({"action": "create", "success": True, "post": post})
+            return jsonify({"action": "create", "success": True, "page": page})
         else:
             return jsonify(errors=form.errors), 422

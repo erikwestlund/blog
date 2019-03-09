@@ -236,7 +236,7 @@ export default {
             this.form.last_name = response.user.last_name
         },
         updateUserRoles (userRoles) {
-            this.form.userRoles = userRoles
+            this.form.user_roles = userRoles
         }
     }
 }

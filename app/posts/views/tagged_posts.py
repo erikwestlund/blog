@@ -32,4 +32,4 @@ class ShowTaggedPosts(MethodView):
         tag = find_or_fail(Tag, Tag.slug == slug)
         page = request.args.get("page") or 1
 
-        return render_template("posts/tagged_posts.html", tag=tag, page=page)
+        return render_template("posts/tagged_posts.html", tag=tag, page=page, title=tag.name)

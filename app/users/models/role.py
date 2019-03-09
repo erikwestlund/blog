@@ -15,6 +15,9 @@ class Role(db.Model):
     display_name = db.Column(db.String(255), unique=True)
     description = db.Column(db.String(255))
 
+    users = db.relationship("Role", back_populates="users", secondary="role_user")
+
+
     # Representation
     def __repr__(self):
         return f"Role('{self.name}', '{self.display_name}', '{self.description}')"

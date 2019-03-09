@@ -28,7 +28,7 @@ class UpdateAccountForm(FlaskForm):
     password_confirm = PasswordField(
         "Confirm Password", validators=[EqualTo("password")]
     )
-    user_roles = MultiCheckboxField(choices=["1", "2"])
+    user_roles = MultiCheckboxField(choices=["1", "2", "3"])
 
     def validate_username(self, username):
         if self.user_being_edited.username != username.data:

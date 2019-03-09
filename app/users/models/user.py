@@ -47,13 +47,11 @@ class User(db.Model, UserMixin, TimestampMixin):
     roles = db.relationship(
         "Role",
         secondary=role_user,
-        lazy="dynamic",
-        cascade="save-update",
-        backref=db.backref("users", lazy="dynamic"),
+        cascade="save-update"
     )
 
     def has_role(self, role):
-        return True if self.roles.filter_by(name=role).count() > 0 else False
+        return True if role in [role.name for role in self.roles] else False
 
     # Is confirmed
     @property

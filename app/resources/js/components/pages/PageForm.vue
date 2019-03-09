@@ -342,7 +342,7 @@
             requestType() {
                 return this.isSaved
                     ? 'patch'
-                    : 'page'
+                    : 'post'
             },
         },
         watch: {

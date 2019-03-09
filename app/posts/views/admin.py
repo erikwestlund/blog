@@ -2,12 +2,14 @@ from flask import render_template, request
 from flask.views import MethodView
 from flask_login import login_required, current_user
 from flask import current_app
+
+from utils.acl import user_has_role, user_can_write_posts
 from utils.models.paginated_json_response import paginated_json_response
 from posts.models.post import Post
 
 
 class FetchAdminPosts(MethodView):
-    @login_required
+    @user_can_write_posts
     def get(self):
         per_page = int(current_app.config["PAGINATE_DEFAULT"])
 
@@ -28,6 +30,7 @@ class FetchAdminPosts(MethodView):
 
 
 class Index(MethodView):
-    @login_required
+
+    @user_can_write_posts
     def get(self):
-        return render_template("posts/index.html")
+        return render_template("posts/index.html", title="Posts Administration")

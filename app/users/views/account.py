@@ -28,6 +28,7 @@ class Account(MethodView):
         user_roles = lpluck_attr("id", user.roles)
         return render_template(
             "users/account.html",
+            title="My Account" if own_account else "Edit User",
             user=user,
             user_roles=user_roles,
             own_account=own_account,
@@ -74,8 +75,7 @@ class Account(MethodView):
         user.last_name = form.last_name.data
 
         if current_user.has_role("administrator"):
-            roles = Role.query.filter(Role.id.in_(form.user_roles.data)).all()
-            user.roles.extend(roles)
+            user.roles = Role.query.filter(Role.id.in_(form.user_roles.data)).all()
 
         if form.password.data:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode(

@@ -13,6 +13,11 @@ def app_state():
         if current_user and current_user.is_authenticated
         else 0
     )
+    can_write_posts = (
+        (current_user.has_role("administrator") or current_user.has_role("writer"))
+        if current_user and current_user.is_authenticated
+        else 0
+    )
     username = (
         current_user.username
         if current_user and current_user.is_authenticated
@@ -62,6 +67,7 @@ def app_state():
             "user": {
                 "logged_in": logged_in,
                 "is_admin": is_admin,
+                "can_write_posts": can_write_posts,
                 "account": {
                     "username": username,
                     "email": email,

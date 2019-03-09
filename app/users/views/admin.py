@@ -11,7 +11,7 @@ from flask import current_app
 class AdminUsersIndex(MethodView):
     @user_has_role("administrator")
     def get(self):
-        return render_template("users/index.html")
+        return render_template("users/index.html", title="Users Administration")
 
 
 class AdminUsersIndexJson(MethodView):

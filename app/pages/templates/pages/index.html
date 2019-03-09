@@ -1,9 +1,15 @@
 {% extends "main/layout.html" %}
 {% block content %}
-    <h1>
-        <fa-icon class="mr-2 text-grey" :icon="['far', 'file-alt']"></fa-icon>
-        Pages
-    </h1>
+    <div class="flex items-center xl:w-4/5">
+        <h1>
+            <fa-icon class="mr-2 text-grey" :icon="['far', 'file-alt']"></fa-icon>
+            Pages
+        </h1>
+        <a role="button" href="/admin/pages/create" class="ml-auto btn btn-blue p-2 hover:bg-blue-darkest hover:border-blue-darkest hover:text-white">
+            <fa-icon class="mr-2" :icon="['far', 'pencil']"></fa-icon>
+            New Page
+        </a>
+    </div>
     <div class="mt-6 bg-white shadow p-6 rounded xl:w-4/5">
         <pages-admin-panel name="pages"
                            object="post"

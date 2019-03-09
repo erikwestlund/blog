@@ -10,21 +10,22 @@ from main.models.image import Image
 from main.models.tag import Tag
 from posts.forms.save_post import SavePostForm
 from posts.models.post import Post
+from utils.acl import user_can_write_posts
 
 
 class CreatePost(MethodView):
-    @login_required
+    @user_can_write_posts
     def get(self):
         return render_template("posts/create.html")
 
-    @login_required
+    @user_can_write_posts
     def post(self):
         form = SavePostForm()
 
         if form.validate_on_submit():
             post = Post(
                 user_id=current_user.id, title=form.title.data, body=form.body.data,
-                primary_image_id=form.primary_image_id.data
+                primary_image_id=form.primary_image_id.data or None
             )
 
             if form.published_at.data and not post.published_at:

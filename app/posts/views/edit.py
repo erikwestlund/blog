@@ -15,11 +15,12 @@ from main.models.image import Image
 from main.models.tag import Tag
 from posts.forms.save_post import SavePostForm
 from posts.models.post import Post, PostRevision
+from utils.acl import user_can_write_posts
 from utils.models.find_or_fail import find_or_fail
 
 
 class FetchPost(MethodView):
-    @login_required
+    @user_can_write_posts
     def get(self, post_id):
         post = Post.query.get(post_id)
 
@@ -30,7 +31,7 @@ class FetchPost(MethodView):
 
 
 class EditPost(MethodView):
-    @login_required
+    @user_can_write_posts
     def get(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 
@@ -39,7 +40,7 @@ class EditPost(MethodView):
 
         return render_template("posts/edit.html", post_id=post_id, title="Edit Post")
 
-    @login_required
+    @user_can_write_posts
     def delete(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 
@@ -53,7 +54,7 @@ class EditPost(MethodView):
 
         return jsonify({"action": "delete", "success": True, "post": post})
 
-    @login_required
+    @user_can_write_posts
     def patch(self, post_id):
         post = find_or_fail(Post, Post.id == post_id)
 

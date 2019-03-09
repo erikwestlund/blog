@@ -2,17 +2,14 @@ from flask import abort
 from flask import jsonify
 from flask.views import MethodView
 from flask_login import current_user
-from flask_login import login_required
-from sqlalchemy import func
 
 from app import db
-from main.models.tag import Tag
-from posts.forms.save_post import SavePostForm
-from posts.models.post import Post, PostRevision
+from posts.models.post import Post
+from utils.acl import user_can_write_posts
 
 
 class UnpublishPost(MethodView):
-    @login_required
+    @user_can_write_posts
     def patch(self, post_id):
         post = Post.query.get(post_id)
 
