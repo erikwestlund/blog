@@ -1,6 +1,4 @@
-import os
-
-from flask import current_app, request, url_for
+from flask import current_app
 from flask_login import current_user
 
 

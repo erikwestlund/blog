@@ -8,13 +8,13 @@ from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-from app_state import app_state, env, current_url
+from app_state import app_state, env
 from celery_context import FlaskCelery
 from config import Config
-from utils.models.json_encoder import AlchemyEncoder
-from utils.session import RedisSessionInterface
 from utils.models.base_model import BaseModel
 from utils.models.base_query import BaseQuery
+from utils.models.json_encoder import AlchemyEncoder
+from utils.session import RedisSessionInterface
 
 db = SQLAlchemy(model_class=BaseModel, query_class=BaseQuery)
 celery = FlaskCelery()
@@ -71,10 +71,6 @@ def init_state(app):
     @app.context_processor
     def context_app_env():
         return env()
-
-    @app.context_processor
-    def context_current_url():
-        return current_url()
 
     @app.context_processor
     def context_app_state():
