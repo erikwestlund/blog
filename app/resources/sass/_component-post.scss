@@ -2,4 +2,8 @@
 .post .post-content ul {
   @apply mt-5;
 }
+
+.post.post-content p:first-child {
+  @apply mt-0;
+}
 /* purgecss end ignore */

@@ -36,6 +36,7 @@ class Post(db.Model, TimestampMixin):
         "body",
         "body_html",
         "body_snippet",
+        "needs_snip",
         "created_at",
         "updated_at",
         "published_at",
@@ -145,15 +146,24 @@ class Post(db.Model, TimestampMixin):
 
         return Post.get_posts_query_by_slug_within_month(slug, year, month).count() > 0
 
+
+    @property
+    def needs_snip(self):
+        snippet_length = int(current_app.config["POST_SNIPPET_LENGTH"])
+        stripped_html = strip_tags(self.body_html)
+        return len(stripped_html) >= snippet_length
+
+
+
     @property
     def body_snippet(self):
         snippet_length = int(current_app.config["POST_SNIPPET_LENGTH"])
         stripped_html = strip_tags(self.body_html)
 
         return (
-            stripped_html
-            if len(stripped_html) <= snippet_length
-            else stripped_html[:snippet_length] + "..."
+            stripped_html[:snippet_length] + "..."
+            if self.needs_snip
+            else stripped_html
         )
 
     @staticmethod

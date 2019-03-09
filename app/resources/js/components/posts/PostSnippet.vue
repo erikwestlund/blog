@@ -19,14 +19,19 @@
             <span class="text-grey">{{ post.published_at | ago }} ago</span>
         </div>
 
-        <div
-                class="mt-4"
-                v-html="post.body_html"
-        />
-
-        <!--<p class="read-more flex  h-48">-->
-            <!--<a href="#" class="button">Read More</a>-->
-        <!--</p>-->
+        <div class="mt-4">
+            <img class="float-right ml-2 mb-2 rounded-lg" :src="getPrimaryImage()" v-if="hasPrimaryImage">
+            <div
+                    v-html="post.body_snippet"
+            />
+            <div class="mt-6">
+                <a :href="post.url" class="flex items-center">
+                    <span v-if="post.needs_snip">Read More</span>
+                    <span v-else>Full Post</span>
+                    <fa-icon class="ml-2" transform="down-1" :icon="['far', 'angle-double-right']" />
+                </a>
+            </div>
+        </div>
 
         <div class="flex items-center mt-6">
             <fa-icon
@@ -47,10 +52,11 @@
 <script>
     import Filters from '../mixins/FiltersMixin'
     import TagList from './TagList'
+    import Image from '../mixins/ImageMixin'
 
     export default {
         components: {TagList},
-        mixins: [Filters],
+        mixins: [Filters, Image],
         props: {
             post: {
                 type: Object,
@@ -61,7 +67,17 @@
                 default: false
             }
         },
+        methods: {
+          getPrimaryImage() {
+              return this.post.primary_image.width > this.imageSettings.thumbnail_widths.small ?
+                  this.getThumbnailUrl(this.post.primary_image.url, 'small') :
+                  this.post.primaryImage.url
+          }
+        },
         computed: {
+            hasPrimaryImage() {
+              return !_.isEmpty(this.post.primary_image) && this.post.primary_image.hasOwnProperty("url")
+            },
             tagCount() {
                 return _.isEmpty(this.post.tags)
                     ? 0

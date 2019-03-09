@@ -8,10 +8,10 @@ filters = Blueprint("filters", __name__)
 
 @filters.app_template_filter()
 def versioned_asset(filename):
-    with open("mix-manifest.json") as file:
+    with open("static/mix-manifest.json") as file:
         data = json.load(file)
 
-    return data[filename]
+    return "/static" + data[filename[7:] if filename.startswith("/static") else filename]
 
 
 @filters.app_template_filter()
