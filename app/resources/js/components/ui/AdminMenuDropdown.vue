@@ -32,6 +32,17 @@
                             <li class="mt-2">
                                 <fa-icon
                                     class="mr-2 text-grey"
+                                    :icon="['far', 'file-alt']"
+                                />
+                                <a
+                                    href="/admin/pages"
+                                >
+                                    Pages
+                                </a>
+                            </li>
+                            <li class="mt-2">
+                                <fa-icon
+                                    class="mr-2 text-grey"
                                     :icon="['far', 'user']"
                                 />
                                 <a

@@ -55,11 +55,13 @@ def init_blueprints(app):
     from main.routes import main
     from users.routes import users
     from posts.routes import posts
+    from pages.routes import pages
     from errors.routes import errors
 
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
+    app.register_blueprint(pages)
     app.register_blueprint(errors)
 
     from utils.filters import filters

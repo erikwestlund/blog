@@ -371,6 +371,7 @@
 
         data() {
             return {
+                objectType: 'post',
                 state: window.State,
                 now: new Date().toISOString(),
                 savedPost: {},
@@ -663,18 +664,8 @@
                     })
             },
 
-            refreshUploadedImages(uploadedImages) {
-                this.uploadedImages = _.clone(uploadedImages)
-            },
-
-            setPrimaryImage(payload) {
-                if (payload.type === 'post') {
-                    this.primaryImage = payload.image
-                }
-            },
-
             showPreview() {
-                Event.fire('showPostPreview')
+                Event.fire('showPreview')
             },
 
             tagsUpdate(payload) {
@@ -682,18 +673,6 @@
                     this.form.tags = _.map(payload.tags, 'id')
                 }
             },
-
-            updateFormPrimaryImage() {
-                this.form.primary_image_id = !_.isEmpty(this.primaryImage) && this.primaryImage.hasOwnProperty('id') ?
-                    this.primaryImage.id :
-                    null
-            },
-
-            updateFormUploadedImages() {
-                Vue.set(this.form, 'uploaded_images', this.uploadedImages.map(image => {
-                    return image.id
-                }))
-            }
         }
     }
 </script>

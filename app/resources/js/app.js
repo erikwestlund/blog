@@ -10,6 +10,8 @@ import Post from './components/posts/Post'
 import Posts from './components/posts/Posts'
 import PostForm from './components/posts/PostForm'
 import PostsAdminPanel from './components/posts/PostsAdminPanel'
+import PageForm from './components/pages/PageForm'
+import PagesAdminPanel from './components/pages/PagesAdminPanel'
 import EditUser from './components/users/EditUser'
 import LoginUser from './components/users/LoginUser'
 import RegisterUser from './components/users/RegisterUser'
@@ -45,6 +47,9 @@ const app = new Vue({
         Posts,
         PostForm,
         PostsAdminPanel,
+        //pages
+        PageForm,
+        PagesAdminPanel,
         // users
         ConfirmEmailAlert,
         EditUser,
