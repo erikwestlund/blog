@@ -8,10 +8,6 @@ def env():
     return dict({"env": current_app.config["ENV"]})
 
 
-def current_url():
-    return dict({"current_url": "%s%s" % (url_for("main.index", _external=True).strip("/"), request.path)})
-
-
 def app_state():
     logged_in = current_user.is_authenticated if current_user else 0
     is_admin = (
