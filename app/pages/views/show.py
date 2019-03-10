@@ -9,4 +9,4 @@ class ShowPage(MethodView):
     def get(self, slug):
         page = find_or_fail(Page, Page.slug == slug)
 
-        return render_template('pages/show.html', title=page.title, page=page)
+        return render_template("pages/show.html", title=page.title, page=page)

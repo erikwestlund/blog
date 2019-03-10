@@ -1,19 +1,20 @@
 <template>
     <div class="post">
-
         <div class="p-3">
             <a
-                    v-if="post.editable"
-                    class="text-grey float-right hover:text-grey-dark"
-                    :href="post.edit_url"
+                v-if="post.editable"
+                class="text-grey float-right hover:text-grey-dark"
+                :href="post.edit_url"
             >
                 <fa-icon
-                        class="mr-2"
-                        :icon="['far', 'pencil']"
+                    class="mr-2"
+                    :icon="['far', 'pencil']"
                 />
                 edit
             </a>
-            <h1 class="text-4xl font-bold">{{ post.title }}</h1>
+            <h1 class="text-4xl font-bold">
+                {{ post.title }}
+            </h1>
 
             <div class="text-grey-darker mt-3 flex items-center">
                 <div class="flex">
@@ -23,55 +24,54 @@
 
                 <div class="flex items-center ml-auto">
                     <fa-icon
-                            v-if="tagCount == 1"
-                            class="text-grey mr-3"
-                            :icon="['far', 'tag']"
+                        v-if="tagCount == 1"
+                        class="text-grey mr-3"
+                        :icon="['far', 'tag']"
                     />
                     <fa-icon
-                            v-else-if="tagCount > 1"
-                            class="text-grey mr-3"
-                            :icon="['far', 'tags']"
+                        v-else-if="tagCount > 1"
+                        class="text-grey mr-3"
+                        :icon="['far', 'tags']"
                     />
-                    <tag-list :tags="post.tags"/>
+                    <tag-list :tags="post.tags" />
                 </div>
             </div>
         </div>
 
-
+        <!-- eslint-disable vue/no-v-html -->
         <div
-                class="mt-1 post-content post bg-white rounded-lg shadow p-5"
-                v-html="post.body_html"
+            class="mt-1 post-content post bg-white rounded-lg shadow p-5"
+            v-html="post.body_html"
         />
-
-
+        <!-- eslint-enable vue/no-v-html -->
     </div>
 </template>
 
 <script>
-    import Filters from '../mixins/FiltersMixin'
-    import TagList from './TagList'
+import Filters from '../mixins/FiltersMixin'
+import TagList from './TagList'
 
-    export default {
-        components: {TagList},
-        mixins: [Filters],
-        props: {
-            post: {
-                type: Object,
-                required: true
-            },
-            snip: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    components: { TagList },
+    mixins: [Filters],
+    props: {
+        post: {
+            type: Object,
+            required: true
         },
-        computed: {
-            tagCount() {
-                return _.isEmpty(this.post.tags)
-                    ? 0
-                    : this.post.tags.length
-            }
+        snip: {
+            type: Boolean,
+            default: false
+        }
+    },
+    computed: {
+        tagCount () {
+            return _.isEmpty(this.post.tags)
+                ? 0
+                : this.post.tags.length
         }
     }
+}
 </script>
 
 <style scoped>

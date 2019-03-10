@@ -12,6 +12,7 @@ image_page = db.Table(
     db.Column("page_id", db.Integer(), db.ForeignKey("page.id")),
 )
 
+
 class Page(db.Model, TimestampMixin):
     visible = [
         "id",
@@ -34,13 +35,10 @@ class Page(db.Model, TimestampMixin):
     primary_image_id = db.Column(db.Integer, ForeignKey("image.id"), nullable=True)
 
     # Relationships
-    images = db.relationship(
-        "Image", secondary=image_page, cascade="save-update"
-    )
+    images = db.relationship("Image", secondary=image_page, cascade="save-update")
     primary_image = db.relationship("Image")
 
     revisions = db.relationship("PageRevision", backref="page", lazy=True)
-
 
     @property
     def uri(self):

@@ -21,7 +21,6 @@ class SavePageForm(FlaskForm):
 
     primary_image_id = StringField("Primary Image Id", validators=[Optional()])
 
-
     def validate_slug(self, slug):
         if self.page_being_edited and self.page_being_edited.slug != slug.data:
             if Page.query.filter_by(slug=slug.data).count() > 0:
@@ -30,6 +29,4 @@ class SavePageForm(FlaskForm):
                 )
 
             if self.slug in ["users", "admin", "contact", "posts", "pages"]:
-                raise ValidationError(
-                    "That slug is reserved."
-                )
+                raise ValidationError("That slug is reserved.")

@@ -24,7 +24,7 @@ class CreatePage(MethodView):
                 title=form.title.data,
                 slug=slugify(form.slug.data),
                 body=form.body.data,
-                primary_image_id=form.primary_image_id.data or None
+                primary_image_id=form.primary_image_id.data or None,
             )
 
             page.images = Image.query.filter(

@@ -44,11 +44,7 @@ class User(db.Model, UserMixin, TimestampMixin):
     email_confirmed_at = db.Column(db.DateTime())
 
     # Relationships
-    roles = db.relationship(
-        "Role",
-        secondary=role_user,
-        cascade="save-update"
-    )
+    roles = db.relationship("Role", secondary=role_user, cascade="save-update")
 
     def has_role(self, role):
         return True if role in [role.name for role in self.roles] else False

@@ -1,83 +1,83 @@
 <script>
-    import FileUploadMixin from './FileUploadMixin'
-    import Image from './ImageMixin'
+import FileUploadMixin from './FileUploadMixin'
+import Image from './ImageMixin'
 
-    export default {
-        mixins: [FileUploadMixin, Image],
-        data() {
-            return {
-                uploadedImages: [],
-                uploading_image: false,
-                submittingType: 'uploading_image',
-                showUploadImagePrompt: false,
-                markdownEditorPosition: null
+export default {
+    mixins: [FileUploadMixin, Image],
+    data () {
+        return {
+            uploadedImages: [],
+            uploading_image: false,
+            submittingType: 'uploading_image',
+            showUploadImagePrompt: false,
+            markdownEditorPosition: null
+        }
+    },
+    created () {
+        Event.listen('newImageUploaded', (newImageUpload) => this.addNewImageToUploads(newImageUpload))
+    },
+    methods: {
+        replaceFilenameWithUrl (newImageUploaded) {
+            this.form.body = this.form.body.replace(
+                new RegExp(`(!\\[.*?\\]\\()(${newImageUploaded.uploadPosition})(\\))`),
+                (whole, a, b, c) => {
+                    return a + newImageUploaded.url + c
+                })
+        },
+
+        refreshUploadedImages (uploadedImages) {
+            this.uploadedImages = _.clone(uploadedImages)
+        },
+
+        setPrimaryImage (payload) {
+            if (payload.type === this.objectType) {
+                this.primaryImage = payload.image
             }
         },
-        created() {
-            Event.listen('newImageUploaded', (newImageUpload) => this.addNewImageToUploads(newImageUpload))
+
+        updateFormPrimaryImage () {
+            this.form.primary_image_id = !_.isEmpty(this.primaryImage) && this.primaryImage.hasOwnProperty('id')
+                ? this.primaryImage.id
+                : null
         },
-        methods: {
-            replaceFilenameWithUrl(newImageUploaded) {
-                this.form.body = this.form.body.replace(
-                    new RegExp(`(!\\[.*?\\]\\()(${newImageUploaded.uploadPosition})(\\))`),
-                    (whole, a, b, c) => {
-                        return a + newImageUploaded.url + c
-                    })
-            },
 
-            refreshUploadedImages(uploadedImages) {
-                this.uploadedImages = _.clone(uploadedImages)
-            },
+        updateFormUploadedImages () {
+            Vue.set(this.form, 'uploaded_images', this.uploadedImages.map(image => {
+                return image.id
+            }))
+        },
 
-            setPrimaryImage(payload) {
-                if (payload.type === this.objectType) {
-                    this.primaryImage = payload.image
-                }
-            },
+        uploadImage (imageToUpload, uploadPosition = null) {
+            this.uploading_image = true
 
-            updateFormPrimaryImage() {
-                this.form.primary_image_id = !_.isEmpty(this.primaryImage) && this.primaryImage.hasOwnProperty('id') ?
-                    this.primaryImage.id :
-                    null
-            },
+            return this.imageFileUpload(imageToUpload)
+                .then(response => {
+                    let newImageUploaded = response.data.data.image
+                    newImageUploaded.originalImage = imageToUpload
+                    newImageUploaded.uploadPosition = uploadPosition
 
-            updateFormUploadedImages() {
-                Vue.set(this.form, 'uploaded_images', this.uploadedImages.map(image => {
-                    return image.id
-                }))
-            },
+                    this.replaceFilenameWithUrl(newImageUploaded)
 
-            uploadImage(imageToUpload, uploadPosition = null) {
-                this.uploading_image = true
+                    Event.fire('newImageUploaded', newImageUploaded)
 
-                return this.imageFileUpload(imageToUpload)
-                    .then(response => {
-                        let newImageUploaded = response.data.data.image
-                        newImageUploaded.originalImage = imageToUpload
-                        newImageUploaded.uploadPosition = uploadPosition
+                    this.showUploadImagePrompt = false
+                    this.uploading_image = false
 
-                        this.replaceFilenameWithUrl(newImageUploaded)
+                    flash('Image uploaded successfully.')
+                })
+                .catch(errors => {
+                    this.showUploadImagePrompt = false
+                    this.uploading_image = false
+                    flash('Image upload failed.', 'danger')
+                })
+        },
 
-                        Event.fire('newImageUploaded', newImageUploaded)
+        addNewImageToUploads (newImageUploaded) {
+            this.uploadedImages = _.clone(this.uploadedImages)
 
-                        this.showUploadImagePrompt = false
-                        this.uploading_image = false
-
-                        flash('Image uploaded successfully.')
-                    })
-                    .catch(errors => {
-                        this.showUploadImagePrompt = false
-                        this.uploading_image = false
-                        flash('Image upload failed.', 'danger')
-                    })
-            },
-
-            addNewImageToUploads(newImageUploaded) {
-                this.uploadedImages = _.clone(this.uploadedImages)
-
-                this.uploadedImages.push(newImageUploaded)
-            },
-
+            this.uploadedImages.push(newImageUploaded)
         }
+
     }
+}
 </script>

@@ -30,7 +30,7 @@ Vue.use(VueClipboard)
 window.Event = new Event()
 
 window.flash = function (message, level = 'success', timeout = 3) {
-    window.Event.fire('flash', {message, level, timeout})
+    window.Event.fire('flash', { message, level, timeout })
 }
 
 /* eslint no-unused-vars: "off" */
@@ -47,7 +47,7 @@ const app = new Vue({
         Posts,
         PostForm,
         PostsAdminPanel,
-        //pages
+        // pages
         PageForm,
         PagesAdminPanel,
         // users

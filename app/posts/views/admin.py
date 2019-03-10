@@ -30,7 +30,6 @@ class FetchAdminPosts(MethodView):
 
 
 class Index(MethodView):
-
     @user_can_write_posts
     def get(self):
         return render_template("posts/index.html", title="Posts Administration")

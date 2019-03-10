@@ -42,7 +42,7 @@ import {
 
 import { faUserCircle as fasUserCircle, faEnvelope as fasEnvelope, faUniversity as fasUniversity } from '@fortawesome/pro-solid-svg-icons'
 
-import {FontAwesomeIcon, FontAwesomeLayers} from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons'
 

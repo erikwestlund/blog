@@ -7,7 +7,6 @@ from utils.acl import user_can_write_posts
 
 
 class RenderPreview(MethodView):
-
     @user_can_write_posts
     def post(self):
         preview = PreviewForm()

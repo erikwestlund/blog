@@ -26,7 +26,7 @@ export default {
                 return 'Saving...'
             } else if (this.type === 'deleting') {
                 return 'Deleting...'
-            }  else if (this.type === 'logging_in') {
+            } else if (this.type === 'logging_in') {
                 return 'Logging in...'
             } else if (this.type === 'publishing') {
                 return 'Publishing...'

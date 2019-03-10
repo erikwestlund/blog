@@ -11,10 +11,15 @@ class ShowPost(MethodView):
         if not post:
             abort(404)
 
-        return render_template("posts/show.html", post=post,
-                               title=post.title,
-                               og_type="article",
-                               og_type_published=post.published_at.isoformat() or None,
-                               og_type_modified=post.updated_at.isoformat() or None ,
-                               og_type_tag=','.join([tag.name for tag in post.tags]) if post.tags else None,
-                               og_type_author=post.user.name)
+        return render_template(
+            "posts/show.html",
+            post=post,
+            title=post.title,
+            og_type="article",
+            og_type_published=post.published_at.isoformat() or None,
+            og_type_modified=post.updated_at.isoformat() or None,
+            og_type_tag=",".join([tag.name for tag in post.tags])
+            if post.tags
+            else None,
+            og_type_author=post.user.name,
+        )

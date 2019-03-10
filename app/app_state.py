@@ -54,12 +54,8 @@ def app_state():
                 "small": small_thumbnail_width,
                 "large": large_thumbnail_width,
             },
-            "cloudinary": {
-                "on": cloudinary_on,
-                "account": cloudinary_account,
-            },
-        },
-
+            "cloudinary": {"on": cloudinary_on, "account": cloudinary_account},
+        }
     }
 
     return dict(
@@ -75,6 +71,6 @@ def app_state():
                     "last_name": last_name,
                 },
             },
-            "settings": settings
+            "settings": settings,
         }
     )

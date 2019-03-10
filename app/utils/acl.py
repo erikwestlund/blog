@@ -27,10 +27,11 @@ def user_can_write_posts(f):
         if not current_user.is_authenticated:
             abort(403)
 
-        if not (current_user.has_role("administrator") or current_user.has_role("writer")):
+        if not (
+            current_user.has_role("administrator") or current_user.has_role("writer")
+        ):
             abort(403)
 
         return f(*args, **kwargs)
 
     return decorated_function
-

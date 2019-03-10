@@ -11,7 +11,9 @@ def versioned_asset(filename):
     with open("static/mix-manifest.json") as file:
         data = json.load(file)
 
-    return "/static" + data[filename[7:] if filename.startswith("/static") else filename]
+    return (
+        "/static" + data[filename[7:] if filename.startswith("/static") else filename]
+    )
 
 
 @filters.app_template_filter()

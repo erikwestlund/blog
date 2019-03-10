@@ -64,9 +64,7 @@ class Post(db.Model, TimestampMixin):
         "Tag", secondary=tag_post, cascade="save-update, merge, delete"
     )
 
-    images = db.relationship(
-        "Image", secondary=image_post, cascade="save-update"
-    )
+    images = db.relationship("Image", secondary=image_post, cascade="save-update")
     primary_image = db.relationship("Image")
 
     revisions = db.relationship("PostRevision", backref="post", lazy=True)
@@ -109,7 +107,11 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def url(self):
-        return url_for("main.index", _external=True).strip("/") + self.uri if self.published_at else None
+        return (
+            url_for("main.index", _external=True).strip("/") + self.uri
+            if self.published_at
+            else None
+        )
 
     @property
     def edit_uri(self):
@@ -146,14 +148,11 @@ class Post(db.Model, TimestampMixin):
 
         return Post.get_posts_query_by_slug_within_month(slug, year, month).count() > 0
 
-
     @property
     def needs_snip(self):
         snippet_length = int(current_app.config["POST_SNIPPET_LENGTH"])
         stripped_html = strip_tags(self.body_html)
         return len(stripped_html) >= snippet_length
-
-
 
     @property
     def body_snippet(self):
@@ -161,9 +160,7 @@ class Post(db.Model, TimestampMixin):
         stripped_html = strip_tags(self.body_html)
 
         return (
-            stripped_html[:snippet_length] + "..."
-            if self.needs_snip
-            else stripped_html
+            stripped_html[:snippet_length] + "..." if self.needs_snip else stripped_html
         )
 
     @staticmethod

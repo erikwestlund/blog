@@ -6,11 +6,15 @@
             no-footer
             @close="show = false"
         >
-            <h3 slot="header" class="flex">
+            <h3
+                slot="header"
+                class="flex"
+            >
                 {{ renderedTitle }}
-                <fa-icon class="ml-auto cursor-pointer"
-                         :icon="['far', 'times']"
-                         @click="show = false"
+                <fa-icon
+                    class="ml-auto cursor-pointer"
+                    :icon="['far', 'times']"
+                    @click="show = false"
                 />
             </h3>
 
@@ -18,11 +22,14 @@
                 <div v-if="loaded && ! body">
                     Write something!
                 </div>
+
+                <!-- eslint-disable vue/no-v-html -->
                 <div
                     v-else-if="loaded && body"
                     class="post"
                     v-html="renderedHtml"
                 />
+                <!-- eslint-enable vue/no-v-html -->
                 <div v-else>
                     <fa-icon
                         class="mr-2 fa-spin"
@@ -36,43 +43,42 @@
 </template>
 
 <script>
-    import Modal from './Modal'
+import Modal from './Modal'
 
-    export default {
-        components: {Modal},
-        data() {
-            return {
-                loaded: false,
-                show: false,
-                renderedHtml: ''
-            }
+export default {
+    components: { Modal },
+    props: {
+        title: {
+            type: String,
+            default: 'Preview'
         },
-        computed: {
-            renderedTitle() {
-                return this.title || 'Preview'
-            }
-        },
-        created() {
-            Event.listen('showPreview', () => this.showPreview())
-        },
-        props: {
-            title: {
-                type: String,
-                default: 'Preview'
-            },
-            body: {
-                type: String,
-                required: true
-            }
-        },
-        methods: {
-            showPreview() {
-                this.fetch()
-            }
+        body: {
+            type: String,
+            required: true
+        }
+    },
+    data () {
+        return {
+            loaded: false,
+            show: false,
+            renderedHtml: ''
+        }
+    },
+    computed: {
+        renderedTitle () {
+            return this.title || 'Preview'
+        }
+    },
+    created () {
+        Event.listen('showPreview', () => this.showPreview())
+    },
+    methods: {
+        showPreview () {
+            this.fetch()
         }
     }
+}
 </script>
-
 
 <style>
     .preview .modal-container {

@@ -10,4 +10,3 @@ class ContactForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     body = TextAreaField("Body", validators=[DataRequired()])
-

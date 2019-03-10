@@ -71,7 +71,7 @@
                         name="body"
                         rows="20"
                         placeholder="Your message."
-                    ></textarea>
+                    />
                     <p
                         v-if="form.errors.has('body')"
                         class="text-red text-xs italic"
@@ -85,11 +85,15 @@
                     class="btn btn-blue hover:bg-blue-darkest hover:border-blue-darkest"
                     :disabled="form.errors.any() || sending"
                 >
-                    <submitting-label v-if="sending"
-                            type="sending"
+                    <submitting-label
+                        v-if="sending"
+                        type="sending"
                     />
                     <span v-else>
-                        <fa-icon class="mr-2" :icon="['far', 'envelope']" />
+                        <fa-icon
+                            class="mr-2"
+                            :icon="['far', 'envelope']"
+                        />
                         Send It
                     </span>
                 </button>
@@ -100,7 +104,7 @@
 
 <script>
 import Form from '../../modules/Form.js'
-import Submitting from "../mixins/SubmittingMixin";
+import Submitting from '../mixins/SubmittingMixin'
 
 export default {
     name: 'RegisterUser',
@@ -110,7 +114,7 @@ export default {
             form: new Form({
                 name: '',
                 email: '',
-                body: '',
+                body: ''
             })
         }
     },
@@ -126,7 +130,6 @@ export default {
                     setTimeout(() => {
                         window.location.replace('/')
                     }, 500)
-
                 })
                 .catch((errors) => {
                     this.sending = false
