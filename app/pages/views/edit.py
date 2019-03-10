@@ -36,9 +36,6 @@ class EditPage(MethodView):
     def delete(self, page_id):
         page = find_or_fail(Page, Page.id == page_id)
 
-        if not page.editable:
-            abort(403)
-
         db.session.delete(page)
         db.session.commit()
 
@@ -50,9 +47,6 @@ class EditPage(MethodView):
     def patch(self, page_id):
         page = find_or_fail(Page, Page.id == page_id)
 
-        if not page.editable:
-            abort(403)
-
         form = SavePageForm(page)
 
         if form.validate_on_submit():
@@ -60,25 +54,13 @@ class EditPage(MethodView):
             db.session.add(revision)
 
             page.title = form.title.data
+            page.slug = slugify(form.slug.data)
             page.body = form.body.data
             page.primary_image_id = form.primary_image_id.data
-
-            if form.published_at.data and not page.published_at:
-                page.published_at = datetime.now()
-            elif form.published_at.data and page.published_at:
-                page.published_at = form.published_at.data
-            elif not form.published_at.data and page.published_at:
-                page.published_at = None
-
-            if not form.slug.data and page.published_at:
-                page.slug = page.generate_slug(form.title.data, form.published_at.data)
-            elif form.slug.data:
-                page.slug = slugify(form.slug.data)
 
             page.images = Image.query.filter(
                 Image.id.in_(form.uploaded_images.data)
             ).all()
-            page.tags = Tag.query.filter(Tag.id.in_(form.tags.data)).all()
 
             db.session.commit()
 

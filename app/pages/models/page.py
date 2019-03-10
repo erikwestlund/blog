@@ -44,11 +44,11 @@ class Page(db.Model, TimestampMixin):
 
     @property
     def uri(self):
-        return '/' + self.slug
+        return "/" + self.slug
 
     @property
     def url(self):
-        return url_for("main.index", _external=True) + self.uri
+        return url_for("main.index", _external=True).strip("/") + self.uri
 
     @property
     def edit_uri(self):

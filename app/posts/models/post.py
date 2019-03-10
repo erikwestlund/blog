@@ -105,11 +105,11 @@ class Post(db.Model, TimestampMixin):
         year = self.published_at.year
         month = str(self.published_at.month).zfill(2)
 
-        return "%d/%s/%s" % (year, month, self.slug)
+        return "/%d/%s/%s" % (year, month, self.slug)
 
     @property
     def url(self):
-        return url_for("main.index", _external=True) + self.uri if self.published_at else None
+        return url_for("main.index", _external=True).strip("/") + self.uri if self.published_at else None
 
     @property
     def edit_uri(self):

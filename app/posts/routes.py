@@ -34,6 +34,7 @@ posts.add_url_rule(
 posts.add_url_rule("/admin/posts", view_func=Index.as_view("post_index"))
 
 posts.add_url_rule("/posts.json", view_func=FetchPosts.as_view("get_posts"))
+
 posts.add_url_rule(
     "/<int:year>/<int:month>/<string:slug>", view_func=ShowPost.as_view("show_post")
 )

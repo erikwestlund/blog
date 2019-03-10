@@ -1,6 +1,7 @@
 from flask import render_template, jsonify
 from flask.views import MethodView
 from flask_login import login_required
+from slugify import slugify
 
 from app import db
 from main.models.image import Image
@@ -21,7 +22,7 @@ class CreatePage(MethodView):
         if form.validate_on_submit():
             page = Page(
                 title=form.title.data,
-                slug=form.slug.data,
+                slug=slugify(form.slug.data),
                 body=form.body.data,
                 primary_image_id=form.primary_image_id.data or None
             )

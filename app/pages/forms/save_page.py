@@ -24,7 +24,7 @@ class SavePageForm(FlaskForm):
 
     def validate_slug(self, slug):
         if self.page_being_edited and self.page_being_edited.slug != slug.data:
-            if Page.slug_exists_within_month(slug.data):
+            if Page.query.filter_by(slug=slug.data).count() > 0:
                 raise ValidationError(
                     "That slug is taken. Please enter a different one."
                 )

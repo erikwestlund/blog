@@ -2,23 +2,23 @@
     <div>
         <transition name="trx-slide-fade">
             <table
-                v-if="hasObjects"
-                class="table w-full"
+                    v-if="hasObjects"
+                    class="table w-full"
             >
                 <tr>
                     <th>Title</th>
                     <th>Updated</th>
-                    <th />
+                    <th/>
                 </tr>
                 <tr
-                    v-for="page in data.data"
-                    :key="page.id"
+                        v-for="page in data.data"
+                        :key="page.id"
                 >
-                    <td v-text="page.title" />
+                    <td v-text="page.title"/>
                     <td>{{ page.updated_at | ago }} ago</td>
                     <td>
                         <a :href="`/admin/pages/${page.id}`">
-                            <fa-icon :icon="['far', 'edit']" />
+                            <fa-icon :icon="['far', 'edit']"/>
                         </a>
                     </td>
                 </tr>
@@ -26,23 +26,23 @@
             <div v-else-if="ready">
                 No pages have been yet! <a href="/admin/pages/create">Make One</a>.
             </div>
-            <paginate
+        </transition>
+        <paginate
                 class="mt-8"
                 name="pages"
                 :data="paginationMeta"
-            />
-        </transition>
+        />
     </div>
 </template>
 
 <script>
-import AdminPanel from '../ui/AdminPanel'
+    import AdminPanel from '../ui/AdminPanel'
 
-export default {
-    name: 'PagesAdminPanel',
-    extends: AdminPanel,
+    export default {
+        name: 'PagesAdminPanel',
+        extends: AdminPanel,
 
-}
+    }
 </script>
 
 <style scoped>

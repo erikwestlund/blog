@@ -1,5 +1,8 @@
 <script>
+    import CopyMixin from './CopyMixin'
+
     export default {
+        mixins: [CopyMixin],
         computed: {
             cloudinary() {
                 return this.imageSettings.cloudinary
@@ -47,17 +50,8 @@
                 Event.fire('imageDeletedFromUploads', this.uploadedImages)
             },
 
-            copyUrl(url) {
-                this.$copyText(url).then(e => {
-                    flash('Image URL copied to clipboard.')
-                })
-                    .catch(e => {
-                        flash('Failed to copy URL to clipboard.', 'danger')
-                    })
-            },
-
             copyThumbnailUrl(url, size) {
-                this.copyUrl(this.getThumbnailUrl(url, size))
+                this.copyUrl(this.getThumbnailUrl(url, size), 'Image')
             },
 
             getCloudinaryImageFetchUrl(url, width) {

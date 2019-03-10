@@ -341,6 +341,7 @@
     import {mavonEditor} from 'mavon-editor'
     import FileUploadImageMixin from '../mixins/FileUploadImageMixin'
     import PostPreview from './PostPreview'
+    import CopyMixin from '../mixins/CopyMixin'
 
     export default {
         name: 'Post',
@@ -354,7 +355,7 @@
             mavonEditor,
             PostPreview
         },
-        mixins: [FileUploadImageMixin, SubmittingMixin],
+        mixins: [FileUploadImageMixin, SubmittingMixin, CopyMixin],
 
         props: {
             initAction: {
@@ -515,7 +516,7 @@
 
         methods: {
             clearPrimaryImage(type) {
-                if(type == 'post') {
+                if (type == 'post') {
                     Vue.set(this, 'primaryImage', null)
                 }
             },

@@ -67,7 +67,7 @@
                         >
                             URL
                         </label>
-                        <div class="flex" v-if="publishedInPast">
+                        <div class="flex" url>
                             <input
                                     readonly
                                     class="border-grey-light bg-grey-lighter text-grey-dark w-100 text-input self-start p-1 mb-0 mr-1 h-7"
@@ -145,7 +145,7 @@
                         </button>
                         <transition name="trx-fade-in">
                             <button
-                                    class="btn btn-grey hover:bg-grey hover:border-grey p-2 ml-auto"
+                                    class="btn btn-grey hover:bg-grey hover:border-grey p-2"
                                     v-show="form.body"
                                     @click.prevent="showPreview()"
                             >
@@ -237,6 +237,7 @@
     import {mavonEditor} from 'mavon-editor'
     import FileUploadImageMixin from '../mixins/FileUploadImageMixin'
     import PagePreview from './PagePreview'
+    import CopyMixin from '../mixins/CopyMixin'
 
     export default {
         name: 'Page',
@@ -248,9 +249,9 @@
             ImagePrimary,
             ImageUploadCollection,
             mavonEditor,
-            PagePreview
+            PagePreview,
         },
-        mixins: [FileUploadImageMixin, SubmittingMixin],
+        mixins: [FileUploadImageMixin, SubmittingMixin, CopyMixin],
 
         props: {
             initAction: {
@@ -376,7 +377,7 @@
 
         methods: {
             clearPrimaryImage(type) {
-                if(type == 'page') {
+                if (type == 'page') {
                     Vue.set(this, 'primaryImage', null)
                 }
             },
@@ -455,7 +456,7 @@
                         this.turnOffSubmitting()
                     })
                     .catch(errors => {
-                            flash('Failed to save page.', 'danger')
+                        flash('Failed to save page.', 'danger')
 
                         this.turnOffSubmitting()
                     })
