@@ -67,7 +67,7 @@ class Post(db.Model, TimestampMixin):
     images = db.relationship("Image", secondary=image_post, cascade="save-update")
     primary_image = db.relationship("Image")
 
-    revisions = db.relationship("PostRevision", backref="post", lazy=True)
+    revisions = db.relationship("PostRevision", backref="post", lazy=True, order_by="desc(PostRevision.created_at)")
 
     @property
     def owner(self):
@@ -178,7 +178,7 @@ class Post(db.Model, TimestampMixin):
 
 
 class PostRevision(db.Model, TimestampMixin):
-    visible = ["id", "post_id", "revision"]
+    visible = ["id", "post_id", "revision", "created_at", "created_at_ago"]
 
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))

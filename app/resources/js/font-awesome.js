@@ -4,6 +4,8 @@ import {
     faAngleDoubleLeft,
     faAngleDoubleRight,
     faAsterisk,
+    faChevronRight,
+    faChevronDown,
     faCircleNotch,
     faCloudUpload,
     faCopy,
@@ -37,7 +39,8 @@ import {
     faUser,
     faUserCircle,
     faUserEdit,
-    faUserPlus
+    faUserPlus,
+    faWindowRestore,
 } from '@fortawesome/pro-regular-svg-icons'
 
 import { faUserCircle as fasUserCircle, faEnvelope as fasEnvelope, faUniversity as fasUniversity } from '@fortawesome/pro-solid-svg-icons'
@@ -50,6 +53,8 @@ library.add(
     faAngleDoubleLeft,
     faAngleDoubleRight,
     faAsterisk,
+    faChevronRight,
+    faChevronDown,
     faCircleNotch,
     faCloudUpload,
     faCut,
@@ -88,7 +93,8 @@ library.add(
     faUserEdit,
     faUserPlus,
     faUniversity,
-    fasUniversity
+    fasUniversity,
+    faWindowRestore
 )
 
 Vue.component('fa-icon', FontAwesomeIcon)

@@ -39,6 +39,7 @@ redis
 requests
 six
 SQLAlchemy
+timeago
 urllib3
 uWSGI
 vine

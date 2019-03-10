@@ -3,6 +3,7 @@ from posts.models.post import Post
 from posts.views.create import CreatePost
 from posts.views.edit import EditPost, FetchPost
 from posts.views.render_preview import RenderPreview
+from posts.views.revisions import Revisions
 from posts.views.tagged_posts import FetchTaggedPosts, ShowTaggedPosts
 from posts.views.unpublish import UnpublishPost
 from posts.views.admin import Index, FetchAdminPosts
@@ -27,6 +28,7 @@ posts.add_url_rule(
 posts.add_url_rule(
     "/admin/posts/<int:post_id>", view_func=EditPost.as_view("edit_post")
 )
+
 posts.add_url_rule("/admin/posts/create", view_func=CreatePost.as_view("create_post"))
 posts.add_url_rule(
     "/admin/posts.json", view_func=FetchAdminPosts.as_view("fetch_admin_posts")
@@ -46,3 +48,10 @@ posts.add_url_rule(
     "/posts/tags/<string:slug>/posts.json",
     view_func=FetchTaggedPosts.as_view("fetch_tagged_posts"),
 )
+
+posts.add_url_rule(
+    "/admin/posts/<int:post_id>/revisions", view_func=Revisions.as_view("revisions")
+)
+# posts.add_url_rule(
+#     "/admin/posts/<int:post_id>/revisions/<int:revision_id>", view_func=Revisions.as_view("edit_revisions")
+# )
