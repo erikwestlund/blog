@@ -1,6 +1,7 @@
 import calendar
-import datetime
+from datetime import datetime
 
+import timeago
 from dateutil.parser import parse as parse_date
 from flask import current_app, url_for
 from flask_login import current_user
@@ -11,6 +12,7 @@ from sqlalchemy import and_
 from main.models.image import Image
 
 from app import db
+from utils.models.revisions import RevisionsMixin
 from utils.models.timestamps import TimestampMixin
 from utils.striphtmltags import strip_tags
 
@@ -40,6 +42,7 @@ class Post(db.Model, TimestampMixin):
         "created_at",
         "updated_at",
         "published_at",
+        "published_at_ago",
         "tags",
         "images",
         "primary_image",
@@ -67,7 +70,16 @@ class Post(db.Model, TimestampMixin):
     images = db.relationship("Image", secondary=image_post, cascade="save-update")
     primary_image = db.relationship("Image")
 
-    revisions = db.relationship("PostRevision", backref="post", lazy=True, order_by="desc(PostRevision.created_at)")
+    revisions = db.relationship(
+        "PostRevision",
+        backref="post",
+        lazy=True,
+        order_by="desc(PostRevision.created_at)",
+    )
+
+    @property
+    def published_at_ago(self):
+        return timeago.format(self.published_at, datetime.now())
 
     @property
     def owner(self):
@@ -166,8 +178,8 @@ class Post(db.Model, TimestampMixin):
     @staticmethod
     def get_posts_query_by_slug_within_month(slug, year, month):
         num_days = calendar.monthrange(year, month)[1]
-        start_date = datetime.datetime(year, month, 1, 0, 0, 0)
-        end_date = datetime.datetime(year, month, num_days, 23, 59, 59)
+        start_date = datetime(year, month, 1, 0, 0, 0)
+        end_date = datetime(year, month, num_days, 23, 59, 59)
 
         return Post.query.filter(
             and_(Post.published_at >= start_date, Post.published_at <= end_date)
@@ -177,9 +189,7 @@ class Post(db.Model, TimestampMixin):
         return f"Post('{self.title}, {self.body}, {self.slug}')"
 
 
-class PostRevision(db.Model, TimestampMixin):
+class PostRevision(db.Model, TimestampMixin, RevisionsMixin):
     visible = ["id", "post_id", "revision", "created_at", "created_at_ago"]
 
-    id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
-    revision = db.Column(db.JSON)

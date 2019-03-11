@@ -11,6 +11,8 @@ if (token) {
     console.error('CSRF token not found.')
 }
 
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+/* eslint-disable no-extend-native */
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1)
 }
+/* eslint-enable no-extend-native */

@@ -14,9 +14,13 @@
                     v-for="page in data.data"
                     :key="page.id"
                 >
-                    <td v-text="page.title" />
-                    <td>{{ page.updated_at | ago }} ago</td>
                     <td>
+                        <a :href="`/admin/pages/${page.id}`">
+                            {{ page.title }}
+                        </a>
+                    </td>
+                    <td>{{ page.updated_at | ago }} ago</td>
+                    <td class="text-right">
                         <a :href="`/admin/pages/${page.id}`">
                             <fa-icon :icon="['far', 'edit']" />
                         </a>

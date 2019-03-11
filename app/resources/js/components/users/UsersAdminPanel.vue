@@ -19,7 +19,11 @@
                     v-for="user in data.data"
                     :key="user.id"
                 >
-                    <td v-text="user.username" />
+                    <td>
+                        <a :href="`/admin/users/${user.id}`">
+                            {{ user.username }}
+                        </a>
+                    </td>
                     <td
                         class="hidden md:table-cell"
                         v-text="user.email"
@@ -27,7 +31,7 @@
                     <td class="hidden md:table-cell">
                         {{ user.created_at | ago }} ago
                     </td>
-                    <td>
+                    <td class="text-right">
                         <a :href="`/admin/users/${user.id}`">
                             <fa-icon :icon="['far', 'edit']" />
                         </a>

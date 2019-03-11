@@ -18,16 +18,14 @@ class Revisions(MethodView):
 
         revisions = [dejsonify_revision(revision) for revision in post.revisions]
 
-        return jsonify({
-            "status": "success",
-            "data": revisions,
-            "parent": post,
-        })
+        return jsonify({"status": "success", "data": revisions, "parent": post})
+
 
 def dejsonify_revision(revision):
     revision.revision = json.loads(revision.revision)
 
     return revision
+
 
 # class Revisions(MethodView):
 #     @user_can_write_posts

@@ -9,7 +9,7 @@
                     class="mr-1"
                     :icon="['far', 'window-restore']"
                 />
-                Restore All Post Fields
+                Restore All Page Fields
             </button>
         </div>
         <div class="flex mt-6">
@@ -71,38 +71,6 @@
         <!-- eslint-enable vue/no-v-html -->
 
         <div class="flex mt-5">
-            <label class="text-input-label">Tags</label>
-            <button
-                role="link"
-                class="ml-auto text-sm"
-                @click="restoreRevisedTags()"
-            >
-                <fa-icon
-                    class="mr-1 text-grey"
-                    :icon="['far', 'window-restore']"
-                />
-                Restore
-            </button>
-        </div>
-        <div class="mt-1">
-            <ul
-                v-if="hasTags"
-                class="list-reset flex"
-            >
-                <li
-                    v-for="tag in revision.tags"
-                    :key="tag.id"
-                    class="inline rounded bg-blue-light px-2 py-1 text-sm text-white mr-2"
-                >
-                    {{ tag.name }}
-                </li>
-            </ul>
-            <span v-else>
-                No tags.
-            </span>
-        </div>
-
-        <div class="flex mt-5">
             <label class="text-input-label">Images</label>
             <button
                 role="link"
@@ -158,31 +126,6 @@
         <div v-else>
             No primary image set.
         </div>
-
-        <div class="flex mt-5">
-            <label class="text-input-label">Published At</label>
-            <button
-                role="link"
-                class="ml-auto text-sm"
-                @click="restoreRevisedField(revision.published_at, 'published_at', 'Published at')"
-            >
-                <fa-icon
-                    class="mr-1 text-grey"
-                    :icon="['far', 'window-restore']"
-                />
-                Restore
-            </button>
-        </div>
-
-        <div
-            v-if="hasPublishedAt"
-            class="mt-2"
-        >
-            {{ revision.published_at }}
-        </div>
-        <div v-else>
-            Not published.
-        </div>
     </div>
 </template>
 
@@ -197,29 +140,20 @@ export default {
         },
         hasPrimaryImage () {
             return !_.isEmpty(this.revision.primary_image)
-        },
-        hasPublishedAt () {
-            return !_.isNil(this.revision.published_at)
-        },
-        hasTags () {
-            return !_.isEmpty(this.revision.tags)
         }
     },
     methods: {
         restoreRevisedField (revised, element, label = null) {
-            Event.fire('restoreRevisedPostField', { revised, element, label })
-        },
-        restoreRevisedTags () {
-            Event.fire('restoreRevisedTags', this.revision.tags)
+            Event.fire('restoreRevisedPageField', { revised, element, label })
         },
         restoreRevisedImages () {
-            Event.fire('restoreRevisedImages', this.revision)
+            Event.fire('restoreRevisedImages', this.revision.images)
         },
         restoreRevisedPrimaryImage () {
             Event.fire('restoreRevisedPrimaryImage', this.revision.primary_image)
         },
         restoreAll () {
-            Event.fire('restoreRevisedPost', this.revision)
+            Event.fire('restoreRevisedPage', this.revision)
         }
     }
 }

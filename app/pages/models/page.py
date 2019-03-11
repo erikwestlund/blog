@@ -4,6 +4,7 @@ from slugify import slugify
 from sqlalchemy import ForeignKey
 
 from app import db
+from utils.models.revisions import RevisionsMixin
 from utils.models.timestamps import TimestampMixin
 
 image_page = db.Table(
@@ -38,7 +39,12 @@ class Page(db.Model, TimestampMixin):
     images = db.relationship("Image", secondary=image_page, cascade="save-update")
     primary_image = db.relationship("Image")
 
-    revisions = db.relationship("PageRevision", backref="page", lazy=True)
+    revisions = db.relationship(
+        "PageRevision",
+        backref="post",
+        lazy=True,
+        order_by="desc(PageRevision.created_at)",
+    )
 
     @property
     def uri(self):
@@ -72,9 +78,7 @@ class Page(db.Model, TimestampMixin):
         return f"Page('{self.title}, {self.body}, {self.slug}')"
 
 
-class PageRevision(db.Model, TimestampMixin):
-    visible = ["id", "page_id", "revision"]
+class PageRevision(db.Model, TimestampMixin, RevisionsMixin):
+    visible = ["id", "page_id", "revision", "created_at_ago"]
 
-    id = db.Column(db.Integer, primary_key=True)
     page_id = db.Column(db.Integer, db.ForeignKey("page.id"))
-    revision = db.Column(db.JSON)

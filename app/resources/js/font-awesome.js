@@ -14,6 +14,7 @@ import {
     faEllipsisH,
     faEnvelope,
     faExclamationCircle,
+    faExternalLink,
     faEye,
     faEyeSlash,
     faFileAlt,
@@ -40,7 +41,7 @@ import {
     faUserCircle,
     faUserEdit,
     faUserPlus,
-    faWindowRestore,
+    faWindowRestore
 } from '@fortawesome/pro-regular-svg-icons'
 
 import { faUserCircle as fasUserCircle, faEnvelope as fasEnvelope, faUniversity as fasUniversity } from '@fortawesome/pro-solid-svg-icons'
@@ -64,6 +65,7 @@ library.add(
     faEnvelope,
     fasEnvelope,
     faExclamationCircle,
+    faExternalLink,
     faEye,
     faEyeSlash,
     faFileAlt,

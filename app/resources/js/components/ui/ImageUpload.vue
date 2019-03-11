@@ -25,11 +25,19 @@
                     :value="upload.url"
                 >
                 <button
-                    class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1"
+                    class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1 mr-2"
                     @click="copyUrl(upload.url)"
                 >
                     <fa-icon :icon="['far', 'cut']" />
                 </button>
+                <a
+                    role="button"
+                    :href="upload.url"
+                    target="_blank"
+                    class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1"
+                >
+                    <fa-icon :icon="['far', 'external-link']" />
+                </a>
             </div>
             <div class="mt-2 flex md:items-center">
                 <div class="flex w-full">

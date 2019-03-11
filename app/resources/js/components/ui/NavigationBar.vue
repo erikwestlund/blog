@@ -79,7 +79,7 @@
 
                         <fa-icon
                             class="mr-1"
-                            :icon="['far', 'edit']"
+                            :icon="['far', 'file-edit']"
                         />
 
                     </a>
@@ -180,9 +180,9 @@ import Modal from './Modal'
 export default {
     name: 'NavigationBar',
     components: {
-        'admin-menu-dropdown': AdminMenuDropdown,
-        'modal': Modal,
-        'login-user': LoginUser
+        AdminMenuDropdown,
+        Modal,
+        LoginUser
     },
     data () {
         return {

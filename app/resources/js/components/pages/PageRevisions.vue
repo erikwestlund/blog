@@ -16,7 +16,7 @@
             v-if="showRevision"
             class="mt-6"
         >
-            <post-revision-restore :revision="loadedRevision" />
+            <page-revision-restore :revision="loadedRevision" />
         </div>
     </div>
 </template>
@@ -24,17 +24,13 @@
 <script>
 import Revisions from '../ui/Revisions'
 import RevisionList from '../ui/RevisionList'
-import PostRevisionRestore from './PostRevisionRestore'
+import PageRevisionRestore from './PageRevisionRestore'
 
 export default {
-    components: { RevisionList, PostRevisionRestore },
+    components: { RevisionList, PageRevisionRestore },
     extends: Revisions,
     created () {
-        Event.listen('postSaved', () => this.reset())
+        Event.listen('pageSaved', () => this.reset())
     }
 }
 </script>
-
-<style scoped>
-
-</style>

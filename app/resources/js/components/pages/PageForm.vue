@@ -80,11 +80,19 @@
                                 :value="savedPage.url"
                             >
                             <button
-                                class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1"
+                                class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1 mr-2"
                                 @click="copyUrl(savedPage.url)"
                             >
                                 <fa-icon :icon="['far', 'cut']" />
                             </button>
+                            <a
+                                role="button"
+                                :href="savedPage.url"
+                                target="_blank"
+                                class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1"
+                            >
+                                <fa-icon :icon="['far', 'external-link']" />
+                            </a>
                         </div>
                     </div>
                     <div class="w-full mt-5">
@@ -129,6 +137,13 @@
                         <image-upload-collection
                             parent-type="page"
                             :init-image-uploads="uploadedImages"
+                        />
+                    </div>
+                    <div class="w-full mt-10">
+                        <page-revisions
+                            v-if="isSaved"
+                            object="page"
+                            :object-id="savedPage.id"
                         />
                     </div>
                 </div>
@@ -247,6 +262,8 @@ import { mavonEditor } from 'mavon-editor'
 import FileUploadImageMixin from '../mixins/FileUploadImageMixin'
 import PagePreview from './PagePreview'
 import CopyMixin from '../mixins/CopyMixin'
+import PageRevisions from './PageRevisions'
+import RevisionMixin from '../mixins/RevisionMixin'
 
 export default {
     name: 'Page',
@@ -256,9 +273,10 @@ export default {
         ImagePrimary,
         ImageUploadCollection,
         mavonEditor,
-        PagePreview
+        PagePreview,
+        PageRevisions
     },
-    mixins: [FileUploadImageMixin, SubmittingMixin, CopyMixin],
+    mixins: [FileUploadImageMixin, SubmittingMixin, CopyMixin, RevisionMixin],
 
     props: {
         initAction: {
@@ -365,6 +383,10 @@ export default {
         Event.listen('imageDeletedFromUploads', (refreshUploadedImages) => this.refreshUploadedImages(refreshUploadedImages))
         Event.listen('setPrimaryImage', (payload) => this.setPrimaryImage(payload))
         Event.listen('clearPrimaryImage', (type) => this.clearPrimaryImage(type))
+        Event.listen('restoreRevisedPageField', (revision) => this.restoreRevisedField(revision))
+        Event.listen('restoreRevisedImages', (images) => this.restoreRevisedImages(images))
+        Event.listen('restoreRevisedPrimaryImage', (image) => this.restoreRevisedPrimaryImage(image))
+        Event.listen('restoreRevisedPage', (revision) => this.restoreRevisedPage(revision))
 
         if (this.initPageId && this.initAction === 'edit') {
             this.pageFetch(this.initPageId)
@@ -475,6 +497,28 @@ export default {
 
             this.submittingType = 'saving'
             this.pagePersist()
+        },
+
+        restoreRevisedImages (revision, flash = true) {
+            this.uploadedImages = _.clone(revision.images)
+            this.restoreRevisedPrimaryImage(revision.primary_image, false)
+
+            flash && Event.fire('revisionElementRestored', { element: 'images' })
+        },
+
+        restoreRevisedPrimaryImage (image, flash = true) {
+            this.primaryImage = _.clone(image)
+            flash && Event.fire('revisionElementRestored', { element: 'primary image' })
+        },
+
+        restoreRevisedPage (revision) {
+            this.restoreRevisedField({ element: 'title', revised: revision.title }, false)
+            this.restoreRevisedField({ element: 'slug', revised: revision.slug }, false)
+            this.restoreRevisedField({ element: 'body', revised: revision.body }, false)
+            this.restoreRevisedImages(revision.images, false)
+            this.restoreRevisedPrimaryImage(revision.primary_image, false)
+
+            Event.fire('revisionElementRestored', { element: 'all fields' })
         },
 
         showPreview () {

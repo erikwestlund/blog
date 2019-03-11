@@ -52,6 +52,3 @@ posts.add_url_rule(
 posts.add_url_rule(
     "/admin/posts/<int:post_id>/revisions", view_func=Revisions.as_view("revisions")
 )
-# posts.add_url_rule(
-#     "/admin/posts/<int:post_id>/revisions/<int:revision_id>", view_func=Revisions.as_view("edit_revisions")
-# )

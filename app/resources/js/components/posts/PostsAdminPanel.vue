@@ -15,10 +15,18 @@
                     v-for="post in data.data"
                     :key="post.id"
                 >
-                    <td v-text="post.title" />
-                    <td v-text="getUsername(post)" />
-                    <td>{{ post.updated_at | ago }} ago</td>
                     <td>
+                        <a :href="`/admin/posts/${post.id}`">
+                            {{ post.title }}
+                        </a>
+                    </td>
+                    <td>
+                        <a :href="`/admin/users/${post.user.id}`">
+                            {{ getUsername(post) }}
+                        </a>
+                    </td>
+                    <td>{{ post.updated_at | ago }} ago</td>
+                    <td class="text-right">
                         <a :href="`/admin/posts/${post.id}`">
                             <fa-icon :icon="['far', 'edit']" />
                         </a>
