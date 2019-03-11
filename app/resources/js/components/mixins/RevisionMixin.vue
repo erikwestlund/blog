@@ -2,10 +2,11 @@
 <script>
     export default {
         methods: {
-            restoreRevision(revision) {
-                restoredObject = JSON.parse(revision.revision)
-                this.form.title = restoredObject.title
-                this.form.body = restoredObject.body
+            restoreRevisedField(payload) {
+                Vue.set(this.form, payload.element, payload.revised)
+                // this.form[payload.element] = payload.revised
+
+                flash(`${payload.element.capitalize()} restored to editing form from revision. Click save to persist changes.`, 'warning')
             }
         }
     }

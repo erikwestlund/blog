@@ -1,3 +1,5 @@
+import json
+
 from flask import jsonify, abort
 from flask.views import MethodView
 
@@ -14,12 +16,18 @@ class Revisions(MethodView):
         if not post.editable:
             abort(403)
 
+        revisions = [dejsonify_revision(revision) for revision in post.revisions]
+
         return jsonify({
             "status": "success",
-            "data": post.revisions,
+            "data": revisions,
             "parent": post,
         })
 
+def dejsonify_revision(revision):
+    revision.revision = json.loads(revision.revision)
+
+    return revision
 
 # class Revisions(MethodView):
 #     @user_can_write_posts

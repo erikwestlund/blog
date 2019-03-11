@@ -519,7 +519,8 @@
             Event.listen('imageDeletedFromUploads', (refreshUploadedImages) => this.refreshUploadedImages(refreshUploadedImages))
             Event.listen('setPrimaryImage', (payload) => this.setPrimaryImage(payload))
             Event.listen('clearPrimaryImage', (type) => this.clearPrimaryImage(type))
-            Event.listen('restoreRevision', (revision) => this.restoreRevision(revision))
+            Event.listen('restoreRevisedPostField', (revision) => this.restoreRevisedField(revision))
+            Event.listen('restoreRevisedTags', (tags) => this.restoreRevisedTags(tags))
 
             if (this.initPostId && this.initAction === 'edit') {
                 this.postFetch(this.initPostId)
@@ -685,6 +686,10 @@
                         flash('Could not unpublish post.', 'danger')
                         this.turnOffSubmitting()
                     })
+            },
+
+            restoreRevisedTags(tags) {
+              Vue.set(this, 'seedTags', tags)
             },
 
             showPreview() {
