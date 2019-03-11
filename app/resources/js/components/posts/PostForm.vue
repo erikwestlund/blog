@@ -88,7 +88,7 @@
                             </button>
                             <a
                                 role="button"
-                                :href="savedPage.url"
+                                :href="savedPost.url"
                                 target="_blank"
                                 class="btn btn-grey border-grey-light hover:bg-grey hover:border-grey py-1"
                             >

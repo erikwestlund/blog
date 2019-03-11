@@ -14,7 +14,7 @@ class TimestampMixin(object):
 
     @property
     def created_at_ago(self):
-        return timeago.format(self.created_at, datetime.now())
+        return timeago.format(self.created_at, datetime.now()) if self.created_at else None
 
     @declared_attr
     def updated_at(cls):
@@ -22,4 +22,4 @@ class TimestampMixin(object):
 
     @property
     def updated_at_ago(self):
-        return timeago.format(self.updated_at, datetime.now())
+        return timeago.format(self.updated_at, datetime.now()) if self.updated_at else None
