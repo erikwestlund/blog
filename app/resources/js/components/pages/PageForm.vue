@@ -143,7 +143,10 @@
                         <page-revisions
                             v-if="isSaved"
                             object="page"
+                            :form="form"
                             :object-id="savedPage.id"
+                            :images="uploadedImages"
+                            :primary-image="primaryImage"
                         />
                     </div>
                 </div>
@@ -480,6 +483,8 @@ export default {
 
                         history.pushState({}, 'Edit Page', this.endpoint)
                     }, this.timerDelay)
+
+                    Event.fire('pageSaved')
 
                     this.turnOffSubmitting()
                 })

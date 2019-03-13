@@ -1,22 +1,28 @@
 <template>
     <div>
-        <h2 class="font-normal">
-            <fa-icon
-                class="text-grey mr-2"
-                :icon="['far', 'copy']"
+        <div v-if="hasRevisions">
+            <h2 class="font-normal">
+                <fa-icon
+                    class="text-grey mr-2"
+                    :icon="['far', 'copy']"
+                />
+                Revisions
+            </h2>
+            <revision-list
+                :revisions="revisions"
+                @loadRevision="loadRevision"
             />
-            Revisions
-        </h2>
-        <revision-list
-            v-if="hasRevisions"
-            :revisions="revisions"
-            @loadRevision="loadRevision"
-        />
-        <div
-            v-if="showRevision"
-            class="mt-6"
-        >
-            <page-revision-restore :revision="loadedRevision" />
+            <div
+                v-if="showRevision"
+                class="mt-6"
+            >
+                <page-revision-restore
+                    :revision="loadedRevision"
+                    :form="form"
+                    :images="images"
+                    :primary-image="primaryImage"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -29,6 +35,20 @@ import PageRevisionRestore from './PageRevisionRestore'
 export default {
     components: { RevisionList, PageRevisionRestore },
     extends: Revisions,
+    props: {
+        images: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        primaryImage: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        }
+    },
     created () {
         Event.listen('pageSaved', () => this.reset())
     }

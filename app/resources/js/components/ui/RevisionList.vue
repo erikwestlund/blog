@@ -55,7 +55,13 @@ export default {
             visibleRevision: {}
         }
     },
+    watch: {
+        'revisions': 'reset'
+    },
     methods: {
+        reset () {
+            this.visibleRevision = {}
+        },
         loadRevision (revision) {
             this.visibleRevision = revision
             this.$emit('loadRevision', revision)

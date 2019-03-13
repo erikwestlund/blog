@@ -79,7 +79,11 @@ class Post(db.Model, TimestampMixin):
 
     @property
     def published_at_ago(self):
-        return timeago.format(self.published_at, datetime.now()) if self.published_at else None
+        return (
+            timeago.format(self.published_at, datetime.now())
+            if self.published_at
+            else None
+        )
 
     @property
     def owner(self):

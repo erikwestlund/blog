@@ -38,7 +38,7 @@
                         />
                     </div>
                     <div
-                        v-if="hasSlug"
+                        v-if="isSaved"
                         class="w-full mt-5"
                     >
                         <label
@@ -146,6 +146,9 @@
                             object="post"
                             :form="form"
                             :object-id="savedPost.id"
+                            :current-tags="currentTags"
+                            :images="uploadedImages"
+                            :primary-image="primaryImage"
                         />
                     </div>
                 </div>
@@ -411,6 +414,7 @@ export default {
             postId: this.initPostId,
             action: this.initAction,
             primaryImage: {},
+            currentTags: [],
             seedTags: [],
             setPublishTimeManually: false,
             showDeletePost: false,
@@ -463,7 +467,7 @@ export default {
         },
 
         hasSlug () {
-            return this.form.slug
+            return this.isSaved && this.savedPost.slug
         },
 
         isPublished () {
@@ -519,7 +523,6 @@ export default {
         'uploadedImages': 'updateFormUploadedImages',
         'primaryImage': 'updateFormPrimaryImage'
     },
-
     created () {
         setInterval(() => {
             this.now = new Date().toISOString()
@@ -618,6 +621,8 @@ export default {
                     text: tag.name
                 }
             })
+
+            this.currentTags = this.seedTags
 
             this.form.tags = savedPost.tags.map(tag => {
                 return tag.id
@@ -739,6 +744,7 @@ export default {
         tagsUpdate (payload) {
             if (payload.for === 'tags') {
                 this.form.tags = _.map(payload.tags, 'id')
+                this.currentTags = _.clone(payload.tags)
             }
         }
     }

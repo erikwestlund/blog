@@ -16,7 +16,13 @@
                 v-if="showRevision"
                 class="mt-6"
             >
-                <post-revision-restore :revision="loadedRevision" :form="form" />
+                <post-revision-restore
+                    :revision="loadedRevision"
+                    :form="form"
+                    :current-tags="currentTags"
+                    :images="images"
+                    :primary-image="primaryImage"
+                />
             </div>
         </div>
     </div>
@@ -30,6 +36,26 @@ import PostRevisionRestore from './PostRevisionRestore'
 export default {
     components: { RevisionList, PostRevisionRestore },
     extends: Revisions,
+    props: {
+        currentTags: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        images: {
+            type: Array,
+            default: () => {
+                return []
+            }
+        },
+        primaryImage: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        }
+    },
     created () {
         Event.listen('postSaved', () => this.reset())
     }
