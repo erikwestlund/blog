@@ -144,6 +144,7 @@
                         <post-revisions
                             v-if="isSaved"
                             object="post"
+                            :form="form"
                             :object-id="savedPost.id"
                         />
                     </div>

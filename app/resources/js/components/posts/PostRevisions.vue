@@ -16,7 +16,7 @@
                 v-if="showRevision"
                 class="mt-6"
             >
-                <post-revision-restore :revision="loadedRevision" />
+                <post-revision-restore :revision="loadedRevision" :form="form" />
             </div>
         </div>
     </div>
