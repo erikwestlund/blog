@@ -89,13 +89,13 @@
         </div>
 
         <!-- eslint-disable vue/no-v-html -->
-        <div class="mt-2 bg-white p-3 shadow rounded post post-content">
+        <div class="mt-2 bg-white p-3 shadow rounded post post-content overflow-x-scroll">
             <div
                 v-for="(line, index) in getLineDiff(revision.body || '', form.body || '')"
                 :key="index"
                 :class="`text-${getDiffColor(line)}`"
             >
-                <div v-html="line.value" />
+                <pre v-text="line.value" />
             </div>
         </div>
         <!-- eslint-enable vue/no-v-html -->
