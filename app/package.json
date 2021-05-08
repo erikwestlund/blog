@@ -30,7 +30,7 @@
     "eslint-plugin-vue": "^5.2.2",
     "glob-all": "^3.1.0",
     "laravel-mix": "^4.0.14",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "luxon": "^1.11.4",
     "mavon-editor": "^2.7.0",
     "prettier": "1.15.3",
