@@ -33,7 +33,7 @@ Jinja2==2.10
 jmespath==0.9.4
 kombu==4.4.0
 Mako==1.0.7
-markdown2==2.3.7
+markdown2==2.4.0
 MarkupSafe==1.1.1
 mock==2.0.0
 pbr==5.1.3
